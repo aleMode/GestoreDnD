@@ -2,8 +2,19 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.GestoreDnD" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorSecondary">@color/grigioScuro</item>
+        <item name="colorAccent">@color/arancione</item>
     </style>
 
     <style name="Theme.GestoreDnD" parent="Base.Theme.GestoreDnD" />
+
+    <style name="Theme.GestoreDnD.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GestoreDnD.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GestoreDnD.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

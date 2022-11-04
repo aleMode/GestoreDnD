@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.GestoreDnD" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/grigioScuro</item>
+        <item name="colorSecondary">@color/grigioChiaro</item>
+        <item name="colorAccent">@color/arancione</item>
     </style>
 </resources>

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="grigioScuro">#322c2d</color>
+    <color name="grigioChiaro">#787273</color>
+    <color name="arancione">#ff964f</color>
+
+
+
 </resources>
