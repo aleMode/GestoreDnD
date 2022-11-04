@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grigioScuro"
     android:fitsSystemWindows="true"
     tools:context=".Login">
 
@@ -16,7 +15,6 @@
         android:layout_marginTop="60dp"
         android:text="Login"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#EF9A9A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-        android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="e-mail"
@@ -41,7 +38,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:backgroundTint="#FFFFFF"
         android:editable="true"
         android:ems="10"
         android:inputType="textPassword"

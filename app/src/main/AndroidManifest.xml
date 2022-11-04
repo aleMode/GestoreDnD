@@ -10,13 +10,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GestoreDnD"
+        android:theme="@style/Base.Theme.GestoreDnD2"
         tools:targetApi="31">
         <activity
             android:name=".Registration"
             android:exported="false"
             android:label="@string/title_activity_registration"
-            android:theme="@style/Theme.GestoreDnD.NoActionBar">
+            android:theme="@style/Base.Theme.GestoreDnD2">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -25,7 +25,7 @@
             android:name=".Login"
             android:exported="false"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.GestoreDnD">
+            android:theme="@style/Base.Theme.GestoreDnD2">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -34,7 +34,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.GestoreDnD">
+            android:theme="@style/Base.Theme.GestoreDnD2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
