@@ -1,6 +1,8 @@
 package com.example.gestorednd
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -22,6 +24,12 @@ class Login : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val registrami = findViewById<TextView>(R.id.txtRegistra)
+
+        registrami.setOnClickListener {
+           val intent = Intent(this, Registration::class.java)
+           startActivity(intent)
+       }
 
 
     }
