@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "165803570258",
+    "project_id": "gestorednd",
+    "storage_bucket": "gestorednd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165803570258:android:a613e94cd6bdd5ad22db8b",
+        "android_client_info": {
+          "package_name": "com.example.gestorednd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165803570258-l2o1g12h8c1fkte714s47r8m68qbbqlf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA20nCT7Cruxee5v_GiCeBl19_Iw9Ywd68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165803570258-l2o1g12h8c1fkte714s47r8m68qbbqlf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
