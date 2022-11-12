@@ -2,6 +2,7 @@ package com.example.gestorednd
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -28,22 +29,34 @@ class Login : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val registrami = findViewById<TextView>(R.id.txtRegistra)
-
         auth = Firebase.auth //Initialize Firebase Auth
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
+
+        val currentUser = auth.currentUser   // Check if user is signed in (non-null) and update UI accordingly.
         if(currentUser != null){
             // INSERISCI PAGINA DOPO
         }
+
+        val registrami = findViewById<TextView>(R.id.txtRegistra)
         registrami.setOnClickListener {
            val intent = Intent(this, Registration::class.java)
            startActivity(intent)
-       }
+        }
 
+        val email = findViewById<TextView>(R.id.txtEmail)
+        val password = findViewById<TextView>(R.id.txtPwd)
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
+        btnLogin.setOnClickListener {
+            auth.signInWithEmailAndPassword(
+                email.text as String,
+                password.text as String
+            ).addOnCompleteListener(this){ task ->
+                if(task.isSuccessful) {
 
+                }else {
+
+                }
+            }
+        }
     }
-
-
 }
