@@ -4,13 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.gestorednd.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -18,7 +13,6 @@ import com.google.firebase.ktx.Firebase
 
 class Login : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth : FirebaseAuth
 
@@ -32,7 +26,7 @@ class Login : AppCompatActivity() {
         auth = Firebase.auth //Initialize Firebase Auth
         super.onStart()
 
-        val currentUser = auth.currentUser   // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
         if(currentUser != null){
             // INSERISCI PAGINA DOPO
         }
