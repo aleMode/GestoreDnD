@@ -13,12 +13,8 @@
 
     </style>
 
-    <style name="Base.Theme.GestoreDnD.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="Base_toolbar">
+        <item name="android:background">@color/primary</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
     </style>
-
-    <style name="Base.Theme.GestoreDnD.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Base.Theme.GestoreDnD.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

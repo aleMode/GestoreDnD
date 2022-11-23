@@ -13,27 +13,9 @@
         android:theme="@style/Base.Theme.GestoreDnD"
         tools:targetApi="31">
         <activity
-            android:name=".BeginActivity"
+            android:name=".MenuActivity"
             android:exported="false"
-            android:label="@string/title_activity_begin"
-            android:theme="@style/Base.Theme.GestoreDnD.NoActionBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Registration"
-            android:exported="false"
-            android:label="@string/title_activity_registration"
-            android:theme="@style/Base.Theme.GestoreDnD">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Login"
-            android:exported="false"
-            android:label="@string/title_activity_login"
+            android:label="@string/title_activity_menu_main"
             android:theme="@style/Base.Theme.GestoreDnD">
             <meta-data
                 android:name="android.app.lib_name"

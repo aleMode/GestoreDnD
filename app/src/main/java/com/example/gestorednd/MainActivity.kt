@@ -1,5 +1,6 @@
 package com.example.gestorednd
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         val regLog = findViewById<TextView>(R.id.txtSwap)
         //Swap per i fragment di registrazione e login
         regLog.setOnClickListener{
+            //temp
+            val intent = Intent(this@MainActivity, MenuActivity::class.java)
+            startActivity(intent)
+            //
+
             if(login) {
                 fm.beginTransaction().replace(R.id.fragmentContainerView, registerFragment).commit()
                 regLog.text = "Login"

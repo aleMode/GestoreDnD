@@ -1,0 +1,14 @@
+[
+    {
+        "name" : "tizio1",
+        "specie" : "umano",
+        "clss" : "boh",
+        "lvl" : 1
+    },
+    {
+        "name" : "tizio2",
+        "specie" : "umano",
+        "clss" : "boh",
+        "lvl" : 1
+    }
+]
