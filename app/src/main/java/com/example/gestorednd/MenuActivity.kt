@@ -1,5 +1,6 @@
 package com.example.gestorednd
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
@@ -36,8 +37,10 @@ class MenuActivity : AppCompatActivity() {
 
 
         chipCamps.setOnClickListener(){
-                fm.beginTransaction().replace(R.id.fragmentContainerView2, campFragment).commit()
-                txtTitle.text = "Campaigns"
+            val intent = Intent(this@MenuActivity, SheetActivity::class.java)
+            startActivity(intent)
+            //fm.beginTransaction().replace(R.id.fragmentContainerView2, campFragment).commit()
+            //txtTitle.text = "Campaigns"
         }
         chipChars.setOnClickListener(){
             fm.beginTransaction().replace(R.id.fragmentContainerView2, sheetFragment).commit()
