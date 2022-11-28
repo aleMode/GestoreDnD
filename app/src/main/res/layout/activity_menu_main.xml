@@ -26,7 +26,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/SettingMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -36,17 +36,17 @@
                 app:srcCompat="@drawable/ic_baseline_settings_24" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/mainTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-                app:layout_constraintEnd_toStartOf="@+id/imageView2"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintEnd_toStartOf="@+id/logoutMain"
+                app:layout_constraintStart_toEndOf="@+id/SettingMain"
                 app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/logoutMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
@@ -60,22 +60,47 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.chip.ChipGroup
+        android:id="@+id/selectChips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|center_horizontal"
+        android:layout_gravity="center"
         android:clipToPadding="true"
+        app:selectionRequired="false"
         app:singleSelection="true">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/sheetChip"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:singleLine="true" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/campaignChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/campaignChip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Campaigns"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/sheetChip"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/sheetChip"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="Characters"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/campaignChip"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -83,6 +108,7 @@
         android:id="@+id/fragmentContainerView2"
         android:name="com.example.gestorednd.ui.login.SheetFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_sheet" />
 
 </LinearLayout>
