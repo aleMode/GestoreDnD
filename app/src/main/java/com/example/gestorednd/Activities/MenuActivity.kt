@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.example.gestorednd.MainMenuFragments.CampaignsFragment
 import com.example.gestorednd.R
-import com.example.gestorednd.ui.login.SheetFragment
+import com.example.gestorednd.MainMenuFragments.SheetFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 

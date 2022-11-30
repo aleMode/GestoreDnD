@@ -1,5 +1,41 @@
 <resources>
 
+    <string name="app_name">DnD</string>
+    <string name="title_activity_sheet">Start</string>
+    <string name="title_activity_menu_main">Main Menu</string>
+    <string name="hello_first_fragment">Hello</string>
+    <string name="previous">prev</string>
+    <string name="next">next</string>
+    <string name="action_settings">action settings</string>
+    <string name="first_fragment_label">first fragment</string>
+    <string name="second_fragment_label">second fragment</string>
+
+    <string name="login_failed">Login failed</string>
+    <string name="invalid_username">Invalid username</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="ConfMail">Confirm e-mail</string>
+    <string name="ConfPsw">Confirm password</string>
+
+    <string name="Stats">Stats</string>
+    <string name="Ability">Ability</string>
+    <string name="Equip">Equip</string>
+    <string name="Spells">Spells</string>
+    <string name="Feats">Feats</string>
+
+    <string name="HP">HP</string>
+    <string name="HD">HD</string>
+    <string name="AC">AC</string>
+    <string name="Initiative">Initiative bonus</string>
+    <string name="Speed">Speed</string>
+    <string name="Proficiency">Proficiency</string>
+
+    <string name="Str">STR</string>
+    <string name="Dex">DEX</string>
+    <string name="Con">CON</string>
+    <string name="Int">INT</string>
+    <string name="Wis">WIS</string>
+    <string name="Cha">CHA</string>
+
     <string name="PswRecover">Forgot password?</string>
     <string name="Register">Create account</string>
     <string name="Login">Login</string>

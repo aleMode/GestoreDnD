@@ -1,4 +1,4 @@
-package com.example.gestorednd.ui.login
+package com.example.gestorednd.MainMenuFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

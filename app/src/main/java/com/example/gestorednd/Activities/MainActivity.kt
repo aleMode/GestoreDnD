@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         var login : Boolean = true
         val regLog = findViewById<TextView>(R.id.txtSwap)
+
         //Swap per i fragment di registrazione e login
         regLog.setOnClickListener{
             //temp
@@ -31,11 +32,11 @@ class MainActivity : AppCompatActivity() {
 
             if(login) {
                 fm.beginTransaction().replace(R.id.fragmentContainerView, registerFragment).commit()
-                regLog.text = "Login"
+                regLog.text = getString(R.string.Login)
             }
             else {
                 fm.beginTransaction().replace(R.id.fragmentContainerView, loginFragment).commit()
-                regLog.text = "Registrami"
+                regLog.text = getString(R.string.Register)
             }
             login = !login
         }

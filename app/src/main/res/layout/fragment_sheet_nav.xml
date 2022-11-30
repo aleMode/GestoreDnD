@@ -31,35 +31,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Stats" />
+                android:text="@string/Stats" />
 
             <Button
                 android:id="@+id/btnAbilities"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Ability" />
+                android:text="@string/Ability" />
 
             <Button
                 android:id="@+id/btnEquip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Equip" />
+                android:text="@string/Equip" />
 
             <Button
                 android:id="@+id/btnSpells"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Spells" />
+                android:text="@string/Spells" />
 
             <Button
                 android:id="@+id/btnOther"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Feats" />
+                android:text="@string/Feats" />
         </LinearLayout>
 
         <View
