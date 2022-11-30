@@ -1,18 +1,12 @@
-package com.example.gestorednd
+package com.example.gestorednd.Activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.gestorednd.databinding.ActivityMenuMainBinding
+import com.example.gestorednd.MainMenuFragments.CampaignsFragment
+import com.example.gestorednd.R
 import com.example.gestorednd.ui.login.SheetFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup

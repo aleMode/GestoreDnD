@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gestorednd.Characters
+import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.R
-import com.example.gestorednd.SheetListAdapter
+import com.example.gestorednd.Adapters.SheetListAdapter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

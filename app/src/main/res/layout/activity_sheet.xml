@@ -11,11 +11,11 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -60,14 +60,16 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navFragContainer"
-        android:name="com.example.gestorednd.SheetNavFragment"
+        android:name="com.example.gestorednd.MainMenuFragments.SheetNavFragment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_sheet_nav" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/sheetPortionContainer"
-        android:name="com.example.gestorednd.StatsFragment"
+        android:name="com.example.gestorednd.CharacterSheetFragments.StatsFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_stats" />
 
 </LinearLayout>

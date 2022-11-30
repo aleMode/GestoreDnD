@@ -13,7 +13,7 @@
         android:theme="@style/Base.Theme.GestoreDnD"
         tools:targetApi="31">
         <activity
-            android:name=".SheetActivity"
+            android:name=".Activities.SheetActivity"
             android:exported="false"
             android:label="@string/title_activity_sheet"
             android:theme="@style/Base.Theme.GestoreDnD.NoActionBar">
@@ -22,7 +22,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MenuActivity"
+            android:name=".Activities.MenuActivity"
             android:exported="false"
             android:label="@string/title_activity_menu_main"
             android:theme="@style/Base.Theme.GestoreDnD">
@@ -31,7 +31,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Base.Theme.GestoreDnD">

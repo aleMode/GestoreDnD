@@ -1,18 +1,19 @@
-package com.example.gestorednd
+package com.example.gestorednd.Adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import org.w3c.dom.Text
+import com.example.gestorednd.DataClasses.Characters
+import com.example.gestorednd.R
 
-class SheetListAdapter(private val charList : ArrayList<com.example.gestorednd.Characters>) : RecyclerView.Adapter<SheetListAdapter.MyViewHolder>() {
+class SheetListAdapter(private val charList : ArrayList<Characters>) : RecyclerView.Adapter<SheetListAdapter.MyViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.sheet_list_items,
+        val itemView = LayoutInflater.from(parent.context).inflate(
+            R.layout.sheet_list_items,
             parent, false)
         return MyViewHolder(itemView)
     }

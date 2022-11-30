@@ -1,15 +1,18 @@
-package com.example.gestorednd
+package com.example.gestorednd.Adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gestorednd.DataClasses.Campaigns
+import com.example.gestorednd.R
 
 class CampaignListAdapter(private val campList : ArrayList<Campaigns>) : RecyclerView.Adapter<CampaignListAdapter.MyViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.campaign_list_items,
+        val itemView = LayoutInflater.from(parent.context).inflate(
+            R.layout.campaign_list_items,
             parent, false)
         return MyViewHolder(itemView)
     }

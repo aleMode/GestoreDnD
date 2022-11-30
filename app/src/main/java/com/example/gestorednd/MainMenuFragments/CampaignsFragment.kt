@@ -1,4 +1,4 @@
-package com.example.gestorednd
+package com.example.gestorednd.MainMenuFragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gestorednd.Adapters.CampaignListAdapter
+import com.example.gestorednd.DataClasses.Campaigns
+import com.example.gestorednd.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

@@ -1,16 +1,13 @@
-package com.example.gestorednd
+package com.example.gestorednd.Activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.fragment.app.FragmentManager
-import com.example.gestorednd.databinding.ActivityMainBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.example.gestorednd.StartFragments.LoginFragment
+import com.example.gestorednd.R
+import com.example.gestorednd.StartFragments.RegistrationFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,14 +1,11 @@
-package com.example.gestorednd
+package com.example.gestorednd.Activities
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.gestorednd.databinding.ActivitySheetBinding
+import com.example.gestorednd.R
+import com.example.gestorednd.MainMenuFragments.SheetNavFragment
+import com.example.gestorednd.CharacterSheetFragments.StatsFragment
 
 class SheetActivity : AppCompatActivity() {
 
