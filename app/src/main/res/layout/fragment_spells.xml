@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CharacterSheetFragments.SpellsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="38dp">
+
+        <TextView
+            android:id="@+id/txtNewSpellName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView6"
+            app:layout_constraintStart_toStartOf="@+id/txtNewSpellLvl" />
+
+        <TextView
+            android:id="@+id/txtNewSpellLvl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="TextView"
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView7"
+            tools:layout_editor_absoluteX="74dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:editable="false"
+            android:text="@string/SpellName"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+            tools:layout_editor_absoluteX="6dp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_marginTop="16dp"
+            android:editable="false"
+            android:text="@string/SpellLvl"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/Add"
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            tools:layout_editor_absoluteX="29dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/Remove"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+            tools:layout_editor_absoluteX="248dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

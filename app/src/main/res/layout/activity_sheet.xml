@@ -60,7 +60,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navFragContainer"
-        android:name="com.example.gestorednd.MainMenuFragments.SheetNavFragment"
+        android:name="com.example.gestorednd.CharacterSheetFragments.SheetNavFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout="@layout/fragment_sheet_nav" />

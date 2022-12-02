@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.example.gestorednd.R
-import com.example.gestorednd.MainMenuFragments.SheetNavFragment
+import com.example.gestorednd.CharacterSheetFragments.SheetNavFragment
 import com.example.gestorednd.CharacterSheetFragments.StatsFragment
 
 class SheetActivity : AppCompatActivity() {

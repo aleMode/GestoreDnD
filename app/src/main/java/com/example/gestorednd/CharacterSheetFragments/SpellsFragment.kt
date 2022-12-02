@@ -1,4 +1,4 @@
-package com.example.gestorednd.MainMenuFragments
+package com.example.gestorednd.CharacterSheetFragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.gestorednd.R
 
-
-class SheetNavFragment : Fragment() {
+class SpellsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -20,7 +18,6 @@ class SheetNavFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sheet_nav, container, false)
+        return inflater.inflate(R.layout.fragment_spells, container, false)
     }
-
 }
