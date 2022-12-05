@@ -18,6 +18,6 @@ class FeatsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_equipment, container, false)
+        return inflater.inflate(R.layout.fragment_feats, container, false)
     }
 }

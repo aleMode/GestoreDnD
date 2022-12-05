@@ -1,120 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/txtItemBag"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/alt_light_primary"
-        android:backgroundTint="@color/alt_light_primary"
-        android:text="TextView"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnAddBag"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddBag"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnAddBag" />
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnAddBag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Add"
-        app:layout_constraintBottom_toBottomOf="@+id/btnRemoveBag"
-        app:layout_constraintEnd_toStartOf="@+id/btnRemoveBag"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txtItemBag"
-        app:layout_constraintTop_toTopOf="@+id/btnRemoveBag" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/Equipped"
+            android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/btnRemoveBag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Remove"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnAddBag"
-        tools:layout_editor_absoluteY="504dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lstEquipped"
+            android:layout_width="409dp"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/Equipped"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/lstEquipped"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        </androidx.recyclerview.widget.RecyclerView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lstEquipped"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        <Button
+            android:id="@+id/btnRemoveEquip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/Remove" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/Bag"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddEquip" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lstBag"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            <TextView
+                android:id="@+id/txtItemEquip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/alt_light_primary"
+                android:backgroundTint="@color/alt_light_primary"
+                android:hint="New item name"
+                android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/btnRemoveEquip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Remove"
-        app:layout_constraintBottom_toBottomOf="@+id/btnAddEquip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnAddEquip"
-        app:layout_constraintTop_toTopOf="@+id/btnAddEquip" />
+            <Button
+                android:id="@+id/btnAddEquip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/Add" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/btnAddEquip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Add"
-        app:layout_constraintBottom_toBottomOf="@+id/txtItemEquip"
-        app:layout_constraintEnd_toStartOf="@+id/btnRemoveEquip"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txtItemEquip"
-        app:layout_constraintTop_toTopOf="@+id/txtItemEquip" />
+        <View
+            android:id="@+id/divider8"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
-    <TextView
-        android:id="@+id/txtItemEquip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/alt_light_primary"
-        android:backgroundTint="@color/alt_light_primary"
-        android:text="TextView"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddEquip"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="237dp" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_margin="5dp"
+            android:text="@string/Bag"
+            android:textSize="16sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lstBag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/btnRemoveBag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Remove" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtItemBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/alt_light_primary"
+                android:backgroundTint="@color/alt_light_primary"
+                android:gravity="center"
+                android:hint="New item name"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnAddBag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/Add" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

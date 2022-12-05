@@ -6,341 +6,416 @@
     android:layout_height="match_parent"
     tools:context=".CharacterSheetFragments.AbilityFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtKnowledge2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintTop_toTopOf="@+id/txtKnowledge"
-            tools:layout_editor_absoluteX="330dp" />
+            android:gravity="center|center_horizontal">
 
-        <TextView
-            android:id="@+id/txtPerception2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtMedicine2"
-            app:layout_constraintTop_toTopOf="@+id/txtPerception" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtStealth2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtPerception2"
-            app:layout_constraintTop_toTopOf="@+id/txtStealth" />
+                <TextView
+                    android:id="@+id/txtStr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_marginTop="16dp"
+                    android:editable="false"
+                    android:text="@string/Str"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtSurvival2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtStealth2"
-            app:layout_constraintTop_toTopOf="@+id/txtSurvival" />
+                <TextView
+                    android:id="@+id/txtDex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_marginTop="16dp"
+                    android:editable="false"
+                    android:text="@string/Dex"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtMedicine2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtKnowledge2"
-            app:layout_constraintTop_toTopOf="@+id/txtMedicine" />
+                <TextView
+                    android:id="@+id/txtCon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_marginTop="16dp"
+                    android:editable="false"
+                    android:text="@string/Con"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtAcrobatics2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtArcana2"
-            app:layout_constraintTop_toTopOf="@+id/txtAcrobatics" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtAthletics2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtDeception2"
-            app:layout_constraintTop_toTopOf="@+id/txtAthletics" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtDeception2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtInsight2"
-            app:layout_constraintTop_toTopOf="@+id/txtDeception" />
+                <TextView
+                    android:id="@+id/txtStrVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:inputType="numberSigned"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtInsight2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintTop_toTopOf="@+id/txtInsight"
-            tools:layout_editor_absoluteX="117dp" />
+                <TextView
+                    android:id="@+id/txtDexVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:inputType="numberSigned"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtArcana2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtAthletics2"
-            app:layout_constraintTop_toTopOf="@+id/txtArcana" />
+                <TextView
+                    android:id="@+id/txtConVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:inputType="numberSigned"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtStrVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:hint="0"
-            android:inputType="numberSigned"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/txtDexVal"
-            app:layout_constraintStart_toEndOf="@+id/txtStr"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtDexVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="0"
-            android:inputType="numberSigned"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtStrVal"
-            app:layout_constraintTop_toTopOf="@+id/txtDex" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtConVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="0"
-            android:inputType="numberSigned"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtDexVal"
-            app:layout_constraintTop_toTopOf="@+id/txtCon" />
+                <TextView
+                    android:id="@+id/txtInt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:editable="false"
+                    android:text="@string/Int"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtIntVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:hint="0"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/txtWisVal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+                <TextView
+                    android:id="@+id/txtWis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:editable="false"
+                    android:text="@string/Wis"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtWisVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="0"
-            android:inputType="numberSigned"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtIntVal"
-            app:layout_constraintTop_toTopOf="@+id/txtWis" />
+                <TextView
+                    android:id="@+id/txtCha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:editable="false"
+                    android:text="@string/Cha"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtChaVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="0"
-            android:inputType="numberSigned"
-            android:text="TextView"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/txtWisVal"
-            app:layout_constraintTop_toTopOf="@+id/txtCha" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtStr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:editable="false"
-            android:text="@string/Str"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/txtDex"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtDex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:text="@string/Dex"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/txtCon"
-            app:layout_constraintEnd_toEndOf="@+id/txtStr"
-            app:layout_constraintTop_toBottomOf="@+id/txtStr"
-            app:layout_constraintVertical_bias="0.5" />
+                <TextView
+                    android:id="@+id/txtChaVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:inputType="numberSigned"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtCon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:text="@string/Con"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/divider5"
-            app:layout_constraintEnd_toEndOf="@+id/txtDex"
-            app:layout_constraintTop_toBottomOf="@+id/txtDex"
-            app:layout_constraintVertical_bias="0.5" />
+                <TextView
+                    android:id="@+id/txtIntVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtInt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:editable="false"
-            android:text="@string/Int"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/txtWis"
-            app:layout_constraintEnd_toStartOf="@+id/txtIntVal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+                <TextView
+                    android:id="@+id/txtWisVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:inputType="numberSigned"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtCha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:text="@string/Cha"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtWis"
-            app:layout_constraintTop_toTopOf="@+id/txtConVal" />
-
-        <TextView
-            android:id="@+id/txtWis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:text="@string/Wis"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtInt"
-            app:layout_constraintTop_toTopOf="@+id/txtDexVal" />
+        </LinearLayout>
 
         <View
             android:id="@+id/divider5"
-            android:layout_width="409dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="148dp" />
+            android:background="?android:attr/listDivider" />
 
-        <TextView
-            android:id="@+id/txtAcrobatics"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Acrobatics"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="194dp" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/txtArcana"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/Arcana"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtAcrobatics"
-            app:layout_constraintTop_toBottomOf="@+id/txtAcrobatics" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtAthletics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/Athletics"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtArcana"
-            app:layout_constraintTop_toBottomOf="@+id/txtArcana" />
+                <TextView
+                    android:id="@+id/txtAcrobatics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Acrobatics"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtSurvival"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Survival"
-            android:textSize="16sp"
-            app:layout_constraintTop_toTopOf="@+id/txtInsight2"
-            tools:layout_editor_absoluteX="246dp" />
+                <TextView
+                    android:id="@+id/txtInsight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Insight"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtStealth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Stealth"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtSurvival"
-            app:layout_constraintTop_toTopOf="@+id/txtDeception2" />
+                <TextView
+                    android:id="@+id/txtDeception"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Deception"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtPerception"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Perception"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtStealth"
-            app:layout_constraintTop_toTopOf="@+id/txtAthletics2" />
+                <TextView
+                    android:id="@+id/txtAthletics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Athletics"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtMedicine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Medicine"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtPerception"
-            app:layout_constraintTop_toTopOf="@+id/txtArcana2" />
+                <TextView
+                    android:id="@+id/txtArcana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Arcana"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtKnowledge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Knowledge"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtMedicine"
-            app:layout_constraintTop_toTopOf="@+id/txtAcrobatics2" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="18dp"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtInsight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/Insight"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtDeception"
-            app:layout_constraintTop_toBottomOf="@+id/txtDeception" />
+                <TextView
+                    android:id="@+id/txtDeception2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtDeception"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/Deception"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/txtAthletics"
-            app:layout_constraintTop_toBottomOf="@+id/txtAthletics" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/txtAcrobatics2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtAthletics2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtInsight2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtArcana2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtStealth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Stealth"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtPerception"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Perception"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtKnowledge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Knowledge"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtMedicine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Medicine"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtSurvival"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Survival"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtPerception2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtMedicine2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtKnowledge2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtSurvival2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtStealth2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </FrameLayout>
