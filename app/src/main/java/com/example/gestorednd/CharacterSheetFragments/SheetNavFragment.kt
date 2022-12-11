@@ -6,14 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.viewpager2.adapter.FragmentViewHolder
 import com.example.gestorednd.Activities.SheetActivity
-import com.example.gestorednd.MainMenuFragments.SheetFragment
 import com.example.gestorednd.R
-import com.example.gestorednd.SheetSwapper
+import com.example.gestorednd.Interfaces.SheetSwapper
 
 
 class SheetNavFragment : Fragment() {
