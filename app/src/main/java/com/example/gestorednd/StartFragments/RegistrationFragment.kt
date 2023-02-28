@@ -1,12 +1,14 @@
 package com.example.gestorednd.StartFragments
 
 import android.os.Bundle
+import android.text.SpannableString
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -48,19 +50,17 @@ class RegistrationFragment() : Fragment() {
         register.setOnClickListener {
             if (email_pattern.matcher(email.text).matches()){
                 if(password_pattern.matcher(password.text).matches()){
-                    if(email.text == emailConf.text) {
-                        if(password.text == passwordConf.text) {
+                    if(email.text.trim() == emailConf.text.trim()) {
+                        if(password.text.trim() == passwordConf.text.trim()) {
                             auth.createUserWithEmailAndPassword(
-                                email.text as String,
-                                password.text as String
+                                SpannableString(email.text.trim()).toString(),
+                                SpannableString(password.text.trim()).toString()
                             ).addOnCompleteListener(requireActivity()) { task ->
                                 if (task.isSuccessful) {
-                                    view.findViewById<TextView>(R.id.txtError).text = ""
-                                    //Sign in success, update UI with the signed-in user's
-                                    //      information
-                                    //Log.d(TAG, "createUserWithEmail:success")
-                                    //val user = auth.currentUser
-                                    //updateUI(user)
+                                    // Create a new Toast object with the message you want to display
+                                    Toast.makeText(activity, "Hello, world!",
+                                        Toast.LENGTH_SHORT).show();
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     // Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -71,7 +71,7 @@ class RegistrationFragment() : Fragment() {
                             }
                         }else{view.findViewById<TextView>(R.id.txtError).text = "Password diverse"}
                     }else{view.findViewById<TextView>(R.id.txtError).text = "Indirizzi email" +
-                            " diversi" }
+                            " diversi"}
                 }else{view.findViewById<TextView>(R.id.txtError).text = "Password deve contenere " +
                         "almeno " + "una lettera minuscola, maiuscola e un numero"}
             }else{view.findViewById<TextView>(R.id.txtError).text = "Indirizzo email non valido"}

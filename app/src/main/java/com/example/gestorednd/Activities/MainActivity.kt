@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         //Swap per i fragment di registrazione e login
         regLog.setOnClickListener{
             //temp
-            val intent = Intent(this@MainActivity, MenuActivity::class.java)
-            startActivity(intent)
+            //val intent = Intent(this@MainActivity, MenuActivity::class.java)
+            //startActivity(intent)
             //
 
             if(login) {

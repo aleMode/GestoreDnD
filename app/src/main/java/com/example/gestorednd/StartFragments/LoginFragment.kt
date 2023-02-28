@@ -1,5 +1,6 @@
 package com.example.gestorednd.StartFragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import com.example.gestorednd.Activities.MenuActivity
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -33,15 +36,17 @@ class LoginFragment() : Fragment() {
         val email = view.findViewById<TextView>(R.id.txtEmail)
         val password = view.findViewById<TextView>(R.id.txtPwd)
         val btnLogin = view.findViewById<Button>(R.id.btnLogin)
+
         btnLogin.setOnClickListener {
             auth.signInWithEmailAndPassword(
-                email.text.toString(),
-                password.text.toString()
+                email.text.trim().toString(),
+                password.text.trim().toString()
             ).addOnCompleteListener(requireActivity()){ task ->
                 if(task.isSuccessful) {
-
+                    val intent = Intent(context, MenuActivity::class.java)
+                    startActivity(intent)
                 }else {
-
+                    view.findViewById<TextView>(R.id.txtErrorLogin).text = "Password o mail errate"
                 }
             }
         }
