@@ -18,18 +18,16 @@ class MainActivity : AppCompatActivity() {
         val fm : FragmentManager = supportFragmentManager
         val loginFragment = LoginFragment()
         val registerFragment = RegistrationFragment()
-        fm.beginTransaction().add(R.id.fragmentContainerView, loginFragment).commit()
+        fm.beginTransaction().add(R.id.fragmentContainerView, loginFragment).addToBackStack(null).commit()
+        //questi due swap servono a correggere un problema grafico di hint che non spariscono
+        fm.beginTransaction().replace(R.id.fragmentContainerView, registerFragment).commit()
+        fm.beginTransaction().replace(R.id.fragmentContainerView, loginFragment).commit()
 
         var login : Boolean = true
         val regLog = findViewById<TextView>(R.id.txtSwap)
 
         //Swap per i fragment di registrazione e login
         regLog.setOnClickListener{
-            //temp
-            //val intent = Intent(this@MainActivity, MenuActivity::class.java)
-            //startActivity(intent)
-            //
-
             if(login) {
                 fm.beginTransaction().replace(R.id.fragmentContainerView, registerFragment).commit()
                 regLog.text = getString(R.string.Login)

@@ -10,21 +10,20 @@
     tools:context=".StartFragments.LoginFragment">
 
     <EditText
-        android:id="@+id/txtPwd"
+        android:id="@+id/txtPwdLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:editable="true"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailLogin" />
 
     <EditText
-        android:id="@+id/txtEmail"
+        android:id="@+id/txtEmailLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
@@ -57,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPwd" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPwdLogin" />
 
     <TextView
         android:id="@+id/txtForgot"
@@ -80,6 +79,6 @@
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPwd" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPwdLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

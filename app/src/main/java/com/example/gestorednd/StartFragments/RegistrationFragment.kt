@@ -28,10 +28,7 @@ class RegistrationFragment() : Fragment() {
         auth = Firebase.auth //Initialize Firebase Auth
 
         var register = view.findViewById<Button>(R.id.btnLogin);
-        var email = view.findViewById<TextView>(R.id.txtEmail)
-        var emailConf = view.findViewById<TextView>(R.id.txtEmailConf)
-        var password = view.findViewById<TextView>(R.id.txtPwd)
-        var passwordConf = view.findViewById<TextView>(R.id.txtPwdConf)
+
         val email_pattern = Pattern.compile(
             "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                     "\\@" +
@@ -48,6 +45,11 @@ class RegistrationFragment() : Fragment() {
         )
 
         register.setOnClickListener {
+            var email = view.findViewById<TextView>(R.id.txtEmail)
+            var emailConf = view.findViewById<TextView>(R.id.txtEmailConf)
+            var password = view.findViewById<TextView>(R.id.txtPwd)
+            var passwordConf = view.findViewById<TextView>(R.id.txtPwdConf)
+
             if (email_pattern.matcher(email.text).matches()){
                 if(password_pattern.matcher(password.text).matches()){
                     if(email.text.trim() == emailConf.text.trim()) {

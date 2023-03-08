@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import com.example.gestorednd.Activities.MenuActivity
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
@@ -33,21 +32,26 @@ class LoginFragment() : Fragment() {
             // INSERISCI PAGINA DOPO
         }
 
-        val email = view.findViewById<TextView>(R.id.txtEmail)
-        val password = view.findViewById<TextView>(R.id.txtPwd)
         val btnLogin = view.findViewById<Button>(R.id.btnLogin)
 
         btnLogin.setOnClickListener {
-            auth.signInWithEmailAndPassword(
-                email.text.trim().toString(),
-                password.text.trim().toString()
-            ).addOnCompleteListener(requireActivity()){ task ->
-                if(task.isSuccessful) {
-                    val intent = Intent(context, MenuActivity::class.java)
-                    startActivity(intent)
-                }else {
-                    view.findViewById<TextView>(R.id.txtErrorLogin).text = "Password o mail errate"
+            val email = view.findViewById<TextView>(R.id.txtEmailLogin).text.trim().toString()
+            val password = view.findViewById<TextView>(R.id.txtPwdLogin).text.trim().toString()
+            val error = view.findViewById<TextView>(R.id.txtErrorLogin)
+
+            if(email != "" && password != ""){
+                auth.signInWithEmailAndPassword(
+                    email, password
+                ).addOnCompleteListener(requireActivity()){ task ->
+                    if(task.isSuccessful) {
+                        val intent = Intent(context, MenuActivity::class.java)
+                        startActivity(intent)
+                    }else {
+                        error.text = "Password o mail errate"
+                    }
                 }
+            }else{
+                error.text = "Inserire email e password"
             }
         }
 
