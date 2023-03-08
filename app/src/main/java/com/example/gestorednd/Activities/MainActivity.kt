@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import com.example.gestorednd.StartFragments.LoginFragment
 import com.example.gestorednd.R
 import com.example.gestorednd.StartFragments.RegistrationFragment
@@ -17,11 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         val fm : FragmentManager = supportFragmentManager
         val loginFragment = LoginFragment()
-        val registerFragment = RegistrationFragment()
         fm.beginTransaction().add(R.id.fragmentContainerView, loginFragment).addToBackStack(null).commit()
-        //questi due swap servono a correggere un problema grafico di hint che non spariscono
-        fm.beginTransaction().replace(R.id.fragmentContainerView, registerFragment).commit()
-        fm.beginTransaction().replace(R.id.fragmentContainerView, loginFragment).commit()
 
         var login : Boolean = true
         val regLog = findViewById<TextView>(R.id.txtSwap)
@@ -29,11 +27,15 @@ class MainActivity : AppCompatActivity() {
         //Swap per i fragment di registrazione e login
         regLog.setOnClickListener{
             if(login) {
-                fm.beginTransaction().replace(R.id.fragmentContainerView, registerFragment).commit()
+                val newReg = RegistrationFragment()
+                fm.beginTransaction().replace(R.id.fragmentContainerView, newReg).addToBackStack(null).commit()
+
                 regLog.text = getString(R.string.Login)
             }
             else {
-                fm.beginTransaction().replace(R.id.fragmentContainerView, loginFragment).commit()
+                val newLog = LoginFragment()
+                fm.beginTransaction().replace(R.id.fragmentContainerView, newLog).addToBackStack(null).commit()
+
                 regLog.text = getString(R.string.Register)
             }
             login = !login
