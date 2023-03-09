@@ -19,7 +19,11 @@ class MainActivity : AppCompatActivity() {
 
         val fm : FragmentManager = supportFragmentManager
         val loginFragment = LoginFragment()
+        val regFragment = RegistrationFragment()
         fm.beginTransaction().add(R.id.fragmentContainerView, loginFragment).addToBackStack(null).commit()
+        //questo serve per uno strano bug visivo con gli hint delle caselle di testo a cui non ho
+        //trovato alcuna soluzione o documentazione
+        fm.beginTransaction().replace(R.id.fragmentContainerView, loginFragment).addToBackStack(null).commit()
 
         var login : Boolean = true
         val regLog = findViewById<TextView>(R.id.txtSwap)
