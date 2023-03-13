@@ -35,23 +35,16 @@ class SheetFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.sheetView)
         recyclerView.layoutManager = layoutManager
-        adapter = SheetListAdapter(initial())
+        adapter = SheetListAdapter(initial()) //uso dell'adapter ad hoc
         recyclerView.adapter = adapter
     }
 
     private fun initial(): ArrayList<Characters> {
-        /*charList = arrayListOf<Characters>()
-
-        for (i in 1..100) {
-            val pers = Characters("antonio $i", "umano", "fuffa", i)
-            charList.add(pers)
-        }
-
-
-
+        /*
         var directory : File = File(".${File.pathSeparator}characters")
         directory.mkdirs()
-        val file = File(directory, "characters.txt")*/
+        val file = File(directory, "characters.txt")
+        */
 
         val jsonString = context?.assets?.open("characters.json")?.bufferedReader().use {
             it?.readText()
