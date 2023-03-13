@@ -41,7 +41,7 @@ class LoginFragment() : Fragment() {
 
             if(email != "" && password != ""){
                 auth.signInWithEmailAndPassword(
-                    email, password
+                        email, password
                 ).addOnCompleteListener(requireActivity()){ task ->
                     if(task.isSuccessful) {
                         val intent = Intent(context, MenuActivity::class.java)

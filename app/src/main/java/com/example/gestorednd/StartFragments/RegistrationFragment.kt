@@ -1,5 +1,6 @@
 package com.example.gestorednd.StartFragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.view.LayoutInflater
@@ -9,8 +10,10 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.gestorednd.Activities.MenuActivity
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -31,6 +34,7 @@ class RegistrationFragment() : Fragment() {
         var emailConf = view.findViewById<TextView>(R.id.txtEmailConf)
         var password = view.findViewById<TextView>(R.id.txtPwd)
         var passwordConf = view.findViewById<TextView>(R.id.txtPwdConf)
+        var error = view.findViewById<TextView>(R.id.txtError)
 
         auth = Firebase.auth //Initialize Firebase Auth
         val database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -54,34 +58,50 @@ class RegistrationFragment() : Fragment() {
         )
 
         register.setOnClickListener {
+            error.text = ""
 
-            if (email_pattern.matcher(email.text).matches()){
-                if(password_pattern.matcher(password.text).matches()){
-                    if(email.text.trim() == emailConf.text.trim()) {
-                        if(password.text.trim() == passwordConf.text.trim()) {
+            val emailTxt = SpannableString(email.text.trim()).toString()
+            val passTxt = SpannableString(password.text.trim()).toString()
+            val emailConfTxt = SpannableString(emailConf.text.trim()).toString()
+            val passConfTxt = SpannableString(passwordConf.text.trim()).toString()
+
+            if (email_pattern.matcher(emailTxt).matches()){
+                if(password_pattern.matcher(passTxt).matches()){
+
+                    if(emailTxt == emailConfTxt) {
+                        if(passTxt == passConfTxt) {
                             auth.createUserWithEmailAndPassword(
-                                SpannableString(email.text.trim()).toString(),
-                                SpannableString(password.text.trim()).toString()
+                                emailTxt, passTxt
                             ).addOnCompleteListener(requireActivity()) { task ->
                                 if (task.isSuccessful) {
-                                    val currentUser = auth.currentUser
-                                    val currentUserDb = ref.child(currentUser?.uid!!)
-                                    currentUserDb.child("userName").setValue("pierino")
-
+                                    auth.signInWithEmailAndPassword(emailTxt, passTxt)
+                                        .addOnCompleteListener(requireActivity()){ task ->
+                                            if(task.isSuccessful) {
+                                                val intent = Intent(context, MenuActivity::class.java)
+                                                startActivity(intent)
+                                            }else {
+                                                Toast.makeText(context, getText(R.string.AuthFail),
+                                                    Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                    /*potenziale upgrade con impostazione di username
+                                    val user = FirebaseAuth.getInstance().currentUser
+                                    val profileUpdates = UserProfileChangeRequest.Builder()
+                                        .setDisplayName("pierino").build()
+                                    user?.updateProfile(profileUpdates)*/
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     // Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                    //Toast.makeText(baseContext, "Authentication failed.",
-                                    //Toast.LENGTH_SHORT).show()
-                                    //updateUI(null)
+                                    Toast.makeText(context, getText(R.string.RegFail),
+                                    Toast.LENGTH_SHORT).show()
                                 }
                             }
-                        }else{view.findViewById<TextView>(R.id.txtError).text = "Password diverse"}
-                    }else{view.findViewById<TextView>(R.id.txtError).text = "Indirizzi email" +
-                            " diversi"}
-                }else{view.findViewById<TextView>(R.id.txtError).text = "Password deve contenere " +
-                        "almeno " + "una lettera minuscola, maiuscola e un numero"}
-            }else{view.findViewById<TextView>(R.id.txtError).text = "Indirizzo email non valido"}
+                        }else{error.text = "Password diverse"}
+                    }else{error.text = "Indirizzi email" + " diversi"}
+
+                }else{error.text = "Password deve contenere almeno una lettera minuscola, una " +
+                        "maiuscola e un numero"}
+            }else{error.text = "Indirizzo email non valido"}
 
         }
         return view
