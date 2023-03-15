@@ -135,16 +135,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtChaVal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:editable="true"
-                    android:hint="-"
-                    android:inputType="numberSigned"
-                    android:textSize="16sp" />
-
-                <TextView
                     android:id="@+id/txtIntVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -155,6 +145,16 @@
 
                 <TextView
                     android:id="@+id/txtWisVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:inputType="numberSigned"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtChaVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -194,26 +194,6 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtInsight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="5dp"
-                    android:text="@string/Insight"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/txtDeception"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="5dp"
-                    android:text="@string/Deception"
-                    android:textSize="16sp" />
-
-                <TextView
                     android:id="@+id/txtAthletics"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -232,6 +212,28 @@
                     android:layout_marginRight="5dp"
                     android:text="@string/Arcana"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtDeception"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Deception"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtInsight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/Insight"
+                    android:textSize="16sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -239,17 +241,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="18dp"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtDeception2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="16dp"
-                    android:editable="true"
-                    android:hint="-"
-                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtAcrobatics2"
@@ -274,17 +265,6 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtInsight2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="16dp"
-                    android:editable="true"
-                    android:hint="-"
-                    android:textSize="16sp" />
-
-                <TextView
                     android:id="@+id/txtArcana2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -294,32 +274,36 @@
                     android:editable="true"
                     android:hint="-"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtDeception2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtInsight2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtStealth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="5dp"
-                    android:text="@string/Stealth"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/txtPerception"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="5dp"
-                    android:text="@string/Perception"
-                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtKnowledge"
@@ -342,12 +326,33 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/txtPerception"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Perception"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtStealth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/Stealth"
+                    android:textSize="16sp" />
+
+                <TextView
                     android:id="@+id/txtSurvival"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/Survival"
                     android:textSize="16sp" />
 
@@ -359,7 +364,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtPerception2"
+                    android:id="@+id/txtKnowledge2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -381,18 +386,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtKnowledge2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="5dp"
-                    android:editable="true"
-                    android:hint="-"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/txtSurvival2"
+                    android:id="@+id/txtPerception2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -412,6 +406,19 @@
                     android:editable="true"
                     android:hint="-"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtSurvival2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="16dp"
+                    android:editable="true"
+                    android:hint="-"
+                    android:textSize="16sp" />
+
             </LinearLayout>
 
         </LinearLayout>

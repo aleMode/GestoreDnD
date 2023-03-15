@@ -4,5 +4,21 @@
   "ac" : 15,
   "speed" : 30,
   "profBonus" : 3,
-  "initBonus" : 2
+  "initBonus" : 2,
+  "str" : 2,
+  "dex" : 3,
+  "con" : 4,
+  "int" : 5,
+  "wis" : 6,
+  "cha" : 7,
+  "acr" : 10,
+  "ath" : 11,
+  "arc" : 12,
+  "dec" : 13,
+  "ins" : 14,
+  "kno" : 15,
+  "med" : 16,
+  "per" : 17,
+  "ste" : 18,
+  "sur" : 19
 }

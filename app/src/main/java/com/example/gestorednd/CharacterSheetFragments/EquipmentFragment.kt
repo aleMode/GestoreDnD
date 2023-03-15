@@ -5,10 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.example.gestorednd.Activities.SheetActivity
+import com.example.gestorednd.DataClasses.Pg
 import com.example.gestorednd.R
 
 
 class EquipmentFragment : Fragment() {
+
+    var chosen : Pg = SheetActivity.chosenChar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,6 +26,17 @@ class EquipmentFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_equipment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<TextView>(R.id.txtHpV).text = chosen.hp.toString()
+        view.findViewById<TextView>(R.id.txtHdV).text = chosen.lvl.toString()
+        view.findViewById<TextView>(R.id.txtCaV).text = chosen.ac.toString()
+        view.findViewById<TextView>(R.id.txtSpeedV).text = chosen.speed.toString()
+        view.findViewById<TextView>(R.id.txtProfV).text = chosen.profBonus.toString()
+        view.findViewById<TextView>(R.id.txtInitV).text = chosen.initBonus.toString()
     }
 
 }

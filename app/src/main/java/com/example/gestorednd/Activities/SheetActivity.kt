@@ -37,8 +37,8 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
     }
 
     override fun swapStats() {
-        //val statFrag = StatsFragment(pers.hp)
-        //fm.beginTransaction().replace(R.id.sheetPortionContainer, statFrag).commit()
+        val statFrag = StatsFragment()
+        fm.beginTransaction().replace(R.id.sheetPortionContainer, statFrag).commit()
     }
     override fun swapAbility() {
         val abilFrag = AbilityFragment()
