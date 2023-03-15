@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.example.gestorednd.CharacterSheetFragments.*
 import com.example.gestorednd.DataClasses.Characters
+import com.example.gestorednd.DataClasses.Pg
 import com.example.gestorednd.R
 import com.example.gestorednd.Interfaces.SheetSwapper
 import com.google.gson.Gson
@@ -16,6 +17,9 @@ import org.w3c.dom.Text
 
 class SheetActivity : AppCompatActivity(), SheetSwapper {
 
+    companion object {
+        var chosenChar = Pg()
+    }
     val fm : FragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +30,9 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         fm.beginTransaction().add(R.id.navFragContainer, navFrag).commit()
 
         val index = intent.getStringExtra("pos")
-        val pers = initialize(index)
+        chosenChar = initialize(index)
 
-        val statsFrag = StatsFragment(pers.hp)
+        val statsFrag = StatsFragment()
         fm.beginTransaction().replace(R.id.sheetPortionContainer, statsFrag).commit()
     }
 
@@ -53,7 +57,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         fm.beginTransaction().replace(R.id.sheetPortionContainer, featFrag).commit()
     }
 
-    fun initialize(pos : String?) : Characters {
+    fun initialize(pos : String?) : Pg {
         var index = pos?.toInt()
 
         val jsonString = assets?.open("characters.json")?.bufferedReader().use {
@@ -63,7 +67,15 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
         var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
 
-        return chars[index!!]
+        val fileName : String = chars[index!!].name + ".json"
+        val jsonString2 = assets?.open(fileName)?.bufferedReader().use {
+            it?.readText()
+        }
+        val gson2 = Gson()
+        val chosenPg = object : TypeToken<Pg>() {}.type
+        var chosenPg2 : Pg = gson2.fromJson(jsonString2, chosenPg)
+
+        return chosenPg2
     }
 
 

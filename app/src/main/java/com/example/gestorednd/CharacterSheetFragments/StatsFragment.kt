@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.gestorednd.Activities.SheetActivity
+import com.example.gestorednd.DataClasses.Pg
 import com.example.gestorednd.R
 import org.w3c.dom.Text
 
-class StatsFragment(var hp : Int = 0) : Fragment() {
+class StatsFragment() : Fragment() {
+
+    var chosen : Pg = SheetActivity.chosenChar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +30,12 @@ class StatsFragment(var hp : Int = 0) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.txtHpV).text = hp.toString()
+        view.findViewById<TextView>(R.id.txtHpV).text = chosen.hp.toString()
+        view.findViewById<TextView>(R.id.txtHdV).text = chosen.lvl.toString()
+        view.findViewById<TextView>(R.id.txtCaV).text = chosen.ac.toString()
+        view.findViewById<TextView>(R.id.txtSpeedV).text = chosen.speed.toString()
+        view.findViewById<TextView>(R.id.txtProfV).text = chosen.profBonus.toString()
+        view.findViewById<TextView>(R.id.txtInitV).text = chosen.initBonus.toString()
     }
 
 }

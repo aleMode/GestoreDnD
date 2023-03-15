@@ -1,0 +1,8 @@
+{
+  "lvl" : 1,
+  "hp" : 10,
+  "ac" : 15,
+  "speed" : 30,
+  "profBonus" : 3,
+  "initBonus" : 2
+}
