@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gestorednd.DataClasses.Equipment
 import com.example.gestorednd.R
 
-class EquipmentListAdapter(private val equipList : ArrayList<Equipment>) : RecyclerView.Adapter<EquipmentListAdapter.MyViewHolder>() {
+class EquipmentListAdapter(private val equipList : ArrayList<String>) : RecyclerView.Adapter<EquipmentListAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -19,7 +19,7 @@ class EquipmentListAdapter(private val equipList : ArrayList<Equipment>) : Recyc
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = equipList[position]
-        holder.item.text = currentItem.item
+        holder.item.text = currentItem
     }
 
     override fun getItemCount(): Int {

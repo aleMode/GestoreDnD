@@ -25,8 +25,9 @@ data class Pg(
     var med : Int = 0,
     var per : Int = 0,
     var ste : Int = 0,
-    var sur : Int = 0
+    var sur : Int = 0,
 
+    var equip : ArrayList<String> = arrayListOf("zaino")
 
 ) {
 }
