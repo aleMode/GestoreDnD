@@ -20,5 +20,9 @@
   "med" : 16,
   "per" : 17,
   "ste" : 18,
-  "sur" : 19
+  "sur" : 19,
+  "equip": [
+    "zaino",
+    "piero"
+  ]
 }

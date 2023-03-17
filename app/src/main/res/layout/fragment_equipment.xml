@@ -22,7 +22,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lstEquipped"
-            android:layout_width="409dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </androidx.recyclerview.widget.RecyclerView>
@@ -41,12 +41,12 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
+            <EditText
                 android:id="@+id/txtItemEquip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/alt_light_primary"
-                android:backgroundTint="@color/alt_light_primary"
+                android:editable="true"
                 android:hint="New item name"
                 android:textSize="16sp" />
 
@@ -91,13 +91,13 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
+            <EditText
                 android:id="@+id/txtItemBag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/alt_light_primary"
-                android:backgroundTint="@color/alt_light_primary"
+                android:editable="true"
                 android:gravity="center"
                 android:hint="New item name"
                 android:textSize="16sp" />

@@ -46,10 +46,21 @@ class EquipmentFragment : Fragment() {
         recyclerView.adapter = adapter
 
         val addEquip = view.findViewById<Button>(R.id.btnAddEquip)
+        addEquip.setOnClickListener {
+            val itemName = view.findViewById<TextView>(R.id.txtItemEquip)
+            SheetActivity.chosenChar.equip.add(itemName.text.toString())
+            chosen = SheetActivity.chosenChar
+            adapter = EquipmentListAdapter(chosen.equip)
+            recyclerView.adapter = adapter
+        }
         val removeEquip = view.findViewById<Button>(R.id.btnRemoveEquip)
+        removeEquip.setOnClickListener {
+            val position = adapter.selectedItem
+            if(position != null)
+                adapter.deleteItem()
+        }
         val addBag = view.findViewById<Button>(R.id.btnAddBag)
         val removeBag = view.findViewById<Button>(R.id.btnRemoveBag)
-
 
     }
 
