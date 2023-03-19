@@ -75,7 +75,7 @@ class EquipmentFragment : Fragment() {
         //bottoni per zaino
         val addBag = view.findViewById<Button>(R.id.btnAddBag)
         addBag.setOnClickListener {
-            val itemName = view.findViewById<TextView>(R.id.txtItemBag)
+            val itemName =  view.findViewById<TextView>(R.id.txtItemBag)
             SheetActivity.chosenChar.bag.add(itemName.text.toString())
             adapterBag = EquipmentListAdapter(chosen.bag)
             recyclerViewBag.adapter = adapterBag
