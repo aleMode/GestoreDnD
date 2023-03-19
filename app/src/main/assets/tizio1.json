@@ -24,5 +24,10 @@
   "equip": [
     "zaino",
     "piero"
+  ],
+  "bag": [
+    "borraccia",
+    "cannuccia",
+    "boh"
   ]
 }
