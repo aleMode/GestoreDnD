@@ -38,7 +38,10 @@ class EquipmentListAdapter(private val equipList : ArrayList<String>) : Recycler
 
     //Selezione di un item
     fun toggleSelection(position: Int) {
-        selectedItem = position
+        if (selectedItem == position)
+            selectedItem = null
+        else
+            selectedItem = position
         notifyDataSetChanged()
     }
 

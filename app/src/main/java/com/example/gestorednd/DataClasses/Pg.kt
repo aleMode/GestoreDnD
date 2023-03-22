@@ -29,11 +29,15 @@ class Pg(
 
     var equip : ArrayList<String> = arrayListOf(),
     var bag : ArrayList<String> = arrayListOf(),
-    var spellArray : ArrayList<Pair<String, Int>> = arrayListOf()
+    var spellArray : ArrayList<Pair<String, Int>> = arrayListOf(),
+    var featArray : ArrayList<Pair<String, String>> = arrayListOf()
 
 ) {
     var spells = spellArray.map {
         Spells(it.first, it.second)
     } as ArrayList<Spells>
 
+    var feats = featArray.map{
+        Feats(it.first, it.second)
+    } as ArrayList<Feats>
 }

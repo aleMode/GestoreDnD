@@ -36,7 +36,10 @@ class SpellListAdapter(private var spellList : ArrayList<Spells>) : RecyclerView
 
     //Selezione di un item
     fun toggleSelection(position: Int) {
-        selectedItem = position
+        if (selectedItem == position)
+            selectedItem = null
+        else
+            selectedItem = position
         notifyDataSetChanged()
     }
 

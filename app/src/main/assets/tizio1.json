@@ -32,5 +32,8 @@
   ],
   "spells": [
     {"name":"uno","lvl": 1}
+  ],
+  "feats": [
+    {"name": "primofeat","description": "per babbage la macchina svolge un algoritmo generico su numeri"}
   ]
 }

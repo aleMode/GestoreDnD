@@ -15,14 +15,14 @@
         android:padding="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView2"
+            android:id="@+id/lstFeats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btnRemoveFeat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Remove" />
@@ -42,7 +42,7 @@
                 android:hint="New feat name" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnAddFeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
