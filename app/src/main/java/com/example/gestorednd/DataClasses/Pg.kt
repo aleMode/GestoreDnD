@@ -1,7 +1,7 @@
 package com.example.gestorednd.DataClasses
 
 //classe con personaggio dettagliato
-data class Pg(
+class Pg(
     var lvl: Int = 0,
     var hp : Int = 0,
     var ac : Int = 0,
@@ -28,7 +28,12 @@ data class Pg(
     var sur : Int = 0,
 
     var equip : ArrayList<String> = arrayListOf(),
-    var bag : ArrayList<String> = arrayListOf()
+    var bag : ArrayList<String> = arrayListOf(),
+    var spellArray : ArrayList<Pair<String, Int>> = arrayListOf()
 
 ) {
+    var spells = spellArray.map {
+        Spells(it.first, it.second)
+    } as ArrayList<Spells>
+
 }

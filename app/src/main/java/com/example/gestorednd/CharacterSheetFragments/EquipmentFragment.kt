@@ -66,10 +66,11 @@ class EquipmentFragment : Fragment() {
         }
         val removeEquip = view.findViewById<Button>(R.id.btnRemoveEquip)
         removeEquip.setOnClickListener {
-            adapterEquip = EquipmentListAdapter(chosen.equip)
             val position = adapterEquip.selectedItem
             if(position != null)
                 adapterEquip.deleteItem()
+            adapterEquip.selectedItem = null
+            adapterEquip = EquipmentListAdapter(chosen.equip)
         }
 
         //bottoni per zaino
@@ -83,10 +84,11 @@ class EquipmentFragment : Fragment() {
         }
         val removeBag = view.findViewById<Button>(R.id.btnRemoveBag)
         removeBag.setOnClickListener {
-            adapterBag = EquipmentListAdapter(chosen.bag)
             val position = adapterBag.selectedItem
             if(position != null)
                 adapterBag.deleteItem()
+            adapterBag.selectedItem = null
+            adapterBag = EquipmentListAdapter(chosen.bag)
         }
     }
 

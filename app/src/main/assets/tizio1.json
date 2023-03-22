@@ -29,5 +29,8 @@
     "borraccia",
     "cannuccia",
     "boh"
+  ],
+  "spells": [
+    {"name":"uno","lvl": 1}
   ]
 }

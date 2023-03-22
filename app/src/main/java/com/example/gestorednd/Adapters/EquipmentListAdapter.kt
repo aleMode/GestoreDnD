@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestorednd.DataClasses.Equipment
+import com.example.gestorednd.DataClasses.Spells
 import com.example.gestorednd.R
 
 class EquipmentListAdapter(private val equipList : ArrayList<String>) : RecyclerView.Adapter<EquipmentListAdapter.MyViewHolder>() {

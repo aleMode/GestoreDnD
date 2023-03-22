@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/lstSpells"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
@@ -30,7 +30,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnRemoveSpell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Remove" />
@@ -42,7 +42,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <TextView
+                <EditText
                     android:id="@+id/txtNewSpellName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                     android:hint="New spell name"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtNewSpellLvl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnAddSpell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Add" />
