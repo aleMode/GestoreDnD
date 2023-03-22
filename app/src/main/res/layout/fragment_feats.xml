@@ -25,26 +25,39 @@
             android:id="@+id/btnRemoveFeat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:text="@string/Remove" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
 
-            <TextView
+            <EditText
                 android:id="@+id/txtNewFeatName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@color/alt_light_primary"
                 android:hint="New feat name" />
+
+            <EditText
+                android:id="@+id/txtNewFeatDescr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/alt_light_primary"
+                android:hint="New feat description" />
 
             <Button
                 android:id="@+id/btnAddFeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:text="@string/Add" />
 

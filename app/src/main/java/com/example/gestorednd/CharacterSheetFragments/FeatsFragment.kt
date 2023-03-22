@@ -24,7 +24,6 @@ class FeatsFragment : Fragment() {
     private lateinit var adapterFeats: FeatListAdapter
     private lateinit var recyclerViewFeats : RecyclerView
     var chosen : Pg = SheetActivity.chosenChar
-    var featDescr : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,40 +50,22 @@ class FeatsFragment : Fragment() {
 
         //bottoni per feats
         val addFeat = view.findViewById<Button>(R.id.btnAddFeat)
-
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Enter Text")
-
-        val input = EditText(context)
-        builder.setView(input)
-
-        builder.setPositiveButton("OK") { dialog, which ->
-            val enteredText = input.text.trim().toString()
-            featDescr = enteredText
-        }
-
-        builder.setNegativeButton("Cancel") { dialog, which ->
-            dialog.cancel()
-            featDescr = ""
-        }
-
-        val dialog = builder.create()
-
         addFeat.setOnClickListener {
             val featName = view.findViewById<TextView>(R.id.txtNewFeatName)
-            dialog.show()
-            if(featDescr.isEmpty()) {
-                SheetActivity.chosenChar.feats.add(
-                    Feats(featName.text.toString(), featDescr)
-                )
-                featName.text = ""
-            }else{
+            val featDescr = view.findViewById<TextView>(R.id.txtNewFeatDescr)
+            if(featDescr.text.trim().isEmpty()) {
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("Error")
                 builder.setMessage("The description is empty")
                 builder.setPositiveButton("OK") { dialog, which -> }
                 val dialog = builder.create()
                 dialog.show()
+            }else{
+                SheetActivity.chosenChar.feats.add(
+                    Feats(featName.text.toString(), featDescr.text.toString())
+                )
+                featName.text = ""
+                featDescr.text = ""
             }
             adapterFeats = FeatListAdapter(chosen.feats)
             recyclerViewFeats.adapter = adapterFeats
@@ -98,5 +79,7 @@ class FeatsFragment : Fragment() {
             adapterFeats.selectedItem = null
             adapterFeats = FeatListAdapter(chosen.feats)
         }
+
+
     }
 }
