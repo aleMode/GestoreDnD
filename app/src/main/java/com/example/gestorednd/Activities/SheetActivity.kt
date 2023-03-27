@@ -17,10 +17,10 @@ import org.w3c.dom.Text
 
 class SheetActivity : AppCompatActivity(), SheetSwapper {
 
+    val fm : FragmentManager = supportFragmentManager
     companion object {
         var chosenChar = Pg()
     }
-    val fm : FragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

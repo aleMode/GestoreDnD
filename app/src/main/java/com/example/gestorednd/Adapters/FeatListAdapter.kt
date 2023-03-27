@@ -21,7 +21,7 @@ class FeatListAdapter(private var featList : ArrayList<Feats>) : RecyclerView.Ad
         return MyViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) { 
         val currentItem = featList[position]
         holder.name.text = currentItem.name
         holder.descr.text = currentItem.description
