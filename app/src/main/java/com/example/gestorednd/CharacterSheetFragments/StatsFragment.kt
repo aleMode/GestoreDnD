@@ -30,12 +30,49 @@ class StatsFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.txtHpV).text = chosen.hp.toString()
-        view.findViewById<TextView>(R.id.txtHdV).text = chosen.lvl.toString()
-        view.findViewById<TextView>(R.id.txtCaV).text = chosen.ac.toString()
-        view.findViewById<TextView>(R.id.txtSpeedV).text = chosen.speed.toString()
-        view.findViewById<TextView>(R.id.txtProfV).text = chosen.profBonus.toString()
-        view.findViewById<TextView>(R.id.txtInitV).text = chosen.initBonus.toString()
+        val hpVal = view.findViewById<TextView>(R.id.txtHpV)
+            hpVal.text = chosen.hp.toString()
+        hpVal.setOnFocusChangeListener { view, b -> //aggiorna i valori dopo il cambiamento
+            if(!b){
+                chosen.hp = Integer.parseInt(hpVal.text.toString())
+            }
+        }
+
+        val hdVal = view.findViewById<TextView>(R.id.txtHdV) //la vita segue i livelli, non editabile
+            hdVal.text = chosen.lvl.toString()
+
+        val caVal = view.findViewById<TextView>(R.id.txtCaV)
+            caVal.text = chosen.ac.toString()
+        caVal.setOnFocusChangeListener { view, b ->
+            if(!b){
+                chosen.ac = Integer.parseInt(caVal.text.toString())
+            }
+        }
+
+        val speedVal = view.findViewById<TextView>(R.id.txtSpeedV)
+            speedVal.text = chosen.speed.toString()
+        speedVal.setOnFocusChangeListener { view, b ->
+            if(!b){
+                chosen.speed = Integer.parseInt(speedVal.text.toString())
+            }
+        }
+
+        val profVal = view.findViewById<TextView>(R.id.txtProfV)
+            profVal.text = chosen.profBonus.toString()
+        profVal.setOnFocusChangeListener { view, b ->
+            if(!b){
+                chosen.profBonus = Integer.parseInt(profVal.text.toString())
+            }
+        }
+
+        val initVal = view.findViewById<TextView>(R.id.txtInitV)
+            initVal.text = chosen.initBonus.toString()
+        initVal.setOnFocusChangeListener { view, b ->
+            if(!b){
+                chosen.initBonus = Integer.parseInt(initVal.text.toString())
+            }
+        }
+
     }
 
 }
