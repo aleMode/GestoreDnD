@@ -23,7 +23,6 @@ class FeatsFragment : Fragment() {
 
     private lateinit var adapterFeats: FeatListAdapter
     private lateinit var recyclerViewFeats : RecyclerView
-    var chosen : Pg = SheetActivity.chosenChar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +44,7 @@ class FeatsFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         recyclerViewFeats = view.findViewById(R.id.lstFeats)
         recyclerViewFeats.layoutManager = layoutManager
-        adapterFeats = FeatListAdapter(chosen.feats) //uso dell'adapter ad hoc
+        adapterFeats = FeatListAdapter(SheetActivity.chosenChar.feats) //uso dell'adapter ad hoc
         recyclerViewFeats.adapter = adapterFeats
 
         //bottoni per feats
@@ -67,7 +66,7 @@ class FeatsFragment : Fragment() {
                 featName.text = ""
                 featDescr.text = ""
             }
-            adapterFeats = FeatListAdapter(chosen.feats)
+            adapterFeats = FeatListAdapter(SheetActivity.chosenChar.feats)
             recyclerViewFeats.adapter = adapterFeats
         }
 
@@ -77,7 +76,7 @@ class FeatsFragment : Fragment() {
             if(position != null)
                 adapterFeats.deleteItem()
             adapterFeats.selectedItem = null
-            adapterFeats = FeatListAdapter(chosen.feats)
+            adapterFeats = FeatListAdapter(SheetActivity.chosenChar.feats)
         }
 
 

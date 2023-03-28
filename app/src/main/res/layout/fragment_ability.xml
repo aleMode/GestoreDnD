@@ -25,30 +25,34 @@
                 <TextView
                     android:id="@+id/txtStr"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_margin="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
                     android:editable="false"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Str"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtDex"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_margin="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_weight="1"
                     android:editable="false"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Dex"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtCon"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_margin="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
                     android:editable="false"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Con"
                     android:textSize="16sp" />
 
@@ -61,7 +65,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <EditText
                     android:id="@+id/txtStrVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,7 +75,7 @@
                     android:inputType="numberSigned"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtDexVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,7 +85,7 @@
                     android:inputType="numberSigned"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtConVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,28 +105,34 @@
 
                 <TextView
                     android:id="@+id/txtInt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_margin="16dp"
+                    android:layout_weight="1"
                     android:editable="false"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Int"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtWis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_margin="16dp"
+                    android:layout_weight="1"
                     android:editable="false"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Wis"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtCha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_margin="16dp"
+                    android:layout_weight="1"
                     android:editable="false"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Cha"
                     android:textSize="16sp" />
 
@@ -134,7 +144,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <EditText
                     android:id="@+id/txtIntVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -143,7 +153,7 @@
                     android:hint="-"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtWisVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -153,7 +163,7 @@
                     android:inputType="numberSigned"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtChaVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -180,57 +190,67 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txtAcrobatics"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Acrobatics"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtAthletics"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Athletics"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtArcana"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Arcana"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtDeception"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Deception"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtInsight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Insight"
                     android:textSize="16sp" />
 
@@ -242,7 +262,7 @@
                 android:layout_marginRight="18dp"
                 android:orientation="vertical">
 
-                <TextView
+                <EditText
                     android:id="@+id/txtAcrobatics2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -253,7 +273,7 @@
                     android:hint="-"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtAthletics2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -264,7 +284,7 @@
                     android:hint="-"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtArcana2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -275,7 +295,7 @@
                     android:hint="-"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtDeception2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -286,7 +306,7 @@
                     android:hint="-"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtInsight2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -302,57 +322,68 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txtKnowledge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Knowledge"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtMedicine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Medicine"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtPerception"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Perception"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtStealth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Stealth"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtSurvival"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
                     android:text="@string/Survival"
                     android:textSize="16sp" />
 
@@ -363,7 +394,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <EditText
                     android:id="@+id/txtKnowledge2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -374,7 +405,7 @@
                     android:hint="-"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtMedicine2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -385,7 +416,7 @@
                     android:hint="-"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtPerception2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -396,7 +427,7 @@
                     android:hint="-"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtStealth2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -407,7 +438,7 @@
                     android:hint="-"
                     android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/txtSurvival2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

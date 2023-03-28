@@ -23,7 +23,6 @@ class EquipmentFragment : Fragment() {
     private lateinit var adapterBag : EquipmentListAdapter
     private lateinit var recyclerViewEquip : RecyclerView
     private lateinit var recyclerViewBag : RecyclerView
-    var chosen : Pg = SheetActivity.chosenChar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +44,14 @@ class EquipmentFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         recyclerViewEquip = view.findViewById(R.id.lstEquipped)
         recyclerViewEquip.layoutManager = layoutManager
-        adapterEquip = EquipmentListAdapter(chosen.equip) //uso dell'adapter ad hoc
+        adapterEquip = EquipmentListAdapter(SheetActivity.chosenChar.equip) //uso dell'adapter ad hoc
         recyclerViewEquip.adapter = adapterEquip
 
         //iniializzazione della lista degli elementi nello zaino
         val layoutManager2 = LinearLayoutManager(context)
         recyclerViewBag = view.findViewById(R.id.lstBag)
         recyclerViewBag.layoutManager = layoutManager2
-        adapterBag = EquipmentListAdapter(chosen.bag) //uso dell'adapter ad hoc
+        adapterBag = EquipmentListAdapter(SheetActivity.chosenChar.bag) //uso dell'adapter ad hoc
         recyclerViewBag.adapter = adapterBag
 
         //bottoni per equip
@@ -60,7 +59,7 @@ class EquipmentFragment : Fragment() {
         addEquip.setOnClickListener {
             val itemName = view.findViewById<TextView>(R.id.txtItemEquip)
             SheetActivity.chosenChar.equip.add(itemName.text.toString())
-            adapterEquip = EquipmentListAdapter(chosen.equip)
+            adapterEquip = EquipmentListAdapter(SheetActivity.chosenChar.equip)
             recyclerViewEquip.adapter = adapterEquip
             itemName.text=""
         }
@@ -70,7 +69,7 @@ class EquipmentFragment : Fragment() {
             if(position != null)
                 adapterEquip.deleteItem()
             adapterEquip.selectedItem = null
-            adapterEquip = EquipmentListAdapter(chosen.equip)
+            adapterEquip = EquipmentListAdapter(SheetActivity.chosenChar.equip)
         }
 
         //bottoni per zaino
@@ -78,7 +77,7 @@ class EquipmentFragment : Fragment() {
         addBag.setOnClickListener {
             val itemName =  view.findViewById<TextView>(R.id.txtItemBag)
             SheetActivity.chosenChar.bag.add(itemName.text.toString())
-            adapterBag = EquipmentListAdapter(chosen.bag)
+            adapterBag = EquipmentListAdapter(SheetActivity.chosenChar.bag)
             recyclerViewBag.adapter = adapterBag
             itemName.text = ""
         }
@@ -88,7 +87,7 @@ class EquipmentFragment : Fragment() {
             if(position != null)
                 adapterBag.deleteItem()
             adapterBag.selectedItem = null
-            adapterBag = EquipmentListAdapter(chosen.bag)
+            adapterBag = EquipmentListAdapter(SheetActivity.chosenChar.bag)
         }
     }
 

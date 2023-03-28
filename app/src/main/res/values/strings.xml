@@ -70,6 +70,12 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
+    <string name="popupName">Name</string>
+    <string name="popupSpec">Species</string>
+    <string name="popupClass">Class</string>
+    <string name="popupLvl">Lvl</string>
+    <string name="popupAdd">Add</string>
+
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>

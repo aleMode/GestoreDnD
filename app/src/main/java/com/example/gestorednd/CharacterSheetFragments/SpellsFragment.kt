@@ -20,7 +20,6 @@ class SpellsFragment : Fragment() {
 
     private lateinit var adapterSpells: SpellListAdapter
     private lateinit var recyclerViewSpells : RecyclerView
-    var chosen : Pg = SheetActivity.chosenChar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +40,7 @@ class SpellsFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         recyclerViewSpells = view.findViewById(R.id.lstSpells)
         recyclerViewSpells.layoutManager = layoutManager
-        adapterSpells = SpellListAdapter(chosen.spells) //uso dell'adapter ad hoc
+        adapterSpells = SpellListAdapter(SheetActivity.chosenChar.spells) //uso dell'adapter ad hoc
         recyclerViewSpells.adapter = adapterSpells
 
         //bottoni per spells
@@ -52,7 +51,7 @@ class SpellsFragment : Fragment() {
             val spellLvl = view.findViewById<TextView>(R.id.txtNewSpellLvl)
             SheetActivity.chosenChar.spells.add(Spells(spellName.text.toString(),
                 Integer.parseInt(spellLvl.text.toString())!!))
-            adapterSpells = SpellListAdapter(chosen.spells)
+            adapterSpells = SpellListAdapter(SheetActivity.chosenChar.spells)
             recyclerViewSpells.adapter = adapterSpells
             spellName.text = ""
             spellLvl.text = ""
@@ -64,7 +63,7 @@ class SpellsFragment : Fragment() {
             if(position != null)
                 adapterSpells.deleteItem()
             adapterSpells.selectedItem = null
-            adapterSpells = SpellListAdapter(chosen.spells)
+            adapterSpells = SpellListAdapter(SheetActivity.chosenChar.spells)
         }
     }
 }

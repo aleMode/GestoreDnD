@@ -13,8 +13,6 @@ import org.w3c.dom.Text
 
 class StatsFragment() : Fragment() {
 
-    var chosen : Pg = SheetActivity.chosenChar
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -31,45 +29,45 @@ class StatsFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val hpVal = view.findViewById<TextView>(R.id.txtHpV)
-            hpVal.text = chosen.hp.toString()
+            hpVal.text = SheetActivity.chosenChar.hp.toString()
         hpVal.setOnFocusChangeListener { view, b -> //aggiorna i valori dopo il cambiamento
             if(!b){
-                chosen.hp = Integer.parseInt(hpVal.text.toString())
+                SheetActivity.chosenChar.hp = Integer.parseInt(hpVal.text.toString())
             }
         }
 
         val hdVal = view.findViewById<TextView>(R.id.txtHdV) //la vita segue i livelli, non editabile
-            hdVal.text = chosen.lvl.toString()
+            hdVal.text = SheetActivity.chosenChar.lvl.toString()
 
         val caVal = view.findViewById<TextView>(R.id.txtCaV)
-            caVal.text = chosen.ac.toString()
+            caVal.text = SheetActivity.chosenChar.ac.toString()
         caVal.setOnFocusChangeListener { view, b ->
             if(!b){
-                chosen.ac = Integer.parseInt(caVal.text.toString())
+                SheetActivity.chosenChar.ac = Integer.parseInt(caVal.text.toString())
             }
         }
 
         val speedVal = view.findViewById<TextView>(R.id.txtSpeedV)
-            speedVal.text = chosen.speed.toString()
+            speedVal.text = SheetActivity.chosenChar.speed.toString()
         speedVal.setOnFocusChangeListener { view, b ->
             if(!b){
-                chosen.speed = Integer.parseInt(speedVal.text.toString())
+                SheetActivity.chosenChar.speed = Integer.parseInt(speedVal.text.toString())
             }
         }
 
         val profVal = view.findViewById<TextView>(R.id.txtProfV)
-            profVal.text = chosen.profBonus.toString()
+            profVal.text = SheetActivity.chosenChar.profBonus.toString()
         profVal.setOnFocusChangeListener { view, b ->
             if(!b){
-                chosen.profBonus = Integer.parseInt(profVal.text.toString())
+                SheetActivity.chosenChar.profBonus = Integer.parseInt(profVal.text.toString())
             }
         }
 
         val initVal = view.findViewById<TextView>(R.id.txtInitV)
-            initVal.text = chosen.initBonus.toString()
+            initVal.text = SheetActivity.chosenChar.initBonus.toString()
         initVal.setOnFocusChangeListener { view, b ->
             if(!b){
-                chosen.initBonus = Integer.parseInt(initVal.text.toString())
+                SheetActivity.chosenChar.initBonus = Integer.parseInt(initVal.text.toString())
             }
         }
 
