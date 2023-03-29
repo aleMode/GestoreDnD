@@ -72,36 +72,38 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
 
     fun initialize(pos : String?) : Pg {
         var index = pos?.toInt()
-
+        var fileName = "characters.json"
+        var file = File(filesDir, fileName)
+        val jsonString = file.readText()
+        val gson = Gson()
+        val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
+        var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
+        /*
         val jsonString = assets?.open("characters.json")?.bufferedReader().use {
             it?.readText()
         }
         val gson = Gson()
         val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
         var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
+        */
 
         namePgSel = chars[index!!].name
-        val fileName : String = "$namePgSel.json"
-        val jsonString2 = assets?.open(fileName)?.bufferedReader().use {
-            it?.readText()
-        }
+        fileName = "$namePgSel.json"
+        file = File(filesDir, fileName)
+        val jsonString2 = file.readText()
         val gson2 = Gson()
         val chosenPg = object : TypeToken<Pg>() {}.type
-        var chosenPg2 : Pg = gson2.fromJson(jsonString2, chosenPg)
-
+        var chosenPg2 : Pg
+        try {
+            chosenPg2 = gson2.fromJson(jsonString2, chosenPg)
+        }catch(e: Exception){
+            //se il file è vuoto crea un personaggio nuovo
+            chosenPg2 = Pg()
+        }
         findViewById<TextView>(R.id.txtCharName).text = namePgSel
 
 
         return chosenPg2
-    }
-
-    //funzione necessaria per salvare il file asset nella memoria interna
-    fun copyAssetFileToInternalStorage(context: Context, assetFileName: String, destFileName: String) {
-        val inputStream = context.assets.open(assetFileName)
-        val outputStream = context.openFileOutput(destFileName, Context.MODE_PRIVATE)
-        inputStream.copyTo(outputStream)
-        inputStream.close()
-        outputStream.close()
     }
 
     fun save(){
@@ -110,9 +112,8 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
 
         //copia del contenuto del file json nello storage interno per poi compiarlo definitivamente
         val fileName : String = "$namePgSel.json"
-        copyAssetFileToInternalStorage(this, fileName, fileName)
         val file = File(getFilesDir(), fileName )
-        val writer = BufferedWriter(FileWriter(file, true))
+        val writer = BufferedWriter(FileWriter(file, false))
         writer.use {
             it.write(jsonString)
             it.newLine()

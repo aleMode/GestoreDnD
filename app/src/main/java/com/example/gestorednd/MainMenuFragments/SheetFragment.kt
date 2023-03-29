@@ -17,8 +17,10 @@ import com.example.gestorednd.R
 import com.example.gestorednd.Adapters.SheetListAdapter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.io.BufferedWriter
 import java.io.File
 import java.io.FileNotFoundException
+import java.io.FileWriter
 
 class SheetFragment : Fragment() {
 
@@ -46,7 +48,7 @@ class SheetFragment : Fragment() {
         recyclerView.adapter = adapter
 
         val btnNewChar = view.findViewById<Button>(R.id.btnNewChar)
-        btnNewChar.setOnClickListener { //popup per inserire roba del nuovo personaggio
+        btnNewChar.setOnClickListener { //popup per inserire roba il nuovo personaggio
             val dialog = Dialog(context!!)
             dialog.setContentView(R.layout.popup)
             val nameP = dialog.findViewById<EditText>(R.id.txtCharNamePop)
@@ -57,33 +59,49 @@ class SheetFragment : Fragment() {
             //creazione del personaggio alla conferma
             buttonAdd.setOnClickListener {
                 //aggiunta del nuovo personaggio alla lista
-                if(
-                    !nameP.text.toString().isEmpty()
-                    || !specP.text.toString().isEmpty()
-                    || !classP.text.toString().isEmpty()
-                    || Integer.parseInt(lvlP.text.toString()) != null
-                ) {
-                    val char = Characters(
-                        nameP.text.toString(),
-                        specP.text.toString(),
-                        classP.text.toString(),
-                        Integer.parseInt(lvlP.text.toString())
-                    )
-                    //creazione file del nuovo personaggio
-                    val filename = nameP.text.toString() + ".json"
-                    val file = File(context?.filesDir, filename)
-                    if(file.exists()){
-                        dialog.findViewById<TextView>(R.id.txtPopErr).text = "Error"
-                    }else {
-                        charList.add(char)
-                        adapter = SheetListAdapter(charList)
-                        recyclerView.adapter = adapter
+                try {
 
+                    if (
+                        !nameP.text.toString().isEmpty()
+                        || !specP.text.toString().isEmpty()
+                        || !classP.text.toString().isEmpty()
+                        || Integer.parseInt(lvlP.text.toString()) != null
+                    ) {
+                        val char = Characters(
+                            nameP.text.toString(),
+                            specP.text.toString(),
+                            classP.text.toString(),
+                            Integer.parseInt(lvlP.text.toString())
+                        )
+
+                        //creazione file del nuovo personaggio
+                        val filename = nameP.text.toString() + ".json"
+                        var file = File(context?.filesDir, filename)
+                        if (file.exists()) { //creazione file personaggio se il nome non è usato
+                            dialog.findViewById<TextView>(R.id.txtPopErr).text = "Error"
+                        } else {
+                            charList.add(char)
+                            adapter = SheetListAdapter(charList)
+                            recyclerView.adapter = adapter
+
+
+                            file.createNewFile()
+                        }
+                        //aggiornamento del file con la lista di personaggi
+                        file = File(context?.filesDir, "characters.json")
                         file.createNewFile()
+                        val writer = BufferedWriter(FileWriter(file, false))
+                        val gson = Gson()
+                        writer.use {
+                            it.write(gson.toJson(charList))
+                            it.newLine()
+                        }
+
+
+                    } else {
+                        dialog.findViewById<TextView>(R.id.txtPopErr).text = "Error"
                     }
-
-
-                }else{
+                }catch (e: Exception){
                     dialog.findViewById<TextView>(R.id.txtPopErr).text = "Error"
                 }
 
