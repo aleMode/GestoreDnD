@@ -2,23 +2,33 @@ package com.example.gestorednd.Activities
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
 import com.example.gestorednd.CharacterSheetFragments.*
 import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.DataClasses.Pg
 import com.example.gestorednd.R
 import com.example.gestorednd.Interfaces.SheetSwapper
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.w3c.dom.Text
 import java.io.BufferedWriter
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileWriter
 
 class SheetActivity : AppCompatActivity(), SheetSwapper {
@@ -111,14 +121,26 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         val jsonString = gson.toJson(chosenChar)
 
         //copia del contenuto del file json nello storage interno per poi compiarlo definitivamente
-        val fileName : String = "$namePgSel.json"
-        val file = File(getFilesDir(), fileName )
+        var fileName : String = "$namePgSel.json"
+        var file = File(getFilesDir(), fileName )
         val writer = BufferedWriter(FileWriter(file, false))
         writer.use {
             it.write(jsonString)
             it.newLine()
         }
 
+        val user = FirebaseAuth.getInstance().currentUser?.uid
+        val storageRef = Firebase.storage.reference
+        val myref = storageRef.child( "$user/characters.json")
+        file = File(filesDir, "characters.json")
+        val inputStream = FileInputStream(file)
+        myref.putStream(inputStream)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Operation successful!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Operation no!", Toast.LENGTH_SHORT).show()
+            }
     }
 
 
