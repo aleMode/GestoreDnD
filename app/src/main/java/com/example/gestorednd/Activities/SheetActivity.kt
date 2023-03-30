@@ -118,7 +118,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
 
     fun save(){
         val gson = Gson()
-        val jsonString = gson.toJson(chosenChar)
+        var jsonString = gson.toJson(chosenChar)
 
         //copia del contenuto del file json nello storage interno per poi compiarlo definitivamente
         var fileName : String = "$namePgSel.json"
@@ -131,6 +131,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
 
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
+
         val myref = storageRef.child( "$user/characters.json")
         file = File(filesDir, "characters.json")
         val inputStream = FileInputStream(file)
@@ -141,6 +142,24 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Operation no!", Toast.LENGTH_SHORT).show()
             }
+
+        //acquisisce il vettore dei personaggi per salvarli remotaemnte tutti
+        jsonString = file.readText()
+        val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
+        var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
+        for(pers in chars){ //upload di tutte le schede personaggio
+            val myref = storageRef.child( "$user/${pers.name}.json")
+            val file = File(filesDir, "${pers.name}.json")
+            val inputStream = FileInputStream(file)
+            myref.putStream(inputStream)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Operation successful!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, "Operation no!", Toast.LENGTH_SHORT).show()
+                }
+        }
+
     }
 
 
