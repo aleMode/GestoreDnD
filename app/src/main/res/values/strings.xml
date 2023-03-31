@@ -17,6 +17,7 @@
     <string name="invalid_password">Invalid password</string>
     <string name="ConfMail">Confirm e-mail</string>
     <string name="ConfPsw">Confirm password</string>
+    <string name="OffMode">Offline Mode</string>
 
     <string name="Stats">Stats</string>
     <string name="Ability">Ability</string>

@@ -2,16 +2,23 @@ package com.example.gestorednd.Activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.ViewTreeObserver
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.commit
 import com.example.gestorednd.StartFragments.LoginFragment
 import com.example.gestorednd.R
 import com.example.gestorednd.StartFragments.RegistrationFragment
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
+
+    companion object{
+        var offline = false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +54,13 @@ class MainActivity : AppCompatActivity() {
                 regLog.text = getString(R.string.Register)
             }
             login = !login
+        }
+
+        var txtOffline = findViewById<TextView>(R.id.txtOffline)
+        txtOffline.setOnClickListener{
+            MainActivity.offline = true
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
         }
 
     }

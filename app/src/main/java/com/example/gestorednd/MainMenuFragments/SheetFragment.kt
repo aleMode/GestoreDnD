@@ -11,10 +11,11 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gestorednd.Activities.SheetActivity
+import com.example.gestorednd.Activities.MainActivity
 import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.R
 import com.example.gestorednd.Adapters.SheetListAdapter
@@ -43,6 +44,20 @@ class SheetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //disavilità le icone di salvataggio cloud se si è in modalità ffline cosè che non siano
+        // cliccate per sbaglio
+        if(MainActivity.offline == true){
+            view.findViewById<ImageView>(R.id.icnSync).isClickable = false
+            view.findViewById<ImageView>(R.id.icnSync).isInvisible = true
+            view.findViewById<ImageView>(R.id.icnUpload).isClickable = false
+            view.findViewById<ImageView>(R.id.icnUpload).isInvisible = true
+        }else{
+            view.findViewById<ImageView>(R.id.icnSync).isClickable = true
+            view.findViewById<ImageView>(R.id.icnSync).isInvisible = false
+            view.findViewById<ImageView>(R.id.icnUpload).isClickable = true
+            view.findViewById<ImageView>(R.id.icnUpload).isInvisible = false
+        }
 
         val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.sheetView)
@@ -114,7 +129,7 @@ class SheetFragment : Fragment() {
             dialog.show()
         }
 
-        val btnUpload = view.findViewById<ImageView>(R.id.icnSave)
+        val btnUpload = view.findViewById<ImageView>(R.id.icnUpload)
         btnUpload.setOnClickListener{
             upload()
         }
