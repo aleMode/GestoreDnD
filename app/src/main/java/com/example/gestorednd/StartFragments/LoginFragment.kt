@@ -8,11 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.gestorednd.Activities.MenuActivity
+import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.io.File
+import java.io.FileInputStream
 
 
 class LoginFragment() : Fragment() {
@@ -29,7 +36,8 @@ class LoginFragment() : Fragment() {
         val currentUser = auth.currentUser      // Check if user is signed in (non-null) and update
                                                 //      UI accordingly.
         if(currentUser != null){
-            // INSERISCI PAGINA DOPO
+            val intent = Intent(context, MenuActivity::class.java)
+            startActivity(intent)
         }
 
         val btnLogin = view.findViewById<Button>(R.id.btnLogin)
@@ -57,4 +65,5 @@ class LoginFragment() : Fragment() {
 
         return view
     }
+
 }

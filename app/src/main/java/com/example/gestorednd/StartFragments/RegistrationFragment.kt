@@ -18,6 +18,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.File
+import java.io.FileInputStream
 import java.util.regex.Pattern
 
 class RegistrationFragment() : Fragment() {
@@ -75,20 +78,24 @@ class RegistrationFragment() : Fragment() {
                             ).addOnCompleteListener(requireActivity()) { task ->
                                 if (task.isSuccessful) {
                                     auth.signInWithEmailAndPassword(emailTxt, passTxt)
-                                        .addOnCompleteListener(requireActivity()){ task ->
-                                            if(task.isSuccessful) {
-                                                val intent = Intent(context, MenuActivity::class.java)
+                                        .addOnCompleteListener(requireActivity()) { task ->
+                                            if (task.isSuccessful) {
+                                                val intent =
+                                                    Intent(context, MenuActivity::class.java)
                                                 startActivity(intent)
-                                            }else {
-                                                Toast.makeText(context, getText(R.string.AuthFail),
-                                                    Toast.LENGTH_SHORT).show()
+                                            } else {
+                                                Toast.makeText(
+                                                    context, getText(R.string.AuthFail),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
                                             }
                                         }
-                                    /*potenziale upgrade con impostazione di username
-                                    val user = FirebaseAuth.getInstance().currentUser
-                                    val profileUpdates = UserProfileChangeRequest.Builder()
-                                        .setDisplayName("pierino").build()
-                                    user?.updateProfile(profileUpdates)*/
+
+                                    //creazione file con la lista dei personaggi
+                                    val file = File(context?.filesDir, "characters.json")
+                                    file.createNewFile()
+
+                                    /*potenziale upgrade con impostazione di username*/
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     // Log.w(TAG, "createUserWithEmail:failure", task.exception)

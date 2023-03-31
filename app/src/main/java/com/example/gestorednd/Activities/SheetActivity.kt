@@ -88,14 +88,6 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         val gson = Gson()
         val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
         var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
-        /*
-        val jsonString = assets?.open("characters.json")?.bufferedReader().use {
-            it?.readText()
-        }
-        val gson = Gson()
-        val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
-        var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
-        */
 
         namePgSel = chars[index!!].name
         fileName = "$namePgSel.json"
@@ -120,44 +112,13 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         val gson = Gson()
         var jsonString = gson.toJson(chosenChar)
 
-        //copia del contenuto del file json nello storage interno per poi compiarlo definitivamente
+        //copia del contenuto del file json nello storage interno
         var fileName : String = "$namePgSel.json"
-        var file = File(getFilesDir(), fileName )
+        var file = File(filesDir, fileName )
         val writer = BufferedWriter(FileWriter(file, false))
         writer.use {
             it.write(jsonString)
             it.newLine()
-        }
-
-        val user = FirebaseAuth.getInstance().currentUser?.uid
-        val storageRef = Firebase.storage.reference
-
-        val myref = storageRef.child( "$user/characters.json")
-        file = File(filesDir, "characters.json")
-        val inputStream = FileInputStream(file)
-        myref.putStream(inputStream)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Operation successful!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Operation no!", Toast.LENGTH_SHORT).show()
-            }
-
-        //acquisisce il vettore dei personaggi per salvarli remotaemnte tutti
-        jsonString = file.readText()
-        val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
-        var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
-        for(pers in chars){ //upload di tutte le schede personaggio
-            val myref = storageRef.child( "$user/${pers.name}.json")
-            val file = File(filesDir, "${pers.name}.json")
-            val inputStream = FileInputStream(file)
-            myref.putStream(inputStream)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Operation successful!", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(this, "Operation no!", Toast.LENGTH_SHORT).show()
-                }
         }
 
     }

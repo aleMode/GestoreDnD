@@ -20,10 +20,12 @@ class MainActivity : AppCompatActivity() {
         val fm : FragmentManager = supportFragmentManager
         val loginFragment = LoginFragment()
         val regFragment = RegistrationFragment()
-        fm.beginTransaction().add(R.id.fragmentContainerView, loginFragment).addToBackStack(null).commit()
+        fm.beginTransaction().add(R.id.fragmentContainerView, loginFragment)
+            .addToBackStack(null).commit()
         //questo serve per uno strano bug visivo con gli hint delle caselle di testo a cui non ho
         //trovato alcuna soluzione o documentazione
-        fm.beginTransaction().replace(R.id.fragmentContainerView, loginFragment).addToBackStack(null).commit()
+        fm.beginTransaction().replace(R.id.fragmentContainerView, loginFragment)
+            .addToBackStack(null).commit()
 
         var login : Boolean = true
         val regLog = findViewById<TextView>(R.id.txtSwap)
@@ -32,13 +34,15 @@ class MainActivity : AppCompatActivity() {
         regLog.setOnClickListener{
             if(login) {
                 val newReg = RegistrationFragment()
-                fm.beginTransaction().replace(R.id.fragmentContainerView, newReg).addToBackStack(null).commit()
+                fm.beginTransaction().replace(R.id.fragmentContainerView, newReg)
+                    .addToBackStack(null).commit()
 
                 regLog.text = getString(R.string.Login)
             }
             else {
                 val newLog = LoginFragment()
-                fm.beginTransaction().replace(R.id.fragmentContainerView, newLog).addToBackStack(null).commit()
+                fm.beginTransaction().replace(R.id.fragmentContainerView, newLog)
+                    .addToBackStack(null).commit()
 
                 regLog.text = getString(R.string.Register)
             }

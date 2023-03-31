@@ -8,19 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gestorednd.Activities.SheetActivity
 import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.R
 import com.example.gestorednd.Adapters.SheetListAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileWriter
+import java.io.*
 
 class SheetFragment : Fragment() {
 
@@ -110,6 +113,16 @@ class SheetFragment : Fragment() {
 
             dialog.show()
         }
+
+        val btnUpload = view.findViewById<ImageView>(R.id.icnSave)
+        btnUpload.setOnClickListener{
+            upload()
+        }
+
+        val btnSync = view.findViewById<ImageView>(R.id.icnSync)
+        btnSync.setOnClickListener{
+            sync()
+        }
     }
 
     private fun initial(): ArrayList<Characters> {
@@ -141,6 +154,74 @@ class SheetFragment : Fragment() {
 
         return chars
 
+    }
+
+    //salva in remoto i files dei personaggi
+    fun upload(){
+        val user = FirebaseAuth.getInstance().currentUser?.uid
+        val storageRef = Firebase.storage.reference
+
+        val myref = storageRef.child( "$user/characters.json")
+        var file = File(context?.filesDir, "characters.json")
+        val inputStream = FileInputStream(file)
+        myref.putStream(inputStream)
+            .addOnSuccessListener {
+                Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+            }
+
+        //acquisisce il vettore dei personaggi per salvarli remotaemnte tutti
+        var jsonString = file.readText()
+        val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
+        val gson = Gson()
+        var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
+        for(pers in chars) { //upload di tutte le schede personaggio
+            val myref = storageRef.child("$user/${pers.name}.json")
+            val file = File(context?.filesDir, "${pers.name}.json")
+            val inputStream = FileInputStream(file)
+            myref.putStream(inputStream)
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    fun sync(){
+        val user = FirebaseAuth.getInstance().currentUser?.uid
+        val storageRef = Firebase.storage.reference
+
+        val myref = storageRef.child( "$user/characters.json")
+        val file = File(context?.filesDir, "characters.json")
+        myref.getFile(file)
+            .addOnSuccessListener {
+                Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+            }
+        //crea un array con tutti i personaggi per scariarli
+        val jsonString = file.readText()
+        val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
+        val gson = Gson()
+        var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
+        for(pers in chars) { //upload di tutte le schede personaggio
+            val myref = storageRef.child("$user/${pers.name}.json")
+            val file = File(context?.filesDir, "${pers.name}.json")
+            myref.getFile(file)
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+                }
+        }
+
+        view?.invalidate()
     }
 
 }
