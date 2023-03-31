@@ -24,8 +24,9 @@ class SpellListAdapter(private var spellList : ArrayList<Spells>) : RecyclerView
         val currentItem = spellList[position]
         holder.name.text = currentItem.name
         holder.lvl.text = currentItem.lvl.toString()
+        //cambio colore per selezione
         if(position == selectedItem)
-            holder.itemView.setBackgroundColor(Color.BLUE)
+            holder.itemView.setBackgroundColor(Color.parseColor("#b1f2ff"))
         else
             holder.itemView.setBackgroundColor(Color.WHITE)
         holder.itemView.setOnClickListener {

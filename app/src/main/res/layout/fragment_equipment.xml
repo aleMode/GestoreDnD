@@ -48,6 +48,7 @@
                 android:background="@color/alt_light_primary"
                 android:editable="true"
                 android:hint="New item name"
+                android:inputType="text"
                 android:textSize="16sp" />
 
             <Button
@@ -100,6 +101,7 @@
                 android:editable="true"
                 android:gravity="center"
                 android:hint="New item name"
+                android:inputType="text"
                 android:textSize="16sp" />
 
             <Button

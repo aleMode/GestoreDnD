@@ -42,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@color/alt_light_primary"
-                android:hint="New feat name" />
+                android:hint="New feat name"
+                android:inputType="text" />
 
             <EditText
                 android:id="@+id/txtNewFeatDescr"
@@ -51,7 +52,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@color/alt_light_primary"
-                android:hint="New feat description" />
+                android:hint="New feat description"
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/btnAddFeat"

@@ -29,6 +29,7 @@ class AbilityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //statistiche e salvataggio quando vengono unfocussate nel vettore
         val strVal = view.findViewById<TextView>(R.id.txtStrVal)
             strVal.text = SheetActivity.chosenChar.str.toString()
         strVal.setOnFocusChangeListener { view, b -> //metodo per il salvataggio dei dati

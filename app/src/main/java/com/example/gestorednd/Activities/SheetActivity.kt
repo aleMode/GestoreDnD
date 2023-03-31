@@ -19,6 +19,8 @@ import java.io.FileWriter
 class SheetActivity : AppCompatActivity(), SheetSwapper {
 
     val fm : FragmentManager = supportFragmentManager
+
+    //personaggio correntemente visualizzato / da visalizzare
     lateinit var namePgSel : String
 
     companion object {
@@ -32,6 +34,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         val navFrag = SheetNavFragment()
         fm.beginTransaction().add(R.id.navFragContainer, navFrag).commit()
 
+        //ricezione della posizione del personaggio da selezionare
         val index = intent.getStringExtra("pos")
         chosenChar = initialize(index)
 
@@ -44,6 +47,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         }
     }
 
+    //funzioni dell'interfaccia per lo scambio di frammenti
     override fun swapStats() {
         val statFrag = StatsFragment()
         fm.beginTransaction().replace(R.id.sheetPortionContainer, statFrag).commit()
@@ -65,8 +69,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         fm.beginTransaction().replace(R.id.sheetPortionContainer, featFrag).commit()
     }
 
-    fun initialize(pos : String?) : Pg {
-        var index = pos?.toInt()
+    fun getCharacterList(): ArrayList<Characters> {
         var fileName = "characters.json"
         var file = File(filesDir, fileName)
         val jsonString = file.readText()
@@ -74,23 +77,41 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
         var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
 
-        namePgSel = chars[index!!].name
-        fileName = "$namePgSel.json"
-        file = File(filesDir, fileName)
-        val jsonString2 = file.readText()
-        val gson2 = Gson()
+        return chars
+    }
+
+    fun getPg(name : String) : Pg{
+        val fileName = "$namePgSel.json"
+        val file = File(filesDir, fileName)
+        val jsonString = file.readText()
+        val gson = Gson()
         val chosenPg = object : TypeToken<Pg>() {}.type
         var chosenPg2 : Pg
+
+        //prova a estrarre un personaggio o lo genera vuoto nel caso in cui sia statop creato
+        // solo il file (nuovo personaggio appena creato)
         try {
-            chosenPg2 = gson2.fromJson(jsonString2, chosenPg)
+            chosenPg2 = gson.fromJson(jsonString, chosenPg)
         }catch(e: Exception){
             //se il file è vuoto crea un personaggio nuovo
             chosenPg2 = Pg()
         }
-        findViewById<TextView>(R.id.txtCharName).text = namePgSel
-
 
         return chosenPg2
+    }
+
+    fun initialize(pos : String?) : Pg {
+        var index = pos?.toInt()
+
+        var chars = getCharacterList()
+
+        namePgSel = chars[index!!].name
+
+        val chosenPg = getPg(chars[index!!].name)
+
+        findViewById<TextView>(R.id.txtCharName).text = namePgSel
+
+        return chosenPg
     }
 
     fun save(){

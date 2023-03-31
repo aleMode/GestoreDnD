@@ -25,8 +25,9 @@ class FeatListAdapter(private var featList : ArrayList<Feats>) : RecyclerView.Ad
         val currentItem = featList[position]
         holder.name.text = currentItem.name
         holder.descr.text = currentItem.description
+        //cambio colore per selezione
         if(position == selectedItem)
-            holder.itemView.setBackgroundColor(Color.BLUE)
+            holder.itemView.setBackgroundColor(Color.parseColor("#b1f2ff"))
         else
             holder.itemView.setBackgroundColor(Color.WHITE)
         holder.itemView.setOnClickListener {

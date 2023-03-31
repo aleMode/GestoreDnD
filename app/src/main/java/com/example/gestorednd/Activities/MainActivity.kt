@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //Fragmentmanager per gestire i frammenti di login e registrazione
         val fm : FragmentManager = supportFragmentManager
         val loginFragment = LoginFragment()
         val regFragment = RegistrationFragment()
@@ -40,22 +41,17 @@ class MainActivity : AppCompatActivity() {
         //Swap per i fragment di registrazione e login
         regLog.setOnClickListener{
             if(login) {
-                val newReg = RegistrationFragment()
-                fm.beginTransaction().replace(R.id.fragmentContainerView, newReg)
-                    .addToBackStack(null).commit()
-
+                swapToReg(fm)
                 regLog.text = getString(R.string.Login)
             }
             else {
-                val newLog = LoginFragment()
-                fm.beginTransaction().replace(R.id.fragmentContainerView, newLog)
-                    .addToBackStack(null).commit()
-
+                swapToLog(fm)
                 regLog.text = getString(R.string.Register)
             }
             login = !login
         }
 
+        //Accesso alla modalità offline
         var txtOffline = findViewById<TextView>(R.id.txtOffline)
         txtOffline.setOnClickListener{
             MainActivity.offline = true
@@ -63,6 +59,20 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    //funzione per swappare il frammento da quello di login a quello di registrazione
+    fun swapToReg(fm : FragmentManager){
+        val newReg = RegistrationFragment()
+        fm.beginTransaction().replace(R.id.fragmentContainerView, newReg)
+            .addToBackStack(null).commit()
+    }
+
+    //funzione per swappare il frammento da quello di login a quello di registrazione
+    fun swapToLog(fm : FragmentManager){
+        val newLog = LoginFragment()
+        fm.beginTransaction().replace(R.id.fragmentContainerView, newLog)
+            .addToBackStack(null).commit()
     }
 
 }

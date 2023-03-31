@@ -59,6 +59,7 @@ class SheetFragment : Fragment() {
             view.findViewById<ImageView>(R.id.icnUpload).isInvisible = false
         }
 
+        //lista dei personaggi
         val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.sheetView)
         recyclerView.layoutManager = layoutManager
@@ -67,66 +68,7 @@ class SheetFragment : Fragment() {
 
         val btnNewChar = view.findViewById<Button>(R.id.btnNewChar)
         btnNewChar.setOnClickListener { //popup per inserire roba il nuovo personaggio
-            val dialog = Dialog(context!!)
-            dialog.setContentView(R.layout.popup)
-            val nameP = dialog.findViewById<EditText>(R.id.txtCharNamePop)
-            val specP = dialog.findViewById<EditText>(R.id.txtCharSpecPop)
-            val classP = dialog.findViewById<EditText>(R.id.txtCharClassPop)
-            val lvlP = dialog.findViewById<EditText>(R.id.txtCharLvlPop)
-            val buttonAdd = dialog.findViewById<Button>(R.id.btnAddPopup)
-            //creazione del personaggio alla conferma
-            buttonAdd.setOnClickListener {
-                //aggiunta del nuovo personaggio alla lista
-                try {
 
-                    if (
-                        !nameP.text.toString().isEmpty()
-                        || !specP.text.toString().isEmpty()
-                        || !classP.text.toString().isEmpty()
-                        || Integer.parseInt(lvlP.text.toString()) != null
-                    ) {
-                        val char = Characters(
-                            nameP.text.toString(),
-                            specP.text.toString(),
-                            classP.text.toString(),
-                            Integer.parseInt(lvlP.text.toString())
-                        )
-
-                        //creazione file del nuovo personaggio
-                        val filename = nameP.text.toString() + ".json"
-                        var file = File(context?.filesDir, filename)
-                        if (file.exists()) { //creazione file personaggio se il nome non è usato
-                            dialog.findViewById<TextView>(R.id.txtPopErr).text = "Error"
-                        } else {
-                            charList.add(char)
-                            adapter = SheetListAdapter(charList)
-                            recyclerView.adapter = adapter
-
-
-                            file.createNewFile()
-                        }
-                        //aggiornamento del file con la lista di personaggi
-                        file = File(context?.filesDir, "characters.json")
-                        file.createNewFile()
-                        val writer = BufferedWriter(FileWriter(file, false))
-                        val gson = Gson()
-                        writer.use {
-                            it.write(gson.toJson(charList))
-                            it.newLine()
-                        }
-
-
-                    } else {
-                        dialog.findViewById<TextView>(R.id.txtPopErr).text = "Error"
-                    }
-                }catch (e: Exception){
-                    dialog.findViewById<TextView>(R.id.txtPopErr).text = "Error"
-                }
-
-                dialog.dismiss()
-            }
-
-            dialog.show()
         }
 
         val btnUpload = view.findViewById<ImageView>(R.id.icnUpload)
@@ -171,11 +113,75 @@ class SheetFragment : Fragment() {
 
     }
 
+    fun insertChar(){
+        val dialog = Dialog(context!!)
+        dialog.setContentView(R.layout.popup)
+        val nameP = dialog.findViewById<EditText>(R.id.txtCharNamePop)
+        val specP = dialog.findViewById<EditText>(R.id.txtCharSpecPop)
+        val classP = dialog.findViewById<EditText>(R.id.txtCharClassPop)
+        val lvlP = dialog.findViewById<EditText>(R.id.txtCharLvlPop)
+        val buttonAdd = dialog.findViewById<Button>(R.id.btnAddPopup)
+
+        //creazione del personaggio alla conferma
+        buttonAdd.setOnClickListener {
+            //aggiunta del nuovo personaggio alla lista
+            try {
+                if (
+                    !nameP.text.toString().isEmpty()
+                    || !specP.text.toString().isEmpty()
+                    || !classP.text.toString().isEmpty()
+                    || Integer.parseInt(lvlP.text.toString()) != null
+                ) {
+                    val char = Characters(
+                        nameP.text.toString(),
+                        specP.text.toString(),
+                        classP.text.toString(),
+                        Integer.parseInt(lvlP.text.toString())
+                    )
+
+                    //creazione file del nuovo personaggio
+                    val filename = nameP.text.toString() + ".json"
+                    var file = File(context?.filesDir, filename)
+                    if (file.exists()) { //creazione file personaggio se il nome non è usato
+                        dialog.findViewById<TextView>(R.id.txtPopErr).text = "Error"
+                    } else {
+                        charList.add(char)
+                        adapter = SheetListAdapter(charList)
+                        recyclerView.adapter = adapter
+
+                        file.createNewFile()
+                    }
+
+                    //aggiornamento del file con la lista di personaggi
+                    file = File(context?.filesDir, "characters.json")
+                    file.createNewFile()
+                    val writer = BufferedWriter(FileWriter(file, false))
+                    val gson = Gson()
+                    writer.use {
+                        it.write(gson.toJson(charList))
+                        it.newLine()
+                    }
+
+
+                } else {
+                    dialog.findViewById<TextView>(R.id.txtPopErr).text = "Error"
+                }
+            }catch (e: Exception){
+                dialog.findViewById<TextView>(R.id.txtPopErr).text = "Error"
+            }
+
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
     //salva in remoto i files dei personaggi
     fun upload(){
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
 
+        //upload file di lista
         val myref = storageRef.child( "$user/characters.json")
         var file = File(context?.filesDir, "characters.json")
         val inputStream = FileInputStream(file)
@@ -187,7 +193,7 @@ class SheetFragment : Fragment() {
                 Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
             }
 
-        //acquisisce il vettore dei personaggi per salvarli remotaemnte tutti
+        //acquisisce il vettore dei personaggi per salvarli remotamente tutti
         var jsonString = file.readText()
         val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
         val gson = Gson()
@@ -210,6 +216,7 @@ class SheetFragment : Fragment() {
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
 
+        //download file di lista
         val myref = storageRef.child( "$user/characters.json")
         val file = File(context?.filesDir, "characters.json")
         myref.getFile(file)
@@ -219,6 +226,7 @@ class SheetFragment : Fragment() {
             .addOnFailureListener { exception ->
                 Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
             }
+
         //crea un array con tutti i personaggi per scariarli
         val jsonString = file.readText()
         val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
@@ -236,6 +244,7 @@ class SheetFragment : Fragment() {
                 }
         }
 
+        //ricostruisce il layout
         view?.invalidate()
     }
 

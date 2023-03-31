@@ -26,8 +26,9 @@ class EquipmentListAdapter(private val equipList : ArrayList<String>) : Recycler
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = equipList[position]
         holder.item.text = currentItem
+        //cambio colore per selezione
         if(position == selectedItem)
-            holder.itemView.setBackgroundColor(Color.BLUE)
+            holder.itemView.setBackgroundColor(Color.parseColor("#b1f2ff"))
         else
             holder.itemView.setBackgroundColor(Color.WHITE)
         holder.itemView.setOnClickListener {

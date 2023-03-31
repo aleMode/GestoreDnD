@@ -19,6 +19,7 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_main)
 
+        //tasto per il logout
         val logout = findViewById<ImageView>(R.id.icnLogout)
         logout.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
@@ -27,6 +28,8 @@ class MenuActivity : AppCompatActivity() {
             finish()
         }
 
+        //FragmentManager e chips per la gestione dei frammenti di schede personaggio
+        // e campagne
         val fm : FragmentManager = supportFragmentManager
         val sheetFragment = SheetFragment()
         val campFragment = CampaignsFragment()

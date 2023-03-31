@@ -72,7 +72,7 @@
                     android:layout_margin="16dp"
                     android:editable="true"
                     android:hint="-"
-                    android:inputType="numberSigned"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -82,7 +82,7 @@
                     android:layout_margin="16dp"
                     android:editable="true"
                     android:hint="-"
-                    android:inputType="numberSigned"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -92,7 +92,7 @@
                     android:layout_margin="16dp"
                     android:editable="true"
                     android:hint="-"
-                    android:inputType="numberSigned"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -151,6 +151,7 @@
                     android:layout_margin="16dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -160,7 +161,7 @@
                     android:layout_margin="16dp"
                     android:editable="true"
                     android:hint="-"
-                    android:inputType="numberSigned"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -170,7 +171,7 @@
                     android:layout_margin="16dp"
                     android:editable="true"
                     android:hint="-"
-                    android:inputType="numberSigned"
+                    android:inputType="number"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -276,6 +277,7 @@
                     android:layout_marginRight="16dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -287,6 +289,7 @@
                     android:layout_marginRight="16dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -298,6 +301,7 @@
                     android:layout_marginRight="16dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -309,6 +313,7 @@
                     android:layout_marginRight="16dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -321,6 +326,7 @@
                     android:layout_marginBottom="16dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -412,6 +418,7 @@
                     android:layout_marginRight="5dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -423,6 +430,7 @@
                     android:layout_marginRight="5dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -434,6 +442,7 @@
                     android:layout_marginRight="5dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -445,6 +454,7 @@
                     android:layout_marginRight="5dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
                 <EditText
@@ -457,6 +467,7 @@
                     android:layout_marginBottom="16dp"
                     android:editable="true"
                     android:hint="-"
+                    android:inputType="number"
                     android:textSize="16sp" />
 
             </LinearLayout>

@@ -14,28 +14,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/popupName" />
+            android:hint="@string/popupName"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/txtCharSpecPop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/popupSpec" />
+            android:hint="@string/popupSpec"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/txtCharClassPop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/popupClass" />
+            android:hint="@string/popupClass"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/txtCharLvlPop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/popupLvl" />
+            android:hint="@string/popupLvl"
+            android:inputType="numberSigned|number" />
 
         <Button
             android:id="@+id/btnAddPopup"
