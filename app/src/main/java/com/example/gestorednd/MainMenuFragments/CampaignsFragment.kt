@@ -1,6 +1,7 @@
 package com.example.gestorednd.MainMenuFragments
 
 import android.app.Dialog
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,6 +17,8 @@ import com.example.gestorednd.DataClasses.Campaigns
 import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
@@ -29,7 +32,9 @@ class CampaignsFragment : Fragment() {
 
     private lateinit var adapter : CampaignListAdapter
     private lateinit var recyclerView : RecyclerView
-    private lateinit var campList : ArrayList<Campaigns>
+    companion object{
+        lateinit var campList : ArrayList<Campaigns>
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +48,8 @@ class CampaignsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sync()
 
         //lista delle campagne
         val layoutManager = LinearLayoutManager(context)
@@ -113,20 +120,23 @@ class CampaignsFragment : Fragment() {
         val nameC = dialog.findViewById<EditText>(R.id.txtGroupName)
         val buttonAdd = dialog.findViewById<Button>(R.id.btnGroupConf)
 
+        val user = FirebaseAuth.getInstance().currentUser?.uid
+        val storageF = Firebase.firestore
+
         //creazione della campagna alla conferma
         buttonAdd.setOnClickListener {
             //aggiunta della nuova campagna alla lista
             try {
                 if (!nameC.text.toString().isEmpty()) {
-                    val char = Campaigns(
+                    val camp = Campaigns(
                         nameC.text.toString(),
-                        UUID.randomUUID()
+                        UUID.randomUUID(),
+                        user!!
                     )
 
-                    campList.add(char)
+                    campList.add(camp)
                     adapter = CampaignListAdapter(campList)
                     recyclerView.adapter = adapter
-
 
                     //aggiornamento del file con la lista delle campagne
                     val file = File(context?.filesDir, "campaign.json")
@@ -137,6 +147,17 @@ class CampaignsFragment : Fragment() {
                         it.write(gson.toJson(campList))
                         it.newLine()
                     }
+
+                    //creazione file su storage remoto della campagna
+                    val groupsRef = storageF.collection("groups")
+                        .document(camp.id.toString()).set(hashMapOf(
+                            "camp_id" to camp.id,
+                            "leader_id" to camp.idLeader,
+                            "name" to camp.name
+                        ))
+                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                        .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+
                 } else {
                     dialog.findViewById<TextView>(R.id.txtPopCampErr).text = "Error"
                 }
