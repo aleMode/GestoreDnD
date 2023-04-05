@@ -45,18 +45,18 @@ class SheetFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //disavilità le icone di salvataggio cloud se si è in modalità ffline cosè che non siano
+        //disabilita le icone di salvataggio cloud se si è in modalità offline cosè che non siano
         // cliccate per sbaglio
         if(MainActivity.offline == true){
-            view.findViewById<ImageView>(R.id.icnSync).isClickable = false
-            view.findViewById<ImageView>(R.id.icnSync).isInvisible = true
-            view.findViewById<ImageView>(R.id.icnUpload).isClickable = false
-            view.findViewById<ImageView>(R.id.icnUpload).isInvisible = true
+            view.findViewById<ImageView>(R.id.icnSyncSheets).isClickable = false
+            view.findViewById<ImageView>(R.id.icnSyncSheets).isInvisible = true
+            view.findViewById<ImageView>(R.id.icnUploadSheets).isClickable = false
+            view.findViewById<ImageView>(R.id.icnUploadSheets).isInvisible = true
         }else{
-            view.findViewById<ImageView>(R.id.icnSync).isClickable = true
-            view.findViewById<ImageView>(R.id.icnSync).isInvisible = false
-            view.findViewById<ImageView>(R.id.icnUpload).isClickable = true
-            view.findViewById<ImageView>(R.id.icnUpload).isInvisible = false
+            view.findViewById<ImageView>(R.id.icnSyncSheets).isClickable = true
+            view.findViewById<ImageView>(R.id.icnSyncSheets).isInvisible = false
+            view.findViewById<ImageView>(R.id.icnUploadSheets).isClickable = true
+            view.findViewById<ImageView>(R.id.icnUploadSheets).isInvisible = false
         }
 
         //lista dei personaggi
@@ -67,16 +67,16 @@ class SheetFragment : Fragment() {
         recyclerView.adapter = adapter
 
         val btnNewChar = view.findViewById<Button>(R.id.btnNewChar)
-        btnNewChar.setOnClickListener { //popup per inserire roba il nuovo personaggio
-
+        btnNewChar.setOnClickListener { //popup per inserire il nuovo personaggio
+            insertChar()
         }
 
-        val btnUpload = view.findViewById<ImageView>(R.id.icnUpload)
+        val btnUpload = view.findViewById<ImageView>(R.id.icnUploadSheets)
         btnUpload.setOnClickListener{
             upload()
         }
 
-        val btnSync = view.findViewById<ImageView>(R.id.icnSync)
+        val btnSync = view.findViewById<ImageView>(R.id.icnSyncSheets)
         btnSync.setOnClickListener{
             sync()
         }
@@ -115,7 +115,7 @@ class SheetFragment : Fragment() {
 
     fun insertChar(){
         val dialog = Dialog(context!!)
-        dialog.setContentView(R.layout.popup)
+        dialog.setContentView(R.layout.popup_new_char)
         val nameP = dialog.findViewById<EditText>(R.id.txtCharNamePop)
         val specP = dialog.findViewById<EditText>(R.id.txtCharSpecPop)
         val classP = dialog.findViewById<EditText>(R.id.txtCharClassPop)
@@ -212,6 +212,7 @@ class SheetFragment : Fragment() {
         }
     }
 
+    //download del file con la lista dei personaggi e dei personaggi singoli
     fun sync(){
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference

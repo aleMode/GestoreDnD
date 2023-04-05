@@ -71,11 +71,17 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
+    <string name="newChar">New Sheet</string>
     <string name="popupName">Name</string>
     <string name="popupSpec">Species</string>
     <string name="popupClass">Class</string>
     <string name="popupLvl">Lvl</string>
     <string name="popupAdd">Add</string>
+
+    <string name="newGroup">New Campaign</string>
+    <string name="groupTitle">Create group</string>
+    <string name="groupName">Name</string>
+    <string name="groupConfirm">Submit</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>

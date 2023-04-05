@@ -1,5 +1,7 @@
 package com.example.gestorednd.DataClasses
 
-data class Campaigns(var name : String) {
+import java.util.UUID
+
+data class Campaigns(var name : String, var id : UUID) {
 
 }
