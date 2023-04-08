@@ -83,6 +83,10 @@
     <string name="groupName">Name</string>
     <string name="groupConfirm">Submit</string>
 
+    <string name="popupSelChar">Tap to select a character</string>
+    <string name="popupSelQuit">Cancel</string>
+    <string name="popupSelOk">Confirm</string>
+
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>

@@ -30,7 +30,9 @@ class SheetFragment : Fragment() {
 
     private lateinit var adapter : SheetListAdapter
     private lateinit var recyclerView : RecyclerView
-    private lateinit var charList : ArrayList<Characters>
+    companion object {
+        lateinit var charList: ArrayList<Characters>
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -248,5 +250,4 @@ class SheetFragment : Fragment() {
         //ricostruisce il layout
         view?.invalidate()
     }
-
 }
