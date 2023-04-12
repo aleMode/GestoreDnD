@@ -1,10 +1,7 @@
 package com.example.gestorednd.Activities
 
 import android.app.Dialog
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.ContentValues
-import android.content.Context
+import android.content.*
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -38,6 +35,7 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CampaignActivity : AppCompatActivity() {
 
@@ -46,7 +44,20 @@ class CampaignActivity : AppCompatActivity() {
     private lateinit var charList : ArrayList<Characters>
 
     companion object {
+        private lateinit var currentCamp : Campaigns
+
         var chosenChar = Pg()
+
+        fun estraiPers(): Pg {
+            val user = FirebaseAuth.getInstance().currentUser?.uid
+            val storageF = Firebase.firestore
+
+            val champ = storageF.collection("groups").document(currentCamp.id.toString())
+                .collection("chars").document("$user.json").get() as Pg
+
+
+            return champ
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,9 +66,15 @@ class CampaignActivity : AppCompatActivity() {
 
         //ricezione della posizione del personaggio da selezionare
         val index = Integer.parseInt(intent.getStringExtra("pos"))
-        val currentCamp = CampaignsFragment.campList[index]
+        currentCamp = CampaignsFragment.campList[index]
         if(FirebaseAuth.getInstance().currentUser?.uid != currentCamp.idLeader){
             //TODO metti intent che rimandi solo ad una versione modificata (o alla stessa che modifichi) della sheet view del personaggio
+            //recupero il personaggio usato nella campagna
+            val pers = estraiPers()
+            //avvio una attività di scheda personaggio con il personaggio usato
+            val intent = Intent(this, SheetActivity::class.java)
+            this.startActivity(intent)
+            //TODO: salvataggio in remoto quando editi una scheda in questo modo
         }
         setup(currentCamp)
 
@@ -154,7 +171,7 @@ class CampaignActivity : AppCompatActivity() {
             Log.e("FileUtils", "Error ")
         }
 
-        var joined : Boolean = false
+        var joined = false
         for(camp in camps)
             if(camp.id.toString() == groupId)
                 joined = true
@@ -203,22 +220,22 @@ class CampaignActivity : AppCompatActivity() {
         //caricamento in remote del personaggio e join della campagna
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageF = Firebase.firestore
-        val charUUID = UUID.randomUUID()
         val groupSet = storageF.collection("groups").document(groupId!!)
-            .update("members", FieldValue.arrayUnion(user, char, charUUID))
+            .update("members", user)
         val groupsRef = storageF.collection("groups").document(groupId!!)
-            .collection("chars").document("$char.json").set(chosenPg2)
+                .collection("chars").document("$user.json").set(chosenPg2)
             .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
 
         var idL : String? = null
-        var nameC : String? = null
+        var nameCamp : String? = null
         val idLeader = storageF.collection("groups").document(groupId!!).get()
             .addOnSuccessListener { snapshot ->
                 idL = snapshot.get("leader_id") as String
-                nameC = snapshot.get("name") as String
+                nameCamp = snapshot.get("name") as String
             }
-        val camp = Campaigns(nameC!!, UUID.fromString(groupId), idL!!)
+        val camp = Campaigns(nameCamp!!, UUID.fromString(groupId), idL!!)
+
         return camp
     }
 

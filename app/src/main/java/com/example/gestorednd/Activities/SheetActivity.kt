@@ -6,10 +6,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.example.gestorednd.CharacterSheetFragments.*
+import com.example.gestorednd.DataClasses.Campaigns
 import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.DataClasses.Pg
 import com.example.gestorednd.R
 import com.example.gestorednd.Interfaces.SheetSwapper
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.BufferedWriter
@@ -36,7 +38,12 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
 
         //ricezione della posizione del personaggio da selezionare
         val index = intent.getStringExtra("pos")
-        chosenChar = initialize(index)
+        if(index != null)
+            chosenChar = initialize(index)
+        else {
+            val user = FirebaseAuth.getInstance().currentUser?.uid
+            chosenChar = CampaignActivity.estraiPers()
+        }
 
         val statsFrag = StatsFragment()
         fm.beginTransaction().replace(R.id.sheetPortionContainer, statsFrag).commit()
@@ -115,6 +122,8 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
     }
 
     fun save(){
+        //TODO: modifica in modo che salvi in remoto
+
         val gson = Gson()
         var jsonString = gson.toJson(chosenChar)
 
