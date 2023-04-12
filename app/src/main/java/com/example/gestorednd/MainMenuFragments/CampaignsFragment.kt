@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestorednd.Adapters.CampaignListAdapter
@@ -139,7 +140,7 @@ class CampaignsFragment : Fragment() {
                     recyclerView.adapter = adapter
 
                     //aggiornamento del file con la lista delle campagne
-                    val file = File(context?.filesDir, "campaign.json")
+                    val file = File(context?.filesDir, "campaigns.json")
                     file.createNewFile()
                     val writer = BufferedWriter(FileWriter(file, false))
                     val gson = Gson()
@@ -197,7 +198,7 @@ class CampaignsFragment : Fragment() {
         //download file di lista
         val myref = storageRef.child( "$user/campaigns.json")
         val file = File(context?.filesDir, "campaigns.json")
-        myref.getFile(file)
+        myref.putFile(file.toUri())
             .addOnSuccessListener {
                 Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
             }

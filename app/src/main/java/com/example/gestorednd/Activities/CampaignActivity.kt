@@ -3,6 +3,7 @@ package com.example.gestorednd.Activities
 import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestorednd.Adapters.PopupSheetListAdapter
@@ -26,14 +28,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.ktx.dynamicLink
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.w3c.dom.Text
+import java.io.BufferedWriter
 import java.io.File
-import java.io.FileNotFoundException
-import kotlin.coroutines.jvm.internal.CompletedContinuation.context
+import java.io.FileWriter
+import java.util.*
 
 class CampaignActivity : AppCompatActivity() {
 
@@ -88,13 +92,11 @@ class CampaignActivity : AppCompatActivity() {
                 if(!alreadyJoined(groupId)){
                     val char : Characters?
                     char = charSelection()
-                    if(char == null)
+                    if(char == null){}
                         //TODO: esci dalla situa
 
-
-
-                    remotejoin(char)
-                    localjoin()
+                    val camp = remotejoin(char, groupId)
+                    localjoin(char, groupId, camp)
                 }
 
             }
@@ -187,17 +189,76 @@ class CampaignActivity : AppCompatActivity() {
         return pers
     }
 
-    private fun localjoin() {
-       // TODO: join nelle campagne salvate localmente e synch
+    //query to join the firebase campaign and to save there a copy of the character
+    private fun remotejoin(char: Characters?, groupId: String?): Campaigns {
+        //recupero e copio il personaggio richiesto
+        val fileName = "$char.json"
+        val file = File(filesDir, fileName)
+        val jsonString = file.readText()
+        val gson = Gson()
+        val chosenPg = object : TypeToken<Pg>() {}.type
+        var chosenPg2 : Pg
+        chosenPg2 = gson.fromJson(jsonString, chosenPg)
+
+        //caricamento in remote del personaggio e join della campagna
+        val user = FirebaseAuth.getInstance().currentUser?.uid
+        val storageF = Firebase.firestore
+        val charUUID = UUID.randomUUID()
+        val groupSet = storageF.collection("groups").document(groupId!!)
+            .update("members", FieldValue.arrayUnion(user, char, charUUID))
+        val groupsRef = storageF.collection("groups").document(groupId!!)
+            .collection("chars").document("$char.json").set(chosenPg2)
+            .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
+
+        var idL : String? = null
+        var nameC : String? = null
+        val idLeader = storageF.collection("groups").document(groupId!!).get()
+            .addOnSuccessListener { snapshot ->
+                idL = snapshot.get("leader_id") as String
+                nameC = snapshot.get("name") as String
+            }
+        val camp = Campaigns(nameC!!, UUID.fromString(groupId), idL!!)
+        return camp
     }
 
-    private fun remotejoin(char: Pg) {
-        //TODO: query to join the firebase campaign and to save there a copy of the character
+    //join nelle campagne salvate localmente e synch
+    private fun localjoin(char: Characters?, groupId: String?, camp: Campaigns) {
+        val user = FirebaseAuth.getInstance().currentUser?.uid
+        val storageRef = Firebase.storage.reference
 
+        //download file di lista per aggiornare
+        val myref = storageRef.child( "$user/campaigns.json")
+        var file = File(this.filesDir, "campaigns.json")
+        myref.getFile(file)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Operation successful!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+            }
+
+        //aggiornamento del file con la lista delle campagne
+        file = File(this.filesDir, "campaigns.json")
+        file.createNewFile()
+        val writer = BufferedWriter(FileWriter(file, false))
+        val gson = Gson()
+        writer.use {
+            it.write(gson.toJson(CampaignsFragment.campList))
+            it.newLine()
+        }
+
+        CampaignsFragment.campList.add(camp)
+
+        //upload del file delle campagne
+        myref.putFile(file.toUri())
+            .addOnSuccessListener {
+                Toast.makeText(this, "Operation successful!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+            }
     }
-
-
-
 
 
     private fun setup(currentCamp: Campaigns) {
