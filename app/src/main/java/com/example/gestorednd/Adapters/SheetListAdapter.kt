@@ -39,6 +39,7 @@ class SheetListAdapter(private val charList : ArrayList<Characters>) : RecyclerV
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, SheetActivity::class.java)
             //inserimento dell'indice del personaggio per unpacking
+            SheetActivity.campaignChar = false
             intent.putExtra("pos", position.toString())
             holder.itemView.context.startActivity(intent)
         }

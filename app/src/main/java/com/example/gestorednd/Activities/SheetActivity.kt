@@ -1,6 +1,8 @@
 package com.example.gestorednd.Activities
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +14,8 @@ import com.example.gestorednd.DataClasses.Pg
 import com.example.gestorednd.R
 import com.example.gestorednd.Interfaces.SheetSwapper
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.BufferedWriter
@@ -27,6 +31,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
 
     companion object {
         var chosenChar = Pg()
+        var campaignChar = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,18 +127,30 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
     }
 
     fun save(){
-        //TODO: modifica in modo che salvi in remoto
+        //TODO: modifica in modo che salvi in remoto per il master (salva il nome del tizio e del pers)
 
-        val gson = Gson()
-        var jsonString = gson.toJson(chosenChar)
+        if(campaignChar){
+            //se edito un personaggio di una campagna lo salvo direttamente in remoto
+            val user = FirebaseAuth.getInstance().currentUser?.uid
+            val storageF = Firebase.firestore
+            val groupsRef = storageF.collection("groups")
+                .document(CampaignActivity.currentCamp.id.toString())
+                .collection("chars").document("$user.json").set(chosenChar)
+                .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
+                .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
 
-        //copia del contenuto del file json nello storage interno
-        var fileName : String = "$namePgSel.json"
-        var file = File(filesDir, fileName )
-        val writer = BufferedWriter(FileWriter(file, false))
-        writer.use {
-            it.write(jsonString)
-            it.newLine()
+        }else {
+            //copia del contenuto del file json nello storage interno se è un pers normale
+            val gson = Gson()
+            var jsonString = gson.toJson(chosenChar)
+
+            var fileName: String = "$namePgSel.json"
+            var file = File(filesDir, fileName)
+            val writer = BufferedWriter(FileWriter(file, false))
+            writer.use {
+                it.write(jsonString)
+                it.newLine()
+            }
         }
 
     }

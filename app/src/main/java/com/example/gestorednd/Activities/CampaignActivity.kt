@@ -44,17 +44,17 @@ class CampaignActivity : AppCompatActivity() {
     private lateinit var charList : ArrayList<Characters>
 
     companion object {
-        private lateinit var currentCamp : Campaigns
+        lateinit var currentCamp : Campaigns
 
         var chosenChar = Pg()
 
         fun estraiPers(): Pg {
+            //recupero il personaggio usato nella campagna
             val user = FirebaseAuth.getInstance().currentUser?.uid
             val storageF = Firebase.firestore
 
             val champ = storageF.collection("groups").document(currentCamp.id.toString())
                 .collection("chars").document("$user.json").get() as Pg
-
 
             return champ
         }
@@ -69,12 +69,9 @@ class CampaignActivity : AppCompatActivity() {
         currentCamp = CampaignsFragment.campList[index]
         if(FirebaseAuth.getInstance().currentUser?.uid != currentCamp.idLeader){
             //TODO metti intent che rimandi solo ad una versione modificata (o alla stessa che modifichi) della sheet view del personaggio
-            //recupero il personaggio usato nella campagna
-            val pers = estraiPers()
             //avvio una attività di scheda personaggio con il personaggio usato
             val intent = Intent(this, SheetActivity::class.java)
             this.startActivity(intent)
-            //TODO: salvataggio in remoto quando editi una scheda in questo modo
         }
         setup(currentCamp)
 
