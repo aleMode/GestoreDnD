@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestorednd.Adapters.PopupSheetListAdapter
 import com.example.gestorednd.Adapters.SheetListAdapter
+import com.example.gestorednd.Adapters.SheetListAdapterCamp
 import com.example.gestorednd.DataClasses.Campaigns
 import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.DataClasses.Pg
@@ -25,7 +26,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.ktx.dynamicLink
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -39,12 +39,13 @@ import kotlin.collections.ArrayList
 
 class CampaignActivity : AppCompatActivity() {
 
-    private lateinit var adapter : SheetListAdapter
+    private lateinit var adapter : SheetListAdapterCamp
     private lateinit var recyclerView : RecyclerView
     private lateinit var charList : ArrayList<Characters>
 
     companion object {
         lateinit var currentCamp : Campaigns
+        lateinit var sheetList : ArrayList<Pg>
 
         var chosenChar = Pg()
 
@@ -64,30 +65,32 @@ class CampaignActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_campaign)
 
-        //ricezione della posizione del personaggio da selezionare
+        //ricezione della posizione della campagna da selezionare
         val index = Integer.parseInt(intent.getStringExtra("pos"))
         currentCamp = CampaignsFragment.campList[index]
+        //reindirizzamento nel caso in cui l'utente al momento non sia il dm (può accedere solo
+        // alla sua scheda)
         if(FirebaseAuth.getInstance().currentUser?.uid != currentCamp.idLeader){
-            //TODO metti intent che rimandi solo ad una versione modificata (o alla stessa che modifichi) della sheet view del personaggio
-            //avvio una attività di scheda personaggio con il personaggio usato
+            //intent che rimanda alla sheet view del personaggio della scheda personaggio
+            // con il personaggio usato nella campagna
             val intent = Intent(this, SheetActivity::class.java)
             this.startActivity(intent)
         }
-        setup(currentCamp)
 
+        findViewById<TextView>(R.id.txtCampNameTitle).text = currentCamp.name
         val saveBtn = findViewById<ImageView>(R.id.icnSave2)
         saveBtn.setOnClickListener{
             save()
         }
 
         //creazione del link da copiare per joinare il gruppo
-        //TODO: controlla funzione per creazione dello short link
-        val shareLink = "app/dndApp/group?id=" + currentCamp.id
+        //TODO: controlla funzione per creazione dello short link e metti in fun separata
+        val shareLink = "group?id=" + currentCamp.id
         val txtLink = findViewById<TextView>(R.id.txtLink)
         var link : Uri
         val dynamicLink = Firebase.dynamicLinks.dynamicLink {
             link = Uri.parse(shareLink)
-            domainUriPrefix = "app/gestorednd"
+            domainUriPrefix = "https://gestorednd.page.link"
             setAndroidParameters(DynamicLink.AndroidParameters.Builder().build())
             buildShortDynamicLink()
         }
@@ -97,8 +100,11 @@ class CampaignActivity : AppCompatActivity() {
         Firebase.dynamicLinks
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                Log.w(ContentValues.TAG, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                 // Get the deep link from the Dynamic Link data
                 val deepLink = pendingDynamicLinkData?.link
+                if (deepLink == null) return@addOnSuccessListener
+                Log.w(ContentValues.TAG, "diocaneeeeeeeeeeeeeeeeeeeeeeeeee")
 
                 // Parse the deep link to get the group ID
                 val groupId = deepLink?.getQueryParameter("id")
@@ -106,8 +112,10 @@ class CampaignActivity : AppCompatActivity() {
                 if(!alreadyJoined(groupId)){
                     val char : Characters?
                     char = charSelection()
-                    if(char == null){}
-                        //TODO: esci dalla situa
+                    if(char == null){
+                        val intent = Intent(this, CampaignActivity::class.java)
+                        this.startActivity(intent)
+                    }
 
                     val camp = remotejoin(char, groupId)
                     localjoin(char, groupId, camp)
@@ -132,9 +140,38 @@ class CampaignActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         recyclerView = findViewById(R.id.lstMembers)
         recyclerView.layoutManager = layoutManager
-        adapter = SheetListAdapter(charList) //uso dell'adapter ad hoc,
-        // TODO: fai sta funzione initial ?? e chiamala diversa
+        sheetList  = getMembers()
+        charList = pgToChar(sheetList)
+        adapter = SheetListAdapterCamp(this.charList) //uso dell'adapter ad hoc,
         recyclerView.adapter = adapter
+    }
+
+    private fun pgToChar(sheetList: ArrayList<Pg>): ArrayList<Characters> {
+        var list : ArrayList<Characters> = arrayListOf()
+        for(pg in sheetList)
+            list.add(Characters(pg.pgName, pg.species, pg.clss, pg.lvl))
+
+        return list
+    }
+
+    private fun getMembers(): ArrayList<Pg> {
+        val user = FirebaseAuth.getInstance().currentUser?.uid
+        val storageF = Firebase.firestore
+        val list = ArrayList<Pg>()
+
+        val groupsRef = storageF.collection("groups").document(currentCamp.id!!.toString())
+            .collection("chars").get()
+            .addOnSuccessListener { sheets ->
+                Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
+
+                for (sheet in sheets) {
+                    val pg = sheet as Pg
+                    list.add(pg)
+                }
+            }
+            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
+
+        return list
     }
 
     //funzione per capire se il gruppo è già stato joinato
@@ -180,6 +217,7 @@ class CampaignActivity : AppCompatActivity() {
         //popup to select a character
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.popup_char_selection)
+        dialog.layoutInflater.inflate(R.layout.popup_char_selection, findViewById(android.R.id.content))
 
         val layoutManager = LinearLayoutManager(this)
         var recyclerView2 = findViewById<RecyclerView>(R.id.lstPopupChars)
@@ -213,6 +251,10 @@ class CampaignActivity : AppCompatActivity() {
         val chosenPg = object : TypeToken<Pg>() {}.type
         var chosenPg2 : Pg
         chosenPg2 = gson.fromJson(jsonString, chosenPg)
+        chosenPg2.idOwner = FirebaseAuth.getInstance().currentUser?.uid
+        chosenPg2.pgName = char!!.name
+        chosenPg2.species = char!!.specie
+        chosenPg2.clss = char!!.clss
 
         //caricamento in remote del personaggio e join della campagna
         val user = FirebaseAuth.getInstance().currentUser?.uid

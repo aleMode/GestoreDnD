@@ -42,10 +42,18 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         fm.beginTransaction().add(R.id.navFragContainer, navFrag).commit()
 
         //ricezione della posizione del personaggio da selezionare
+        //index riceve l'indice dalla sezione personaggi, campindex da quella campagne
+        //se entrambi sono nulli si usa l'inizializzazione per membro della campagna
         val index = intent.getStringExtra("pos")
-        if(index != null)
-            chosenChar = initialize(index)
-        else {
+        val campIndex = intent.getStringExtra("camp")
+        if(index != null) {
+            if(campIndex != null) {
+                chosenChar = CampaignActivity.sheetList[Integer.parseInt(campIndex)]
+            }else {
+                chosenChar = initialize(index)
+            }
+        }else {
+            //TODO: utile cambiare in pos/stringa per camp da user/stringa con nome per dm
             val user = FirebaseAuth.getInstance().currentUser?.uid
             chosenChar = CampaignActivity.estraiPers()
         }
@@ -128,11 +136,12 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
 
     fun save(){
         //TODO: modifica in modo che salvi in remoto per il master (salva il nome del tizio e del pers)
-
         if(campaignChar){
             //se edito un personaggio di una campagna lo salvo direttamente in remoto
-            val user = FirebaseAuth.getInstance().currentUser?.uid
+            //salvo con il campo idowner in modo che sia sempre chiaro di chi sia il personaggio
+            var user = chosenChar.idOwner
             val storageF = Firebase.firestore
+
             val groupsRef = storageF.collection("groups")
                 .document(CampaignActivity.currentCamp.id.toString())
                 .collection("chars").document("$user.json").set(chosenChar)

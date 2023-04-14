@@ -44,10 +44,8 @@ class MenuActivity : AppCompatActivity() {
 
 
         chipCamps.setOnClickListener(){
-            val intent = Intent(this@MenuActivity, SheetActivity::class.java)
-            startActivity(intent)
-            //fm.beginTransaction().replace(R.id.fragmentContainerView2, campFragment).commit()
-            //txtTitle.text = "Campaigns"
+            fm.beginTransaction().replace(R.id.fragmentContainerView2, campFragment).commit()
+            txtTitle.text = "Campaigns"
         }
         chipChars.setOnClickListener(){
             fm.beginTransaction().replace(R.id.fragmentContainerView2, sheetFragment).commit()

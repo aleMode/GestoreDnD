@@ -62,16 +62,19 @@ class CampaignsFragment : Fragment() {
         val btnNewCamp = view.findViewById<Button>(R.id.btnNewCamp)
         btnNewCamp.setOnClickListener { //popup per inserire il nuovo personaggio
             insertCamp()
+
         }
 
-        val btnUpload = view.findViewById<ImageView>(R.id.icnUploadSheets)
+        val btnUpload = view.findViewById<ImageView>(R.id.icnUploadCamp)
         btnUpload.setOnClickListener{
             upload()
+
         }
 
-        val btnSync = view.findViewById<ImageView>(R.id.icnSyncSheets)
+        val btnSync = view.findViewById<ImageView>(R.id.icnSyncCamp)
         btnSync.setOnClickListener{
             sync()
+
         }
     }
 
@@ -135,6 +138,9 @@ class CampaignsFragment : Fragment() {
                         user!!
                     )
 
+                    //aggiorno la lista col cloud nel caso in cui sia già stata updatata ma non scaricata
+                    sync()
+
                     campList.add(camp)
                     adapter = CampaignListAdapter(campList)
                     recyclerView.adapter = adapter
@@ -149,6 +155,8 @@ class CampaignsFragment : Fragment() {
                         it.newLine()
                     }
 
+                    upload()
+
                     //creazione file su storage remoto della campagna
                     val groupsRef = storageF.collection("groups")
                         .document(camp.id.toString()).set(hashMapOf(
@@ -156,8 +164,12 @@ class CampaignsFragment : Fragment() {
                             "leader_id" to camp.idLeader,
                             "name" to camp.name
                         ))
-                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-                        .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "remote successful!", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(context, "remote unsuccessful! $e", Toast.LENGTH_SHORT).show()
+                        }
 
                 } else {
                     dialog.findViewById<TextView>(R.id.txtPopCampErr).text = "Error"
@@ -180,14 +192,16 @@ class CampaignsFragment : Fragment() {
         //upload file di lista
         val myref = storageRef.child( "$user/campaigns.json")
         var file = File(context?.filesDir, "campaigns.json")
-        val inputStream = FileInputStream(file)
-        myref.putStream(inputStream)
-            .addOnSuccessListener {
-                Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
-            }
+        if(file.exists()) {
+            val inputStream = FileInputStream(file)
+            myref.putFile(file.toUri())
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     //download del file con la lista delle campagne
@@ -198,13 +212,27 @@ class CampaignsFragment : Fragment() {
         //download file di lista
         val myref = storageRef.child( "$user/campaigns.json")
         val file = File(context?.filesDir, "campaigns.json")
-        myref.putFile(file.toUri())
+        myref.getFile(file.toUri())
             .addOnSuccessListener {
                 Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
             }
+
+        //aggiorno la lista delle campagne dello user
+        if(file.exists()) {
+            val gson = Gson()
+            val type = object : TypeToken<ArrayList<Campaigns>>() {}.type
+            val json : String
+            if(file.readText() == null || file.readText() == "") {
+                campList = arrayListOf()
+            }
+            else {
+                json = file.readText()
+                campList = gson.fromJson(json, type)
+            }
+        }
 
         //ricostruisce il layout
         view?.invalidate()

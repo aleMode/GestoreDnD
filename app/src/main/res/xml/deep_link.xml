@@ -6,7 +6,7 @@
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
 
-            <data android:scheme="app" android:host="gestorednd" />
+            <data android:scheme="https" android:host="gestorednd.page.link" />
         </intent-filter>
     </activity>
 </PreferenceScreen>
