@@ -1,7 +1,6 @@
 package com.example.gestorednd.MainMenuFragments
 
 import android.app.Dialog
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,12 +12,9 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestorednd.Adapters.CampaignListAdapter
-import com.example.gestorednd.Adapters.SheetListAdapter
 import com.example.gestorednd.DataClasses.Campaigns
-import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -220,6 +216,7 @@ class CampaignsFragment : Fragment() {
                 Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
             }
 
+        //TODO: problema con il primo login nelle campagne
         //aggiorno la lista delle campagne dello user
         if(file.exists()) {
             val gson = Gson()

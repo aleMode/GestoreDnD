@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <activity android:name=".CampaignActivity">
+    <activity android:name = ".MenuActivity">
         <intent-filter>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
 
-            <data android:scheme="https" android:host="gestorednd.page.link" />
+            <data android:host="gestorednd.page.link" android:scheme="https"  />
         </intent-filter>
     </activity>
 </PreferenceScreen>
