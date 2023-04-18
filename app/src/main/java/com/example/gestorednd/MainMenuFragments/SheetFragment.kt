@@ -182,6 +182,9 @@ class SheetFragment : Fragment() {
 
     //salva in remoto i files dei personaggi
     fun upload(){
+        //sincronizzo per scaricare eventuali personaggi che non sono ancora stati scaricati
+        sync()
+
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
 
@@ -203,8 +206,8 @@ class SheetFragment : Fragment() {
         var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
         for(pers in chars) { //upload di tutte le schede personaggio
             val myref = storageRef.child("$user/${pers.name}.json")
-            val file = File(context?.filesDir, "${pers.name}.json")
-            myref.putFile(file.toUri())
+            val file2 = File(context?.filesDir, "${pers.name}.json")
+            myref.putFile(file2.toUri())
                 .addOnSuccessListener {
                     Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
                 }
@@ -215,14 +218,28 @@ class SheetFragment : Fragment() {
     }
 
     //download del file con la lista dei personaggi e dei personaggi singoli
+    //la funzione gestisce anche i files salvati in locale e non ancora caricati
     fun sync(){
+        fixUnsavedChars()
+        var file = File(context?.filesDir, "characters.json")
+        if (!file.exists()) return
+
+        //prendo l'array con i personaggi registrati (suppongo già un passaggio di fixUnsavedChars())
+        val jsonString = file.readText()
+        val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
+        val gson = Gson()
+        var chars: ArrayList<Characters>? = null
+        try {
+            chars = gson.fromJson(jsonString, listCharactersType)
+        }catch(e: java.lang.NullPointerException){
+
+        }
+
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
-
-        //download file di lista
-        val myref = storageRef.child( "$user/characters.json")
-        val file = File(context?.filesDir, "characters.json")
-        myref.getFile(file)
+        val myref = storageRef.child("$user/characters.json")
+        val file2 = File(context?.filesDir, "characters.json")
+        myref.getFile(file2)
             .addOnSuccessListener {
                 Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
             }
@@ -230,27 +247,52 @@ class SheetFragment : Fragment() {
                 Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
             }
 
-        //crea un array con tutti i personaggi per scariarli
-        val jsonString = file.readText()
-        val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
-        val gson = Gson()
-        var chars : ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
-        for(pers in chars) { //upload di tutte le schede personaggio
-            val myref = storageRef.child("$user/${pers.name}.json")
-            val file = File(context?.filesDir, "${pers.name}.json")
-            myref.getFile(file)
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
+        //faccio la stessa cosa col file proveniente da remoto
+        var chars2: ArrayList<Characters>? = null
+        try {
+            var jsonString2 = file2.readText()
+
+            val listCharactersType2 = object : TypeToken<ArrayList<Characters>>() {}.type
+            val gson2 = Gson()
+            chars2 = gson2.fromJson(jsonString2, listCharactersType2)
+        }catch(e: java.lang.NullPointerException){
+
+        }
+
+        //se un elemento in locale non è nella lista in remoto lo aggiungo e poi concludo scaricando
+        // i files personaggio da remoto
+        if(chars != null){
+            if(!(chars?.isEmpty())!!) {
+                for (char in chars!!)
+                    if (!chars2!!.contains(char))
+                        chars2.add(char)
+            }
+        }
+
+        if(chars2 != null){
+            if(!(chars2?.isEmpty())!!) {
+                //falliranno soltanto quelli non salvati in remoto ma in locale
+                for (pers in chars2!!) {
+                    //upload di tutte le schede personaggio
+                    val myref = storageRef.child("$user/${pers.name}.json")
+                    val file = File(context?.filesDir, "${pers.name}.json")
+                    myref.getFile(file)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { exception ->
+                            Toast.makeText(context, "Operation calcolatissima!", Toast.LENGTH_SHORT).show()
+                        }
                 }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
-                }
+            }
         }
 
         //ricostruisce il layout
         view?.invalidate()
     }
 
+    //pulisce i personaggi rimasti se il file dei personaggi non è presente o li rimuove se non sono
+    //registrati (non sarebbero comunque accessibil)
     fun fixUnsavedChars(){
         var file = File(context?.filesDir, "characters.json")
         if (!file.exists()) { //pulisce i files personaggio se non c'è un file characters.json
@@ -259,27 +301,33 @@ class SheetFragment : Fragment() {
                 it.delete()
             }
 
-        }else { //rimuove i personaggi i cui files non sono presenti
-            val jsonString = file.readText()
-            val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
-            val gson = Gson()
-            var chars: ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
-            for (i in 0..chars.size ) { //upload di tutte le schede personaggio
-                var pers = chars[i]
-                val file2 = File(context?.filesDir, "${pers.name}.json")
-                if (!file2.exists()) {
-                    chars.removeAt(i)
-                }
+        }else { //rimuove i personaggi i cui files personaggio non sono presenti dalla lista
+            try {
+                val jsonString = file.readText()
 
+                val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
+                val gson = Gson()
+                var chars: ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
+                for (i in chars.indices.reversed()) { //upload di tutte le schede personaggio
+                    var pers = chars[i]
+                    val file2 = File(context?.filesDir, "${pers.name}.json")
+                    if (!file2.exists()) {
+                        chars.removeAt(i)
+                    }
+
+                }
+            }catch(e:java.lang.NullPointerException){
+                file.createNewFile()
+                context?.filesDir?.listFiles { name -> name.endsWith(".json") }?.forEach {
+                    it.delete()
+                }
             }
         }
+        //ricostruisce il layout
+        view?.invalidate()
+
         return
     }
 
-    fun mergeChars(){
-        var file = File(context?.filesDir, "characters.json")
-        if (!file.exists()) return
 
-
-    }
 }

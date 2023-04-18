@@ -20,6 +20,8 @@ import com.example.gestorednd.MainMenuFragments.CampaignsFragment
 import com.example.gestorednd.MainMenuFragments.SheetFragment
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -160,7 +162,7 @@ class JoinCampaignActivity : AppCompatActivity() {
     //query to join the firebase campaign and to save there a copy of the character
     private fun remotejoin(char: Characters?, groupId: String?): Campaigns {
         //recupero e copio il personaggio richiesto
-        val fileName = "$char.json"
+        val fileName = char?.name!! +".json"
         val file = File(filesDir, fileName)
         val jsonString = file.readText()
         val gson = Gson()
@@ -182,13 +184,17 @@ class JoinCampaignActivity : AppCompatActivity() {
             .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
 
-        var idL : String? = null
-        var nameCamp : String? = null
-        val idLeader = storageF.collection("groups").document(groupId!!).get()
+        var idL : String = ""
+        var nameCamp : String = ""
+
+        storageF.collection("groups").document(groupId!!).get()
             .addOnSuccessListener { snapshot ->
-                idL = snapshot.get("leader_id") as String
-                nameCamp = snapshot.get("name") as String
+                idL = snapshot.getString("leader_id") as String
+                nameCamp = snapshot.getString("name") as String
             }
+            .addOnFailureListener{
+            }
+
         val camp = Campaigns(nameCamp!!, UUID.fromString(groupId), idL!!)
 
         return camp
