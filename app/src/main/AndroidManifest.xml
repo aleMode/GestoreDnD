@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,11 +15,29 @@
         android:theme="@style/Base.Theme.GestoreDnD"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.JoinCampaignActivity"
+            android:exported="true"
+            android:label="@string/title_activity_join_campaign"
+            android:theme="@style/Base.Theme.GestoreDnD.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="gestorednd.page.link"
+                    android:scheme="https" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Activities.CampaignActivity"
             android:exported="false"
             android:label="@string/title_activity_campaign"
             android:theme="@style/Base.Theme.GestoreDnD.NoActionBar">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -36,16 +53,9 @@
         </activity>
         <activity
             android:name=".Activities.MenuActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/title_activity_menu_main"
             android:theme="@style/Base.Theme.GestoreDnD">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:host="gestorednd.page.link" android:scheme="https" />
-            </intent-filter>
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -66,6 +76,5 @@
                 android:value="" />
         </activity>
     </application>
-
 
 </manifest>

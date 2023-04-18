@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,7 @@ class SheetFragment : Fragment() {
     private lateinit var recyclerView : RecyclerView
     companion object {
         lateinit var charList: ArrayList<Characters>
+
     }
 
     override fun onCreateView(
@@ -186,8 +188,7 @@ class SheetFragment : Fragment() {
         //upload file di lista
         val myref = storageRef.child( "$user/characters.json")
         var file = File(context?.filesDir, "characters.json")
-        val inputStream = FileInputStream(file)
-        myref.putStream(inputStream)
+        myref.putFile(file.toUri())
             .addOnSuccessListener {
                 Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
             }
@@ -203,8 +204,7 @@ class SheetFragment : Fragment() {
         for(pers in chars) { //upload di tutte le schede personaggio
             val myref = storageRef.child("$user/${pers.name}.json")
             val file = File(context?.filesDir, "${pers.name}.json")
-            val inputStream = FileInputStream(file)
-            myref.putStream(inputStream)
+            myref.putFile(file.toUri())
                 .addOnSuccessListener {
                     Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
                 }
@@ -249,5 +249,37 @@ class SheetFragment : Fragment() {
 
         //ricostruisce il layout
         view?.invalidate()
+    }
+
+    fun fixUnsavedChars(){
+        var file = File(context?.filesDir, "characters.json")
+        if (!file.exists()) { //pulisce i files personaggio se non c'è un file characters.json
+            file.createNewFile()
+            context?.filesDir?.listFiles { name -> name.endsWith(".json") }?.forEach {
+                it.delete()
+            }
+
+        }else { //rimuove i personaggi i cui files non sono presenti
+            val jsonString = file.readText()
+            val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
+            val gson = Gson()
+            var chars: ArrayList<Characters> = gson.fromJson(jsonString, listCharactersType)
+            for (i in 0..chars.size ) { //upload di tutte le schede personaggio
+                var pers = chars[i]
+                val file2 = File(context?.filesDir, "${pers.name}.json")
+                if (!file2.exists()) {
+                    chars.removeAt(i)
+                }
+
+            }
+        }
+        return
+    }
+
+    fun mergeChars(){
+        var file = File(context?.filesDir, "characters.json")
+        if (!file.exists()) return
+
+
     }
 }

@@ -153,6 +153,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
             val gson = Gson()
             var jsonString = gson.toJson(chosenChar)
 
+
             var fileName: String = "$namePgSel.json"
             var file = File(filesDir, fileName)
             val writer = BufferedWriter(FileWriter(file, false))
@@ -160,6 +161,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
                 it.write(jsonString)
                 it.newLine()
             }
+            Log.e("FileUtils", "dio bufo ")
         }
 
     }

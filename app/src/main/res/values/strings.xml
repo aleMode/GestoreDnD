@@ -92,4 +92,5 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_campaign">CampaignActivity</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_join_campaign">JoinCampaignActivity</string>
 </resources>
