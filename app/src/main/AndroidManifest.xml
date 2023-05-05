@@ -19,15 +19,14 @@
             android:exported="true"
             android:label="@string/title_activity_join_campaign"
             android:theme="@style/Base.Theme.GestoreDnD.NoActionBar">
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="gestorednd.page.link"
-                    android:scheme="https" />
+                <data android:host="gestorednd1.page.link" android:scheme="https"  />
+                <data android:host="gestorednd1.page.link" android:scheme="http"  />
             </intent-filter>
             <meta-data
                 android:name="android.app.lib_name"
