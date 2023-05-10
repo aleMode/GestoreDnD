@@ -58,19 +58,16 @@ class CampaignsFragment : Fragment() {
         val btnNewCamp = view.findViewById<Button>(R.id.btnNewCamp)
         btnNewCamp.setOnClickListener { //popup per inserire il nuovo personaggio
             insertCamp()
-
         }
 
         val btnUpload = view.findViewById<ImageView>(R.id.icnUploadCamp)
         btnUpload.setOnClickListener{
             upload()
-
         }
 
         val btnSync = view.findViewById<ImageView>(R.id.icnSyncCamp)
         btnSync.setOnClickListener{
             sync()
-
         }
     }
 
@@ -155,6 +152,8 @@ class CampaignsFragment : Fragment() {
 
                     //creazione file su storage remoto della campagna
                     val groupsRef = storageF.collection("groups")
+                        .document(camp.id.toString())
+                        .collection("data")
                         .document(camp.id.toString()).set(hashMapOf(
                             "camp_id" to camp.id,
                             "leader_id" to camp.idLeader,

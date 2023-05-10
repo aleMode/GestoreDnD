@@ -53,7 +53,7 @@ class CampaignActivity : AppCompatActivity() {
             val storageF = Firebase.firestore
 
             val champ = storageF.collection("groups").document(currentCamp.id.toString())
-                .collection("chars").document("$user.json").get() as Pg
+                .collection("data").document("$user.json").get() as Pg
 
             return champ
         }
@@ -70,7 +70,7 @@ class CampaignActivity : AppCompatActivity() {
         //reindirizzamento nel caso in cui l'utente al momento non sia il dm (può accedere solo
         // alla sua scheda)
         if (FirebaseAuth.getInstance().currentUser?.uid != currentCamp.idLeader) {
-            //intent che rimanda alla sheet view del personaggio della scheda personaggio
+            //todo: (?) intent che rimanda alla sheet view del personaggio della scheda personaggio
             // con il personaggio usato nella campagna
             val intent = Intent(this, SheetActivity::class.java)
             this.startActivity(intent)
@@ -124,7 +124,7 @@ class CampaignActivity : AppCompatActivity() {
         val list = ArrayList<Pg>()
 
         val groupsRef = storageF.collection("groups").document(currentCamp.id!!.toString())
-            .collection("chars").get()
+            .collection("data").get()
             .addOnSuccessListener { sheets ->
                 Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
 

@@ -18,6 +18,7 @@ import com.example.gestorednd.MainMenuFragments.CampaignsFragment
 import com.example.gestorednd.MainMenuFragments.SheetFragment
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -100,8 +101,9 @@ class JoinCampaignActivity : AppCompatActivity() {
     }
 
     private fun initial() {
-        val filename = "characters.json"
-        val file = File(this.filesDir, filename)
+        //caricamento personaggi locali
+        var filename = "characters.json"
+        var file = File(this.filesDir, filename)
         var chars : ArrayList<Characters> = arrayListOf()
         try {
             val jsonString = file.readText()
@@ -117,6 +119,25 @@ class JoinCampaignActivity : AppCompatActivity() {
         }
 
         SheetFragment.charList = chars //per refresh dell'adapter
+
+        //caricamento campagne locali
+        filename = "campaigns.json"
+        file = File(this.filesDir, filename)
+        var camps : ArrayList<Campaigns> = arrayListOf()
+        try {
+            val jsonString = file.readText()
+            val gson = Gson()
+            val listCharactersType = object : TypeToken<ArrayList<Campaigns>>() {}.type
+            chars = gson.fromJson(jsonString, listCharactersType)
+
+        } catch (e: FileNotFoundException) {
+            //se il file non esiste crealo
+            file.createNewFile()
+        } catch (e: Exception) {
+            Log.e("FileUtils", "Error ")
+        }
+
+        CampaignsFragment.campList = camps //per refresh dell'adapter
     }
 
 
@@ -178,16 +199,19 @@ class JoinCampaignActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageF = Firebase.firestore
         val groupSet = storageF.collection("groups").document(groupId!!)
-            .update("members", user)
+            .collection("data").document(groupId!!)
+            .update("members", FieldValue.arrayUnion(user))
+
         val groupsRef = storageF.collection("groups").document(groupId!!)
-            .collection("chars").document("$user.json").set(chosenPg2)
+            .collection("data").document("$user.json").set(chosenPg2)
             .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
 
         var idL : String = ""
         var nameCamp : String = ""
 
-        storageF.collection("groups").document(groupId!!).get()
+        storageF.collection("groups").document(groupId!!).collection("data")
+            .document(groupId!!).get()
             .addOnSuccessListener { snapshot ->
                 idL = snapshot.getString("leader_id") as String
                 nameCamp = snapshot.getString("name") as String
