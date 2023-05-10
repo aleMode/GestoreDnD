@@ -90,12 +90,13 @@ class JoinCampaignActivity : AppCompatActivity() {
             }
             Log.e("FileUtils", "dio scimmia bastarda ")
 
-
         }else{
             Log.w(ContentValues.TAG, "già membro o dm scemo")
         }
 
         Log.w(ContentValues.TAG, "diocaneeeeeeeeeeeeeeeeeeeeeeeeee")
+        val intent = Intent(this, CampaignActivity::class.java)
+        this.startActivity(intent)
     }
 
     private fun initial() {

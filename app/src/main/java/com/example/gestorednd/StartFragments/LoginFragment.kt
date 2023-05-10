@@ -42,6 +42,7 @@ class LoginFragment() : Fragment() {
         val btnLogin = view.findViewById<Button>(R.id.btnLogin)
 
         btnLogin.setOnClickListener {
+            //hardCleanup()
             val email = view.findViewById<TextView>(R.id.txtEmailLogin).text.trim().toString()
             val password = view.findViewById<TextView>(R.id.txtPwdLogin).text.trim().toString()
             val error = view.findViewById<TextView>(R.id.txtErrorLogin)

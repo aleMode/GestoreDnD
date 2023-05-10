@@ -30,7 +30,7 @@ class CampaignsFragment : Fragment() {
     private lateinit var adapter : CampaignListAdapter
     private lateinit var recyclerView : RecyclerView
     companion object{
-        lateinit var campList : ArrayList<Campaigns>
+        var campList : ArrayList<Campaigns> = arrayListOf()
     }
 
     override fun onCreateView(
