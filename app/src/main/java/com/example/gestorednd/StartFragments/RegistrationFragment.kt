@@ -19,8 +19,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileReader
 import java.util.regex.Pattern
 
 class RegistrationFragment() : Fragment() {
@@ -80,6 +82,7 @@ class RegistrationFragment() : Fragment() {
                                     auth.signInWithEmailAndPassword(emailTxt, passTxt)
                                         .addOnCompleteListener(requireActivity()) { task ->
                                             if (task.isSuccessful) {
+                                                loginCleanup(emailTxt)
                                                 val intent =
                                                     Intent(context, MenuActivity::class.java)
                                                 startActivity(intent)
@@ -112,5 +115,38 @@ class RegistrationFragment() : Fragment() {
 
         }
         return view
+    }
+
+    //funzione per pulire i files locali ed evitare conflitti nel caso di login con nuovo account
+    fun loginCleanup(email : String){
+        val dir = File(context?.filesDir?.path)
+        val lastlog = File(context?.filesDir, "lastLogin.txt")
+        if(!lastlog.exists()){
+            lastlog.createNewFile()
+            lastlog.writeText(email)
+        }else {
+            val reader = BufferedReader(FileReader(lastlog))
+            val line = reader.readLine()
+            reader.close()
+            if (!line.contains(email)) {
+                dir.listFiles()?.forEach {
+                    if (it.isFile && it.name.endsWith(".json")) {
+                        it.delete()
+                    }
+                }
+                lastlog.writeText(email)
+            }
+        }
+    }
+
+    //funzione per pulire semplicemente i files nella directory filesdir
+    fun hardCleanup(){
+        val dir = File(context?.filesDir?.path)
+        dir.listFiles()?.forEach {
+            if (it.isFile && it.name.endsWith(".json")) {
+                it.delete()
+            }
+        }
+        File(dir,"lastLogin.txt").delete()
     }
 }

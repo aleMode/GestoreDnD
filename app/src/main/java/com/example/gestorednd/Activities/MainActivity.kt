@@ -12,12 +12,17 @@ import androidx.fragment.app.FragmentManager
 import com.example.gestorednd.StartFragments.LoginFragment
 import com.example.gestorednd.R
 import com.example.gestorednd.StartFragments.RegistrationFragment
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
 import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
     companion object{
         var offline = false
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +78,39 @@ class MainActivity : AppCompatActivity() {
         val newLog = LoginFragment()
         fm.beginTransaction().replace(R.id.fragmentContainerView, newLog)
             .addToBackStack(null).commit()
+    }
+
+    //funzione per pulire i files locali ed evitare conflitti nel caso di login con nuovo account
+    fun loginCleanup(email : String){
+        val dir = File(this.filesDir.path)
+        val lastlog = File(this.filesDir, "lastLogin.txt")
+        if(!lastlog.exists()){
+            lastlog.createNewFile()
+            lastlog.writeText(email)
+        }else {
+            val reader = BufferedReader(FileReader(lastlog))
+            val line = reader.readLine()
+            reader.close()
+            if (!line.contains(email)) {
+                dir.listFiles()?.forEach {
+                    if (it.isFile && it.name.endsWith(".json")) {
+                        it.delete()
+                    }
+                }
+                lastlog.writeText(email)
+            }
+        }
+    }
+
+    //funzione per pulire semplicemente i files nella directory filesdir
+    fun hardCleanup(){
+        val dir = File(this.filesDir.path)
+        dir.listFiles()?.forEach {
+            if (it.isFile && it.name.endsWith(".json")) {
+                it.delete()
+            }
+        }
+        File(dir,"lastLogin.txt").delete()
     }
 
 }
