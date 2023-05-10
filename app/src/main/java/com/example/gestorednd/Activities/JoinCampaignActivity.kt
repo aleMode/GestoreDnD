@@ -1,9 +1,7 @@
 package com.example.gestorednd.Activities
 
-import android.app.Dialog
 import android.content.ContentValues
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -20,9 +18,6 @@ import com.example.gestorednd.MainMenuFragments.CampaignsFragment
 import com.example.gestorednd.MainMenuFragments.SheetFragment
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -40,65 +35,89 @@ class JoinCampaignActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join_campaign)
 
-        //intercettazione del link con intent
-        Firebase.dynamicLinks.getDynamicLink(intent)
-            .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                Log.w(ContentValues.TAG, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-
-                // Get the deep link from the Dynamic Link data
-                var deepLink : Uri? = null
-                if (pendingDynamicLinkData?.link == null){
-                    return@addOnSuccessListener
-                }
-                deepLink = pendingDynamicLinkData.link
-                Log.w(ContentValues.TAG, "link $deepLink")
-
-                // Parse the deep link to get the group ID
-                val groupId = deepLink?.getQueryParameter("id")
-
-                if(!alreadyJoined(groupId)){
-                    Log.e("FileUtils", "dio australopiteco ")
-                    initial()
-
-                    val layoutManager = LinearLayoutManager(this)
-                    var recyclerView = findViewById<RecyclerView>(R.id.lstJoiningChars)
-                    recyclerView.layoutManager = layoutManager
-                    var adapter = PopupSheetListAdapter(SheetFragment.charList) //uso dell'adapter ad hoc
-                    recyclerView.adapter = adapter
-
-                    var char : Characters? = null
-
-                    val btnQuit = findViewById<Button>(R.id.btnJoinCharCanc)
-                    btnQuit.setOnClickListener {
-                        //TODO: finisci qui il return a una attività
-                    }
-                    val btnOk = findViewById<Button>(R.id.btnJoinCharOk)
-                    btnOk.setOnClickListener {
-                        char = adapter.getSelected()
-
-                        if(char == null){
-                            val intent = Intent(this, CampaignActivity::class.java)
-                            this.startActivity(intent)
-                        }
-
-                        val camp = remotejoin(char, groupId)
-                        localjoin(char, groupId, camp)
-                    }
-                    Log.e("FileUtils", "dio scimmia bastarda ")
-
-
-                }else{
-                    Log.w(ContentValues.TAG, "già membro o dm scemo")
-                }
-
-                Log.w(ContentValues.TAG, "diocaneeeeeeeeeeeeeeeeeeeeeeeeee")
-            }
-            .addOnFailureListener(this) { e ->
-                Log.w(ContentValues.TAG, "error handling link")
-            }
-
-
+        val link = getCampaignLink()
+        if(!link.contains("error"))
+            joinCampaign(link)
     }
+
+    //intercettazione del link con intent
+    fun getCampaignLink(): String {
+
+        Log.w(ContentValues.TAG, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
+        // Get the deep link from the intent
+        var deepLink : String
+        if (intent.dataString == null){
+            Log.e("Join", "intent non ricevuto")
+            return "error"
+        }
+        deepLink = intent.dataString!!
+        Log.w(ContentValues.TAG, "link $deepLink")
+        return deepLink
+    }
+
+    private fun joinCampaign(deepLink: String) {
+        // Parse the deep link to get the group ID
+        val parts = deepLink.split("=")
+        val groupId = parts[1]
+        if(!alreadyJoined(groupId)){
+            Log.e("FileUtils", "dio australopiteco ")
+            initial()
+
+            val layoutManager = LinearLayoutManager(this)
+            var recyclerView = findViewById<RecyclerView>(R.id.lstJoiningChars)
+            recyclerView.layoutManager = layoutManager
+            var adapter = PopupSheetListAdapter(SheetFragment.charList) //uso dell'adapter ad hoc
+            recyclerView.adapter = adapter
+
+            var char : Characters? = null
+
+            val btnQuit = findViewById<Button>(R.id.btnJoinCharCanc)
+            btnQuit.setOnClickListener {
+                //TODO: finisci qui il return a una attività
+            }
+            val btnOk = findViewById<Button>(R.id.btnJoinCharOk)
+            btnOk.setOnClickListener {
+                char = adapter.getSelected()
+
+                if(char == null){
+                    val intent = Intent(this, CampaignActivity::class.java)
+                    this.startActivity(intent)
+                }
+
+                val camp = remotejoin(char, groupId)
+                localjoin(char, groupId, camp)
+            }
+            Log.e("FileUtils", "dio scimmia bastarda ")
+
+
+        }else{
+            Log.w(ContentValues.TAG, "già membro o dm scemo")
+        }
+
+        Log.w(ContentValues.TAG, "diocaneeeeeeeeeeeeeeeeeeeeeeeeee")
+    }
+
+    private fun initial() {
+        val filename = "characters.json"
+        val file = File(this.filesDir, filename)
+        var chars : ArrayList<Characters> = arrayListOf()
+        try {
+            val jsonString = file.readText()
+            val gson = Gson()
+            val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
+            chars = gson.fromJson(jsonString, listCharactersType)
+
+        } catch (e: FileNotFoundException) {
+            //se il file non esiste crealo
+            file.createNewFile()
+        } catch (e: Exception) {
+            Log.e("FileUtils", "Error ")
+        }
+
+        SheetFragment.charList = chars //per refresh dell'adapter
+    }
+
 
     //funzione per capire se il gruppo è già stato joinato
     private fun alreadyJoined(groupId: String?): Boolean {
@@ -137,26 +156,6 @@ class JoinCampaignActivity : AppCompatActivity() {
                 joined = true
 
         return joined
-    }
-
-    private fun initial() {
-        val filename = "characters.json"
-        val file = File(this.filesDir, filename)
-        var chars : ArrayList<Characters> = arrayListOf()
-        try {
-            val jsonString = file.readText()
-            val gson = Gson()
-            val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
-            chars = gson.fromJson(jsonString, listCharactersType)
-
-        } catch (e: FileNotFoundException) {
-            //se il file non esiste crealo
-            file.createNewFile()
-        } catch (e: Exception) {
-            Log.e("FileUtils", "Error ")
-        }
-
-        SheetFragment.charList = chars //per refresh dell'adapter
     }
 
     //query to join the firebase campaign and to save there a copy of the character
