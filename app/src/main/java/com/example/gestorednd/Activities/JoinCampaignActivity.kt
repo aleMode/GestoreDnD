@@ -18,12 +18,19 @@ import com.example.gestorednd.MainMenuFragments.CampaignsFragment
 import com.example.gestorednd.MainMenuFragments.SheetFragment
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileNotFoundException
@@ -35,6 +42,11 @@ class JoinCampaignActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join_campaign)
+
+        //snippet for debugging to clear the local file
+        /*var filename = "campaigns.json"
+        var file = File(this.filesDir, filename)
+        file.delete()*/
 
         val link = getCampaignLink()
         if(!link.contains("error"))
@@ -82,12 +94,17 @@ class JoinCampaignActivity : AppCompatActivity() {
                 char = adapter.getSelected()
 
                 if(char == null){
-                    val intent = Intent(this, CampaignActivity::class.java)
+                    Log.e("Debug", "dio culo bastarda ")
+
+                    val intent = Intent(this, MenuActivity::class.java)
                     this.startActivity(intent)
                 }
 
                 val camp = remotejoin(char, groupId)
-                localjoin(char, groupId, camp)
+                localjoin(char, groupId, camp!!)
+                Log.w(ContentValues.TAG, "diocaneeeeeeeeeeeeeeeeeeeeeeeeee")
+                val intent = Intent(this, MenuActivity::class.java)
+                this.startActivity(intent)
             }
             Log.e("FileUtils", "dio scimmia bastarda ")
 
@@ -95,11 +112,10 @@ class JoinCampaignActivity : AppCompatActivity() {
             Log.w(ContentValues.TAG, "già membro o dm scemo")
         }
 
-        Log.w(ContentValues.TAG, "diocaneeeeeeeeeeeeeeeeeeeeeeeeee")
-        val intent = Intent(this, CampaignActivity::class.java)
-        this.startActivity(intent)
+
     }
 
+    //carica i personaggi presenti
     private fun initial() {
         //caricamento personaggi locali
         var filename = "characters.json"
@@ -119,8 +135,9 @@ class JoinCampaignActivity : AppCompatActivity() {
         }
 
         SheetFragment.charList = chars //per refresh dell'adapter
+        Log.e("debug", chars.toString())
 
-        //caricamento campagne locali
+        /*//caricamento campagne locali
         filename = "campaigns.json"
         file = File(this.filesDir, filename)
         var camps : ArrayList<Campaigns> = arrayListOf()
@@ -128,16 +145,18 @@ class JoinCampaignActivity : AppCompatActivity() {
             val jsonString = file.readText()
             val gson = Gson()
             val listCharactersType = object : TypeToken<ArrayList<Campaigns>>() {}.type
-            chars = gson.fromJson(jsonString, listCharactersType)
+            camps = gson.fromJson(jsonString, listCharactersType)
 
         } catch (e: FileNotFoundException) {
             //se il file non esiste crealo
             file.createNewFile()
+            camps = arrayListOf()
         } catch (e: Exception) {
             Log.e("FileUtils", "Error ")
+            camps = arrayListOf()
         }
 
-        CampaignsFragment.campList = camps //per refresh dell'adapter
+        CampaignsFragment.campList = camps //per refresh dell'adapter */
     }
 
 
@@ -181,7 +200,7 @@ class JoinCampaignActivity : AppCompatActivity() {
     }
 
     //query to join the firebase campaign and to save there a copy of the character
-    private fun remotejoin(char: Characters?, groupId: String?): Campaigns {
+    private fun remotejoin(char: Characters?, groupId: String?): Campaigns? {
         //recupero e copio il personaggio richiesto
         val fileName = char?.name!! +".json"
         val file = File(filesDir, fileName)
@@ -197,7 +216,7 @@ class JoinCampaignActivity : AppCompatActivity() {
 
         //caricamento in remote del personaggio e join della campagna
         val user = FirebaseAuth.getInstance().currentUser?.uid
-        val storageF = Firebase.firestore
+        var storageF = Firebase.firestore
         val groupSet = storageF.collection("groups").document(groupId!!)
             .collection("data").document(groupId!!)
             .update("members", FieldValue.arrayUnion(user))
@@ -207,21 +226,60 @@ class JoinCampaignActivity : AppCompatActivity() {
             .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
 
-        var idL : String = ""
-        var nameCamp : String = ""
 
-        storageF.collection("groups").document(groupId!!).collection("data")
-            .document(groupId!!).get()
+        var camp : Campaigns? = runBlocking {
+            retrieveCamp(groupId)
+        }
+        /*val camppp = storageF.collection("groups")
+            .document(groupId!!)
+            .collection("data")
+            .document("82255acc-5b71-4a85-9836-ce0c685fa364")
+        camppp.get()
             .addOnSuccessListener { snapshot ->
-                idL = snapshot.getString("leader_id") as String
-                nameCamp = snapshot.getString("name") as String
-            }
-            .addOnFailureListener{
-            }
 
-        val camp = Campaigns(nameCamp!!, UUID.fromString(groupId), idL!!)
+                val data = snapshot.data
+                Log.e("debug2", data.toString())
+
+                camp = Campaigns(
+                    data!!.get("name") as String,
+                    UUID.fromString(groupId),
+                    data!!.get("leader_id") as String
+                )
+                //idL = snapshot.toObject<Campaigns>()!!
+
+                //nameCamp = snapshot.getString("name") as String
+            }
+            .addOnFailureListener{ exception ->
+                Log.e("debug", "culo" + exception)
+
+            }*/
+
+
+        Log.e("debug3", camp.toString())
 
         return camp
+    }
+
+    //async function to retrieve correctly the campaign
+    private suspend fun retrieveCamp(groupId: String?) : Campaigns {
+        val db = Firebase.firestore
+        val documentSnapshot = db.collection("groups")
+            .document(groupId!!)
+            .collection("data")
+            .document(groupId!!).get().await()
+        var value : Campaigns? = null
+        if (documentSnapshot.exists()) {
+            Log.e("debug", "halp")
+
+            value = Campaigns(
+                documentSnapshot.data!!["name"] as String,
+                UUID.fromString(groupId),
+                documentSnapshot.data!!["leader_id"] as String
+            )
+            Log.e("debug", value.toString())
+
+        }
+        return value!!
     }
 
     //join nelle campagne salvate localmente e synch
@@ -240,22 +298,26 @@ class JoinCampaignActivity : AppCompatActivity() {
                 Toast.makeText(this, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
             }
 
+        CampaignsFragment.campList.add(camp)
+
         //aggiornamento del file con la lista delle campagne
         file = File(this.filesDir, "campaigns.json")
         file.createNewFile()
         val writer = BufferedWriter(FileWriter(file, false))
         val gson = Gson()
+        Log.e("debug", CampaignsFragment.campList.toString())
+
         writer.use {
             it.write(gson.toJson(CampaignsFragment.campList))
             it.newLine()
+            it.flush()
         }
-
-        CampaignsFragment.campList.add(camp)
+        writer.close()
 
         //upload del file delle campagne
         myref.putFile(file.toUri())
             .addOnSuccessListener {
-                Toast.makeText(this, "Operation successful!", Toast.LENGTH_SHORT).show()
+                Log.e("debug", "upload ok")
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()

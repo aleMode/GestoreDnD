@@ -64,7 +64,10 @@ class CampaignActivity : AppCompatActivity() {
         setContentView(R.layout.activity_campaign)
 
         //ricezione della posizione della campagna da selezionare
-        var index = Integer.parseInt(intent.getStringExtra("pos"))
+        val number = intent.getStringExtra("pos")
+        var index = 0
+        if (number != null)
+            index = Integer.parseInt(number)
 
         currentCamp = CampaignsFragment.campList[index]
         //reindirizzamento nel caso in cui l'utente al momento non sia il dm (può accedere solo
