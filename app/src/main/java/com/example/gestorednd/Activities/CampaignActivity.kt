@@ -29,6 +29,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.tasks.await
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -47,16 +48,58 @@ class CampaignActivity : AppCompatActivity() {
 
         var chosenChar = Pg()
 
-        fun estraiPers(): Pg {
+        suspend fun estraiPers(): Pg {
             //recupero il personaggio usato nella campagna
             val user = FirebaseAuth.getInstance().currentUser?.uid
             val storageF = Firebase.firestore
 
-            val champ = storageF.collection("groups").document(currentCamp.id.toString())
-                .collection("data").document("$user.json").get() as Pg
+            val champSnapshot = storageF.collection("groups").document(currentCamp.id.toString())
+                .collection("data").document("$user.json").get().await()
 
+            val champ = castToPg(champSnapshot.data)
             return champ
         }
+
+        private fun castToPg(data: Map<String, Any>?): Pg {
+            return Pg(
+                data?.get("idOwner") as String?,
+
+                data?.get("pgName") as String? ?: "",
+                data?.get("species") as String? ?: "",
+                data?.get("clss") as String? ?: "",
+                (data?.get("lvl") as Long?)?.toInt() ?: 0,
+
+                (data?.get("hp") as Long?)?.toInt() ?: 0 ,
+                (data?.get("ac") as Long?)?.toInt() ?: 0,
+                (data?.get("speed") as Long?)?.toInt() ?: 0,
+                (data?.get("profBonus") as Long?)?.toInt() ?: 0,
+                (data?.get("initBonus") as Long?)?.toInt() ?: 0,
+
+                (data?.get("str") as Long?)?.toInt() ?: 0,
+                (data?.get("dex") as Long?)?.toInt() ?: 0,
+                (data?.get("con") as Long?)?.toInt() ?: 0,
+                (data?.get("int") as Long?)?.toInt() ?: 0,
+                (data?.get("wis") as Long?)?.toInt() ?: 0,
+                (data?.get("cha") as Long?)?.toInt() ?: 0,
+
+                (data?.get("acr") as Long?)?.toInt() ?: 0,
+                (data?.get("ath") as Long?)?.toInt() ?: 0,
+                (data?.get("arc") as Long?)?.toInt() ?: 0,
+                (data?.get("dec") as Long?)?.toInt() ?: 0,
+                (data?.get("ins") as Long?)?.toInt() ?: 0,
+                (data?.get("kno") as Long?)?.toInt() ?: 0,
+                (data?.get("med") as Long?)?.toInt() ?: 0,
+                (data?.get("per") as Long?)?.toInt() ?: 0,
+                (data?.get("ste") as Long?)?.toInt() ?: 0,
+                (data?.get("sur") as Long?)?.toInt() ?: 0,
+
+                data?.get("equip") as ArrayList<String>? ?: arrayListOf(),
+                data?.get("bag") as ArrayList<String>? ?: arrayListOf(),
+                data?.get("spellArray") as ArrayList<Pair<String,Int>>? ?: arrayListOf(),
+                data?.get("featArray") as ArrayList<Pair<String,String>>? ?: arrayListOf(),
+                )
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,7 +175,7 @@ class CampaignActivity : AppCompatActivity() {
                 Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
 
                 for (sheet in sheets) {
-                    val pg = sheet as Pg
+                    val pg = castToPg(sheet.data)
                     list.add(pg)
                 }
             }

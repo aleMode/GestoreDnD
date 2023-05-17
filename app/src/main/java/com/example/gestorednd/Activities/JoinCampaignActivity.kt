@@ -44,9 +44,9 @@ class JoinCampaignActivity : AppCompatActivity() {
         setContentView(R.layout.activity_join_campaign)
 
         //snippet for debugging to clear the local file
-        /*var filename = "campaigns.json"
+        var filename = "campaigns.json"
         var file = File(this.filesDir, filename)
-        file.delete()*/
+        file.delete()
 
         val link = getCampaignLink()
         if(!link.contains("error"))
@@ -54,7 +54,7 @@ class JoinCampaignActivity : AppCompatActivity() {
     }
 
     //intercettazione del link con intent
-    fun getCampaignLink(): String {
+    private fun getCampaignLink(): String {
 
         Log.w(ContentValues.TAG, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 

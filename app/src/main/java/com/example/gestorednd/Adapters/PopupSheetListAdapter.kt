@@ -59,8 +59,11 @@ class PopupSheetListAdapter(private val charList : ArrayList<Characters>) : Recy
         notifyDataSetChanged()
     }
 
-    fun getSelected() : Characters {
-        return charList[selectedItem!!]
+    fun getSelected() : Characters? {
+        if(selectedItem != null)
+            return charList[selectedItem!!]
+        else
+            return null
     }
 
     override fun getItemCount(): Int {

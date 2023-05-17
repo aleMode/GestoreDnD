@@ -18,6 +18,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.runBlocking
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -26,12 +27,12 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
 
     val fm : FragmentManager = supportFragmentManager
 
-    //personaggio correntemente visualizzato / da visalizzare
-    lateinit var namePgSel : String
-
     companion object {
         var chosenChar = Pg()
         var campaignChar = false
+
+        //personaggio correntemente visualizzato / da visalizzare
+        var namePgSel : String = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +56,8 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         }else {
             //TODO: utile cambiare in pos/stringa per camp da user/stringa con nome per dm
             val user = FirebaseAuth.getInstance().currentUser?.uid
-            chosenChar = CampaignActivity.estraiPers()
+            chosenChar = runBlocking { CampaignActivity.estraiPers()}
+            namePgSel = chosenChar.pgName
         }
 
         val statsFrag = StatsFragment()
