@@ -47,6 +47,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         //se entrambi sono nulli si usa l'inizializzazione per membro della campagna
         val index = intent.getStringExtra("pos")
         val campIndex = intent.getStringExtra("camp")
+        Log.e("controllo intent", "$index e poi $campIndex")
         if(index != null) {
             if(campIndex != null) {
                 chosenChar = CampaignActivity.sheetList[Integer.parseInt(campIndex)]
@@ -55,7 +56,6 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
             }
         }else {
             //TODO: utile cambiare in pos/stringa per camp da user/stringa con nome per dm
-            val user = FirebaseAuth.getInstance().currentUser?.uid
             chosenChar = runBlocking { CampaignActivity.estraiPers()}
             namePgSel = chosenChar.pgName
         }
@@ -138,23 +138,16 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
 
     fun save(){
         //TODO: modifica in modo che salvi in remoto per il master (salva il nome del tizio e del pers)
+
         if(campaignChar){
             //se edito un personaggio di una campagna lo salvo direttamente in remoto
             //salvo con il campo idowner in modo che sia sempre chiaro di chi sia il personaggio
-            var user = chosenChar.idOwner
-            val storageF = Firebase.firestore
-
-            val groupsRef = storageF.collection("groups")
-                .document(CampaignActivity.currentCamp.id.toString())
-                .collection("chars").document("$user.json").set(chosenChar)
-                .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
-                .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
-
+            runBlocking { remoteSave() }
+            Log.e("debug", "proova2")
         }else {
             //copia del contenuto del file json nello storage interno se è un pers normale
             val gson = Gson()
             var jsonString = gson.toJson(chosenChar)
-
 
             var fileName: String = "$namePgSel.json"
             var file = File(filesDir, fileName)
@@ -163,9 +156,21 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
                 it.write(jsonString)
                 it.newLine()
             }
-            Log.e("FileUtils", "dio bufo ")
+            Log.e("debug", "proova1")
         }
+    }
 
+    private suspend fun remoteSave(){
+        var user = chosenChar.idOwner
+        val storageF = Firebase.firestore
+
+        val groupsRef = storageF.collection("groups")
+            .document(CampaignActivity.currentCamp.id.toString())
+            .collection("chars")
+            .document("$user.json")
+            .set(chosenChar)
+            .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
+            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
     }
 
 

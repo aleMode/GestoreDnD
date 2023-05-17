@@ -74,7 +74,6 @@ class JoinCampaignActivity : AppCompatActivity() {
         val parts = deepLink.split("=")
         val groupId = parts[1]
         if(!alreadyJoined(groupId)){
-            Log.e("FileUtils", "dio australopiteco ")
             initial()
 
             val layoutManager = LinearLayoutManager(this)
@@ -94,8 +93,6 @@ class JoinCampaignActivity : AppCompatActivity() {
                 char = adapter.getSelected()
 
                 if(char == null){
-                    Log.e("Debug", "dio culo bastarda ")
-
                     val intent = Intent(this, MenuActivity::class.java)
                     this.startActivity(intent)
                 }
@@ -106,10 +103,9 @@ class JoinCampaignActivity : AppCompatActivity() {
                 val intent = Intent(this, MenuActivity::class.java)
                 this.startActivity(intent)
             }
-            Log.e("FileUtils", "dio scimmia bastarda ")
 
         }else{
-            Log.w(ContentValues.TAG, "già membro o dm scemo")
+            Log.w(ContentValues.TAG, "già membro o dm")
         }
 
 
@@ -158,7 +154,6 @@ class JoinCampaignActivity : AppCompatActivity() {
 
         CampaignsFragment.campList = camps //per refresh dell'adapter */
     }
-
 
     //funzione per capire se il gruppo è già stato joinato
     private fun alreadyJoined(groupId: String?): Boolean {

@@ -53,8 +53,10 @@ class CampaignActivity : AppCompatActivity() {
             val user = FirebaseAuth.getInstance().currentUser?.uid
             val storageF = Firebase.firestore
 
-            val champSnapshot = storageF.collection("groups").document(currentCamp.id.toString())
-                .collection("data").document("$user.json").get().await()
+            val champSnapshot = storageF.collection("groups")
+                .document(currentCamp.id.toString())
+                .collection("chars")
+                .document("$user.json").get().await()
 
             val champ = castToPg(champSnapshot.data)
             return champ
@@ -118,6 +120,7 @@ class CampaignActivity : AppCompatActivity() {
         if (FirebaseAuth.getInstance().currentUser?.uid != currentCamp.idLeader) {
             //todo: (?) intent che rimanda alla sheet view del personaggio della scheda personaggio
             // con il personaggio usato nella campagna
+            SheetActivity.campaignChar = true
             val intent = Intent(this, SheetActivity::class.java)
             this.startActivity(intent)
         }
@@ -127,17 +130,16 @@ class CampaignActivity : AppCompatActivity() {
         //TODO: controlla funzione per creazione dello short link e metti in fun separata
         val shareLink = "https://gestorednd.page.link/group?id=" + currentCamp.id
         val txtLink = findViewById<TextView>(R.id.txtLink)
-        var link : Uri
+        /*var link : Uri
         val dynamicLink = Firebase.dynamicLinks.dynamicLink {
             link = Uri.parse(shareLink)
             domainUriPrefix = "https://gestorednd.page.link"
             setAndroidParameters(DynamicLink.AndroidParameters.Builder().build())
             buildShortDynamicLink()
         }
-        val linkFin = dynamicLink.toString()
-        Log.w(ContentValues.TAG, "diocaneeeeeeeeeeeeeeeeeeeeeeeeee ma prima")
+        val linkFin = dynamicLink.toString()*/
 
-        txtLink.text = linkFin
+        txtLink.text = shareLink
         //copia nella clipboard del link quando viene cliccato
         txtLink.setOnClickListener{
             val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -154,14 +156,6 @@ class CampaignActivity : AppCompatActivity() {
         charList = pgToChar(sheetList)
         adapter = SheetListAdapterCamp(this.charList) //uso dell'adapter ad hoc,
         recyclerView.adapter = adapter
-    }
-
-    private fun pgToChar(sheetList: ArrayList<Pg>): ArrayList<Characters> {
-        var list : ArrayList<Characters> = arrayListOf()
-        for(pg in sheetList)
-            list.add(Characters(pg.pgName, pg.species, pg.clss, pg.lvl))
-
-        return list
     }
 
     private fun getMembers(): ArrayList<Pg> {
@@ -183,5 +177,15 @@ class CampaignActivity : AppCompatActivity() {
 
         return list
     }
+
+    private fun pgToChar(sheetList: ArrayList<Pg>): ArrayList<Characters> {
+        var list : ArrayList<Characters> = arrayListOf()
+        for(pg in sheetList)
+            list.add(Characters(pg.pgName, pg.species, pg.clss, pg.lvl))
+
+        return list
+    }
+
+
 
 }
