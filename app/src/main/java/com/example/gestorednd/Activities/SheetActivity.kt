@@ -19,6 +19,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -48,16 +49,21 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         val index = intent.getStringExtra("pos")
         val campIndex = intent.getStringExtra("camp")
         Log.e("controllo intent", "$index e poi $campIndex")
-        if(index != null) {
-            if(campIndex != null) {
-                chosenChar = CampaignActivity.sheetList[Integer.parseInt(campIndex)]
+        if(index == null) {
+            //se non ho index sono tra i personaggi della campagna
+            if(campIndex == null) {
+                //se non ho indici estraggo il personaggio della campagna corrente (con currentCamp)
+                //TODO: utile cambiare in pos/stringa per camp da user/stringa con nome per dm
+                chosenChar = runBlocking { CampaignActivity.estraiPers()}
+                namePgSel = chosenChar.pgName
             }else {
-                chosenChar = initialize(index)
+                //se ho campindex sono il dm di una campagna
+                chosenChar = CampaignActivity.sheetList[Integer.parseInt(campIndex)]
             }
         }else {
-            //TODO: utile cambiare in pos/stringa per camp da user/stringa con nome per dm
-            chosenChar = runBlocking { CampaignActivity.estraiPers()}
-            namePgSel = chosenChar.pgName
+            //se ho un index significa che sono tra i personaggi locali
+            chosenChar = initialize(index)
+
         }
 
         val statsFrag = StatsFragment()
@@ -124,11 +130,9 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
 
     fun initialize(pos : String?) : Pg {
         var index = pos?.toInt()
-
         var chars = getCharacterList()
 
         namePgSel = chars[index!!].name
-
         val chosenPg = getPg(chars[index!!].name)
 
         findViewById<TextView>(R.id.txtCharName).text = namePgSel
@@ -168,9 +172,10 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
             .document(CampaignActivity.currentCamp.id.toString())
             .collection("chars")
             .document("$user.json")
-            .set(chosenChar)
-            .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
-            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
+            .set(chosenChar).await()
+
+        Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
+
     }
 
 

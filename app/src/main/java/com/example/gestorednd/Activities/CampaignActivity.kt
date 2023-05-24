@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import java.io.BufferedWriter
 import java.io.File
@@ -40,11 +42,11 @@ class CampaignActivity : AppCompatActivity() {
 
     private lateinit var adapter : SheetListAdapterCamp
     private lateinit var recyclerView : RecyclerView
-    private lateinit var charList : ArrayList<Characters>
+    private var charList : ArrayList<Characters> = arrayListOf()
 
     companion object {
         lateinit var currentCamp : Campaigns
-        lateinit var sheetList : ArrayList<Pg>
+        var sheetList = ArrayList<Pg>()
 
         var chosenChar = Pg()
 
@@ -58,8 +60,7 @@ class CampaignActivity : AppCompatActivity() {
                 .collection("chars")
                 .document("$user.json").get().await()
 
-            val champ = castToPg(champSnapshot.data)
-            return champ
+            return castToPg(champSnapshot.data)
         }
 
         private fun castToPg(data: Map<String, Any>?): Pg {
@@ -130,6 +131,8 @@ class CampaignActivity : AppCompatActivity() {
         //TODO: controlla funzione per creazione dello short link e metti in fun separata
         val shareLink = "https://gestorednd.page.link/group?id=" + currentCamp.id
         val txtLink = findViewById<TextView>(R.id.txtLink)
+        txtLink.text = shareLink
+
         /*var link : Uri
         val dynamicLink = Firebase.dynamicLinks.dynamicLink {
             link = Uri.parse(shareLink)
@@ -138,44 +141,51 @@ class CampaignActivity : AppCompatActivity() {
             buildShortDynamicLink()
         }
         val linkFin = dynamicLink.toString()*/
+        //txtLink.text = shareLink
 
-        txtLink.text = shareLink
         //copia nella clipboard del link quando viene cliccato
-        txtLink.setOnClickListener{
+        val copyIcon = findViewById<ImageView>(R.id.imgCopyLinkIcon)
+        copyIcon.setOnClickListener{
             val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clipData = ClipData.newPlainText("text", txtLink.text)
             clipboardManager.setPrimaryClip(clipData)
             Toast.makeText(this, "Text copied to clipboard", Toast.LENGTH_LONG).show()
         }
 
-        //lista dei personaggi
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView = findViewById(R.id.lstMembers)
-        recyclerView.layoutManager = layoutManager
-        sheetList  = getMembers()
-        charList = pgToChar(sheetList)
-        adapter = SheetListAdapterCamp(this.charList) //uso dell'adapter ad hoc,
-        recyclerView.adapter = adapter
+        if(FirebaseAuth.getInstance().currentUser?.uid == currentCamp.idLeader) {
+            //lista dei personaggi
+            val layoutManager = LinearLayoutManager(this)
+            recyclerView = findViewById(R.id.lstMembers)
+            recyclerView.layoutManager = layoutManager
+            runBlocking { getMembers()}
+            adapter = SheetListAdapterCamp(this.charList) //uso dell'adapter ad hoc,
+            recyclerView.adapter = adapter
+        }
     }
 
-    private fun getMembers(): ArrayList<Pg> {
-        val user = FirebaseAuth.getInstance().currentUser?.uid
+    private suspend fun getMembers() {
         val storageF = Firebase.firestore
         val list = ArrayList<Pg>()
 
-        val groupsRef = storageF.collection("groups").document(currentCamp.id!!.toString())
-            .collection("data").get()
-            .addOnSuccessListener { sheets ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
+        val sheetsSnapshot = storageF.collection("groups")
+            .document(currentCamp.id!!.toString())
+            .collection("chars").get().await()
+        if(!sheetsSnapshot.isEmpty){
+            Log.e(ContentValues.TAG, "DocumentSnapshot successfully written!")
 
-                for (sheet in sheets) {
-                    val pg = castToPg(sheet.data)
-                    list.add(pg)
-                }
+            for (sheet in sheetsSnapshot) {
+
+                val pg = castToPg(sheet.data)
+                list.add(pg)
             }
-            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
 
-        return list
+            sheetList = list
+            Log.e("debug lista char", sheetList[0].hp.toString())
+
+            charList = pgToChar(list)
+            Log.e("debug lista char", charList.toString())
+
+        }
     }
 
     private fun pgToChar(sheetList: ArrayList<Pg>): ArrayList<Characters> {

@@ -1,6 +1,7 @@
 package com.example.gestorednd.CharacterSheetFragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +31,8 @@ class StatsFragment() : Fragment() {
 
         val hpVal = view.findViewById<TextView>(R.id.txtHpV)
             hpVal.text = SheetActivity.chosenChar.hp.toString()
-        hpVal.setOnFocusChangeListener { view, b -> //aggiorna i valori dopo il cambiamento
+
+    hpVal.setOnFocusChangeListener { view, b -> //aggiorna i valori dopo il cambiamento
             if(!b){
                 SheetActivity.chosenChar.hp = Integer.parseInt(hpVal.text.toString())
             }

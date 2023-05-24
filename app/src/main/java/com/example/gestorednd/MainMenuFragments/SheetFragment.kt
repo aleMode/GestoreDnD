@@ -20,6 +20,7 @@ import com.example.gestorednd.Activities.MainActivity
 import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.R
 import com.example.gestorednd.Adapters.SheetListAdapter
+import com.example.gestorednd.DataClasses.Pg
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -154,6 +155,16 @@ class SheetFragment : Fragment() {
                         recyclerView.adapter = adapter
 
                         file.createNewFile()
+                        val writer2 = BufferedWriter(FileWriter(file, false))
+                        val gson2 = Gson()
+                        writer2.use {
+                            it.write(
+                                gson2.toJson(
+                                    Pg(null, char.name, char.specie, char.clss, char.lvl)
+                                )
+                            )
+                            it.newLine()
+                        }
                     }
 
                     //aggiornamento del file con la lista di personaggi
