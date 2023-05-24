@@ -78,12 +78,12 @@ class SheetFragment : Fragment() {
 
         val btnUpload = view.findViewById<ImageView>(R.id.icnUploadSheets)
         btnUpload.setOnClickListener{
-            upload()
+            upload(adapter)
         }
 
         val btnSync = view.findViewById<ImageView>(R.id.icnSyncSheets)
         btnSync.setOnClickListener{
-            sync()
+            sync(adapter)
         }
     }
 
@@ -192,9 +192,9 @@ class SheetFragment : Fragment() {
     }
 
     //salva in remoto i files dei personaggi
-    fun upload(){
+    fun upload(adapter: SheetListAdapter) {
         //sincronizzo per scaricare eventuali personaggi che non sono ancora stati scaricati
-        sync()
+        sync(this.adapter)
 
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
@@ -226,11 +226,14 @@ class SheetFragment : Fragment() {
                     Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
                 }
         }
+
+        //refresh dell'adapter della lista
+        adapter.notifyDataSetChanged()
     }
 
     //download del file con la lista dei personaggi e dei personaggi singoli
     //la funzione gestisce anche i files salvati in locale e non ancora caricati
-    fun sync(){
+    fun sync(adapter: SheetListAdapter) {
         fixUnsavedChars()
         var file = File(context?.filesDir, "characters.json")
         if (!file.exists()) return
@@ -299,7 +302,7 @@ class SheetFragment : Fragment() {
         }
 
         //ricostruisce il layout
-        view?.invalidate()
+        adapter.notifyDataSetChanged()
     }
 
     //pulisce i personaggi rimasti se il file dei personaggi non è presente o li rimuove se non sono

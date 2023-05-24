@@ -46,7 +46,7 @@ class CampaignsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sync()
+        sync(adapter)
 
         //lista delle campagne
         val layoutManager = LinearLayoutManager(context)
@@ -62,12 +62,12 @@ class CampaignsFragment : Fragment() {
 
         val btnUpload = view.findViewById<ImageView>(R.id.icnUploadCamp)
         btnUpload.setOnClickListener{
-            upload()
+            upload(adapter)
         }
 
         val btnSync = view.findViewById<ImageView>(R.id.icnSyncCamp)
         btnSync.setOnClickListener{
-            sync()
+            sync(adapter)
         }
     }
 
@@ -132,7 +132,7 @@ class CampaignsFragment : Fragment() {
                     )
 
                     //aggiorno la lista col cloud nel caso in cui sia già stata updatata ma non scaricata
-                    sync()
+                    sync(adapter)
 
                     campList.add(camp)
                     adapter = CampaignListAdapter(campList)
@@ -148,7 +148,7 @@ class CampaignsFragment : Fragment() {
                         it.newLine()
                     }
 
-                    upload()
+                    upload(adapter)
 
                     //creazione file su storage remoto della campagna
                     val groupsRef = storageF.collection("groups")
@@ -180,7 +180,7 @@ class CampaignsFragment : Fragment() {
     }
 
     //salva in remoto il file delle campagne
-    fun upload(){
+    fun upload(adapter: CampaignListAdapter) {
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
 
@@ -197,10 +197,12 @@ class CampaignsFragment : Fragment() {
                     Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
                 }
         }
+
+        adapter.notifyDataSetChanged()
     }
 
     //download del file con la lista delle campagne
-    fun sync(){
+    fun sync(adapter: CampaignListAdapter) {
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
 
@@ -231,7 +233,7 @@ class CampaignsFragment : Fragment() {
         }
 
         //ricostruisce il layout
-        view?.invalidate()
+        adapter.notifyDataSetChanged()
     }
 
 
