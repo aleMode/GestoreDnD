@@ -60,12 +60,11 @@ class CampaignActivity : AppCompatActivity() {
                 .collection("chars")
                 .document("$user.json").get().await()
 
-            Log.e("log char1", champSnapshot.data.toString())
+            Log.e("estraiPers champ", champSnapshot.data.toString())
             return castToPg(champSnapshot.data)
         }
 
         private fun castToPg(data: Map<String, Any>?): Pg {
-            Log.e("log char2", data?.get("pgName").toString())
             return Pg(
                 data?.get("idOwner") as String?,
 
@@ -117,11 +116,8 @@ class CampaignActivity : AppCompatActivity() {
             index = Integer.parseInt(number)
 
         currentCamp = CampaignsFragment.campList[index]
-        //reindirizzamento nel caso in cui l'utente al momento non sia il dm (può accedere solo
-        // alla sua scheda)
+        //manda alla scheda personaggio direttamente nel caso l'utente non sia il DM
         if (FirebaseAuth.getInstance().currentUser?.uid != currentCamp.idLeader) {
-            //todo: (?) intent che rimanda alla sheet view del personaggio della scheda personaggio
-            // con il personaggio usato nella campagna
             SheetActivity.campaignChar = true
             val intent = Intent(this, SheetActivity::class.java)
             this.startActivity(intent)
@@ -170,10 +166,11 @@ class CampaignActivity : AppCompatActivity() {
 
         val sheetsSnapshot = storageF.collection("groups")
             .document(currentCamp.id!!.toString())
-            .collection("chars").get().await()
-        if(!sheetsSnapshot.isEmpty){
-            Log.e(ContentValues.TAG, "DocumentSnapshot successfully written!")
+            .collection("chars")
+            .get().await()
 
+        if(!sheetsSnapshot.isEmpty){
+            Log.e("getMembers", "vuoto, nessun utente nella campagna")
             for (sheet in sheetsSnapshot) {
 
                 val pg = castToPg(sheet.data)
@@ -181,10 +178,8 @@ class CampaignActivity : AppCompatActivity() {
             }
 
             sheetList = list
-            Log.e("debug lista char", sheetList[0].hp.toString())
 
             charList = pgToChar(list)
-            Log.e("debug lista char", charList.toString())
 
         }
     }

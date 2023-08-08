@@ -21,8 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object{
         var offline = false
-
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

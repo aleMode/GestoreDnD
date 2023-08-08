@@ -86,6 +86,10 @@
     <string name="popupSelChar">Tap to select a character</string>
     <string name="popupSelQuit">Cancel</string>
     <string name="popupSelOk">Confirm</string>
+    <string name="popupQuitNotif">Join Cancelled</string>
+    <string name="popupQuitErrChar">Character not found</string>
+    <string name="popupQuitSucc">Campaign successfully joined</string>
+    <string name="popupJoined">Campaign already Joined</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -93,4 +97,7 @@
     <string name="title_activity_campaign">CampaignActivity</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_join_campaign">JoinCampaignActivity</string>
+
+    <string name="saveSucc">Save Successful</string>
+    <string name="saveSuccRem">Remote Save Successful</string>
 </resources>

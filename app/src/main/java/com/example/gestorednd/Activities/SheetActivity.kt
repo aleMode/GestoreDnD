@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.example.gestorednd.CharacterSheetFragments.*
@@ -48,15 +49,15 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         //se entrambi sono nulli si usa l'inizializzazione per membro della campagna
         val index = intent.getStringExtra("pos")
         val campIndex = intent.getStringExtra("camp")
-        Log.e("controllo intent", "$index e poi $campIndex")
+        Log.e("Controllo intent", "$index e poi $campIndex")
+
         if(index == null) {
             //se non ho index sono tra i personaggi della campagna
             if(campIndex == null) {
                 //se non ho indici estraggo il personaggio della campagna corrente (con currentCamp)
-                //TODO: utile cambiare in pos/stringa per camp da user/stringa con nome per dm
-                Log.e("check campagna", CampaignActivity.currentCamp.toString())
+                Log.e("check campagna1", CampaignActivity.currentCamp.toString())
                 chosenChar = runBlocking { CampaignActivity.estraiPers() }
-                Log.e("check campagna", chosenChar.pgName)
+                Log.e("check campagna2", chosenChar.pgName)
                 namePgSel = chosenChar.pgName
             }else {
                 //se ho campindex sono il dm di una campagna
@@ -65,7 +66,6 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         }else {
             //se ho un index significa che sono tra i personaggi locali
             chosenChar = initialize(index)
-
         }
 
         val statsFrag = StatsFragment()
@@ -118,7 +118,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         val chosenPg = object : TypeToken<Pg>() {}.type
         var chosenPg2 : Pg
 
-        //prova a estrarre un personaggio o lo genera vuoto nel caso in cui sia statop creato
+        //prova a estrarre un personaggio o lo genera vuoto nel caso in cui sia stato creato
         // solo il file (nuovo personaggio appena creato)
         try {
             chosenPg2 = gson.fromJson(jsonString, chosenPg)
@@ -149,7 +149,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
             //se edito un personaggio di una campagna lo salvo direttamente in remoto
             //salvo con il campo idowner in modo che sia sempre chiaro di chi sia il personaggio
             runBlocking { remoteSave() }
-            Log.e("debug", "proova2")
+            Log.e("SheetActivity Save", "camp char")
         }else {
             //copia del contenuto del file json nello storage interno se è un pers normale
             val gson = Gson()
@@ -162,7 +162,8 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
                 it.write(jsonString)
                 it.newLine()
             }
-            Log.e("debug", "proova1")
+            Log.e("SheetActivity Save", "success")
+            Toast.makeText(this, this.getString(R.string.saveSucc), Toast.LENGTH_SHORT)
         }
     }
 
@@ -176,9 +177,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
             .document("$user.json")
             .set(chosenChar).await()
 
-        Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
-
+        Log.e("SheetActivity RemSave", "DocumentSnapshot successfully written!")
+        Toast.makeText(this, this.getString(R.string.saveSuccRem), Toast.LENGTH_SHORT)
     }
-
-
 }
