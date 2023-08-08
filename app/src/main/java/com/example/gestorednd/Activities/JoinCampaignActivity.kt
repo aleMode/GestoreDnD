@@ -212,12 +212,17 @@ class JoinCampaignActivity : AppCompatActivity() {
         //caricamento in remote del personaggio e join della campagna
         val user = FirebaseAuth.getInstance().currentUser?.uid
         var storageF = Firebase.firestore
-        val groupSet = storageF.collection("groups").document(groupId!!)
-            .collection("data").document(groupId!!)
+        val groupSet = storageF.collection("groups")
+            .document(groupId!!)
+            .collection("data")
+            .document(groupId!!)
             .update("members", FieldValue.arrayUnion(user))
 
-        val groupsRef = storageF.collection("groups").document(groupId!!)
-            .collection("data").document("$user.json").set(chosenPg2)
+        val groupsRef = storageF.collection("groups")
+            .document(groupId!!)
+            .collection("chars")
+            .document("$user.json")
+            .set(chosenPg2)
             .addOnSuccessListener { Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
 

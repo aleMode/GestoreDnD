@@ -60,10 +60,12 @@ class CampaignActivity : AppCompatActivity() {
                 .collection("chars")
                 .document("$user.json").get().await()
 
+            Log.e("log char1", champSnapshot.data.toString())
             return castToPg(champSnapshot.data)
         }
 
         private fun castToPg(data: Map<String, Any>?): Pg {
+            Log.e("log char2", data?.get("pgName").toString())
             return Pg(
                 data?.get("idOwner") as String?,
 
@@ -102,7 +104,6 @@ class CampaignActivity : AppCompatActivity() {
                 data?.get("featArray") as ArrayList<Pair<String,String>>? ?: arrayListOf(),
                 )
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

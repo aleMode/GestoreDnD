@@ -54,7 +54,9 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
             if(campIndex == null) {
                 //se non ho indici estraggo il personaggio della campagna corrente (con currentCamp)
                 //TODO: utile cambiare in pos/stringa per camp da user/stringa con nome per dm
-                chosenChar = runBlocking { CampaignActivity.estraiPers()}
+                Log.e("check campagna", CampaignActivity.currentCamp.toString())
+                chosenChar = runBlocking { CampaignActivity.estraiPers() }
+                Log.e("check campagna", chosenChar.pgName)
                 namePgSel = chosenChar.pgName
             }else {
                 //se ho campindex sono il dm di una campagna

@@ -46,14 +46,14 @@ class CampaignsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sync(adapter)
-
         //lista delle campagne
         val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.CampaignsView)
         recyclerView.layoutManager = layoutManager
         adapter = CampaignListAdapter(initial())
         recyclerView.adapter = adapter
+
+        sync(adapter)
 
         val btnNewCamp = view.findViewById<Button>(R.id.btnNewCamp)
         btnNewCamp.setOnClickListener { //popup per inserire il nuovo personaggio
