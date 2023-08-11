@@ -33,7 +33,7 @@ class StatsFragment() : Fragment() {
             hpVal.text = SheetActivity.chosenChar.hp.toString()
 
     hpVal.setOnFocusChangeListener { view, b -> //aggiorna i valori dopo il cambiamento
-            if(!b){
+            if(!b) {
                 SheetActivity.chosenChar.hp = Integer.parseInt(hpVal.text.toString())
             }
         }

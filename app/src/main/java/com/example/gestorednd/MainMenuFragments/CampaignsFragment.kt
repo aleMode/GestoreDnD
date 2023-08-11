@@ -101,7 +101,6 @@ class CampaignsFragment : Fragment() {
             val gson = Gson()
             val listCampaignsType = object : TypeToken<ArrayList<Campaigns>>() {}.type
             camps = gson.fromJson(jsonString, listCampaignsType)
-
         } catch (e: FileNotFoundException) {
             //se il file non esiste crealo
             file.createNewFile()
@@ -160,10 +159,9 @@ class CampaignsFragment : Fragment() {
                             "name" to camp.name
                         ))
                         .addOnSuccessListener {
-                            Toast.makeText(context, "remote successful!", Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener { e ->
-                            Toast.makeText(context, "remote unsuccessful! $e", Toast.LENGTH_SHORT).show()
+                            Log.e("CampFrag", "Remote creation Failed")
                         }
 
                 } else {
@@ -188,13 +186,11 @@ class CampaignsFragment : Fragment() {
         val myref = storageRef.child( "$user/campaigns.json")
         var file = File(context?.filesDir, "campaigns.json")
         if(file.exists()) {
-            val inputStream = FileInputStream(file)
             myref.putFile(file.toUri())
                 .addOnSuccessListener {
-                    Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { exception ->
-                    Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+                    Log.e("CampFrag", "Remote file save Failed")
                 }
         }
 
@@ -211,10 +207,9 @@ class CampaignsFragment : Fragment() {
         val file = File(context?.filesDir, "campaigns.json")
         myref.getFile(file.toUri())
             .addOnSuccessListener {
-                Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+                Log.e("CampFrag", "Camp file Download Failed")
             }
 
         //TODO: problema con il primo login nelle campagne

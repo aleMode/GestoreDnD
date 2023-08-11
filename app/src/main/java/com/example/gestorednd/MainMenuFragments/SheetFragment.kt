@@ -101,7 +101,7 @@ class SheetFragment : Fragment() {
             //se il file non esiste crealo
             file.createNewFile()
         } catch (e: Exception) {
-            Log.e("FileUtils", "Error ")
+            Log.e("SheetFragment", "Initial file Creation Error ")
         }
 
         charList = chars //per refresh dell'adapter
@@ -204,10 +204,9 @@ class SheetFragment : Fragment() {
         var file = File(context?.filesDir, "characters.json")
         myref.putFile(file.toUri())
             .addOnSuccessListener {
-                Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+                Log.e("SheetFrag", "Upload Failed 1")
             }
 
         //acquisisce il vettore dei personaggi per salvarli remotamente tutti
@@ -220,10 +219,9 @@ class SheetFragment : Fragment() {
             val file2 = File(context?.filesDir, "${pers.name}.json")
             myref.putFile(file2.toUri())
                 .addOnSuccessListener {
-                    Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { exception ->
-                    Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+                    Log.e("SheetFrag", "Upload Failed 2")
                 }
         }
 
@@ -246,7 +244,7 @@ class SheetFragment : Fragment() {
         try {
             chars = gson.fromJson(jsonString, listCharactersType)
         }catch(e: java.lang.NullPointerException){
-
+            Log.e("SheetFrag", "Sync Failed 1")
         }
 
         val user = FirebaseAuth.getInstance().currentUser?.uid
@@ -255,10 +253,9 @@ class SheetFragment : Fragment() {
         val file2 = File(context?.filesDir, "characters.json")
         myref.getFile(file2)
             .addOnSuccessListener {
-                Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(context, "Operation unsuccessful!", Toast.LENGTH_SHORT).show()
+                Log.e("SheetFrag", "Sync failed 2")
             }
 
         //faccio la stessa cosa col file proveniente da remoto
@@ -292,10 +289,9 @@ class SheetFragment : Fragment() {
                     val file = File(context?.filesDir, "${pers.name}.json")
                     myref.getFile(file)
                         .addOnSuccessListener {
-                            Toast.makeText(context, "Operation successful!", Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener { exception ->
-                            Toast.makeText(context, "Operation calcolatissima!", Toast.LENGTH_SHORT).show()
+                            Log.e("SheetFrag", "Sync Failed 3")
                         }
                 }
             }
