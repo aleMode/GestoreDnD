@@ -143,7 +143,6 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
     }
 
     fun save(){
-        //TODO: modifica in modo che salvi in remoto per il master (salva il nome del tizio e del pers)
 
         if(campaignChar){
             //se edito un personaggio di una campagna lo salvo direttamente in remoto

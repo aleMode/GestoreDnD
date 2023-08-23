@@ -8,127 +8,188 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txtHp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:text="@string/HP"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/txtHd"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:text="@string/HD"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/txtCa"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:text="@string/AC"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/txtSpeed"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:text="@string/Speed"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/txtComp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:text="@string/Proficiency"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/txtInit"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center|center_vertical"
-                android:text="@string/Initiative"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:gravity="right"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/txtHpV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="-"
-                android:inputType="number"
-                android:textSize="16sp" />
+            <ImageView
+                android:id="@+id/img_char"
+                android:layout_width="400px"
+                android:layout_height="400px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10px"
+                android:layout_marginTop="10px"
+                android:layout_marginBottom="10px"
+                android:clickable="false"
+                tools:src="@tools:sample/avatars" />
 
-            <EditText
-                android:id="@+id/txtHdV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="-"
-                android:inputType="number"
-                android:textSize="16sp"
-                tools:ignore="TouchTargetSizeCheck" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/txtCaV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="-"
-                android:inputType="number"
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10px"
+                    android:layout_marginBottom="10px"
+                    android:gravity="center"
+                    android:text="@string/imgPick" />
 
-            <EditText
-                android:id="@+id/txtSpeedV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="-"
-                android:inputType="number"
-                android:textSize="16sp" />
+                <Button
+                    android:id="@+id/btn_camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Camera" />
 
-            <EditText
-                android:id="@+id/txtProfV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="-"
-                android:inputType="number"
-                android:textSize="16sp" />
+                <Button
+                    android:id="@+id/btn_files"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Files" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/txtInitV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="-"
-                android:inputType="number"
-                android:textSize="16sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtHp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center|center_vertical"
+                    android:text="@string/HP"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtHd"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center|center_vertical"
+                    android:text="@string/HD"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtCa"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center|center_vertical"
+                    android:text="@string/AC"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtSpeed"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center|center_vertical"
+                    android:text="@string/Speed"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtComp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center|center_vertical"
+                    android:text="@string/Proficiency"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtInit"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center|center_vertical"
+                    android:text="@string/Initiative"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/txtHpV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="-"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/txtHdV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="-"
+                    android:inputType="number"
+                    android:textSize="16sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <EditText
+                    android:id="@+id/txtCaV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="-"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/txtSpeedV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="-"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/txtProfV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="-"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/txtInitV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="-"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
+
 </FrameLayout>

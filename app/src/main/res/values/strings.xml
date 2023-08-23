@@ -55,6 +55,7 @@
     <string name="Perception">Perception</string>
     <string name="Stealth">Stealth</string>
     <string name="Survival">Survival</string>
+    <string name="imgPick">Choose image from:</string>
 
     <string name="Equipped">Equipped</string>
     <string name="Bag">Bag</string>
