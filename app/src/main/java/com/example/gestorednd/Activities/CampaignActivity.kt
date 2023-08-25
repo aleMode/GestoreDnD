@@ -67,6 +67,7 @@ class CampaignActivity : AppCompatActivity() {
         private fun castToPg(data: Map<String, Any>?): Pg {
             return Pg(
                 data?.get("idOwner") as String?,
+                data?.get("imgPath") as String? ?: "",
 
                 data?.get("pgName") as String? ?: "",
                 data?.get("species") as String? ?: "",

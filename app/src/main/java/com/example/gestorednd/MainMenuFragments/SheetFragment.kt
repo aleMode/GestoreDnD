@@ -22,6 +22,7 @@ import com.example.gestorednd.R
 import com.example.gestorednd.Adapters.SheetListAdapter
 import com.example.gestorednd.DataClasses.Pg
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
@@ -160,7 +161,14 @@ class SheetFragment : Fragment() {
                         writer2.use {
                             it.write(
                                 gson2.toJson(
-                                    Pg(null, char.name, char.specie, char.clss, char.lvl)
+                                    Pg(
+                                        FirebaseAuth.getInstance().currentUser?.uid,
+                                        "",
+                                        char.name,
+                                        char.specie,
+                                        char.clss,
+                                        char.lvl
+                                    )
                                 )
                             )
                             it.newLine()

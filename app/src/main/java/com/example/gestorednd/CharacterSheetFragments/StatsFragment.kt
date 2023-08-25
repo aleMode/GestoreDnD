@@ -5,9 +5,11 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Environment.getStorageDirectory
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,9 +26,13 @@ import androidx.fragment.app.Fragment
 import com.example.gestorednd.Activities.CampaignActivity
 import com.example.gestorednd.Activities.SheetActivity
 import com.example.gestorednd.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import java.io.BufferedWriter
@@ -45,7 +51,7 @@ class StatsFragment() : Fragment() {
     private val SELECT_IMAGE_REQUEST = 2
     private val STORAGE_PERMISSION_CODE = 102
 
-    private lateinit var currentPhotoPath : Uri
+    private var currentPhotoPath : Uri = "".toUri()
     private lateinit var currentPhotoName : String
 
 
@@ -110,6 +116,18 @@ class StatsFragment() : Fragment() {
         }
 
         //TODO: prendi l'immagine scaricata col personaggio e aprila
+        val img_slot = view.findViewById<ImageView>(R.id.img_char)
+        if (SheetActivity.chosenChar.imgPath != "") {
+            val img = File(
+                context!!.filesDir,
+                SheetActivity.chosenChar.imgPath
+            )
+            if(!img.exists()){
+                Log.e("sss", "dioca")
+            }
+            val bitmap = BitmapFactory.decodeFile(img.absolutePath)
+            img_slot.setImageBitmap(bitmap)
+        }
 
         val btn_camera = view.findViewById<Button>(R.id.btn_camera)
         btn_camera.setOnClickListener {
@@ -175,7 +193,8 @@ class StatsFragment() : Fragment() {
             val resized = Bitmap.createScaledBitmap(selectedBitmap!!, 400, 400, true)
             view?.findViewById<ImageView>(R.id.img_char)?.setImageBitmap(resized)
 
-            var imageFile = createFileFromImg(resized)
+            createFileFromImg(resized)
+            saveImg()
 
             //TODO: carica online l'immagine se il personaggio è online, salva nel valore immagine il
             //TODO percorso scelto se è una immagine presente in locale, idem ma salvandola anche come
@@ -184,63 +203,91 @@ class StatsFragment() : Fragment() {
             //TODO: all'apertura se il pg è in locale l'immagine viene cercata, altrimenti se non si è
             //TODO in locale viene ignorato e l'immagine è scaricata dalla cartella in remoto e applicata
             //TODO a quel punto se l'immagine è cambiata essa è caricata subito e così via
-
-
         }
     }
 
     private fun createFileFromImg(resized: Bitmap) {
         val user = SheetActivity.chosenChar.idOwner
-        val imageFileName = user + "_" + SheetActivity.campaignChar.toString() + ".jpg"
-        val storageDir = Environment.getStorageDirectory()
-        var imageFile = File(storageDir, imageFileName)
+        val imageFileName = user + "_" + SheetActivity.chosenChar.pgName + ".jpg"
+        val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
+        var imageFile = File(context!!.filesDir, imageFileName)
+        if(imageFile.exists()) imageFile.delete()
+        imageFile.createNewFile()
 
         var savedImgPath : Uri? = null
         try{
             val outputStream = FileOutputStream(imageFile)
             resized.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
             outputStream.close()
             savedImgPath = imageFile.absolutePath.toUri()
+            currentPhotoPath = imageFile.absolutePath.toUri()
+
+            Log.e("SaveImg file", "img writing to file successful @: $currentPhotoPath")
         }catch (e: Exception){
             Log.e("SaveImg file", e.printStackTrace().toString())
         }
-
-        currentPhotoPath = imageFile.absolutePath.toUri()
         currentPhotoName = imageFileName
     }
 
     //salva le immagini in locale se il personaggio non è in una campagna, in remoto se si
     private fun saveImg() {
-        if(SheetActivity.campaignChar){
-            runBlocking {
-                var user = SheetActivity.chosenChar.idOwner
-                val storageRef = FirebaseStorage.getInstance().reference
-                val imageRef = storageRef.child(currentPhotoName)
+        //salva il percorso nella scheda personaggio
+        //TODO: non è un path ma un nome
+        SheetActivity.chosenChar.imgPath = currentPhotoName
 
+        val gson = Gson()
+        var jsonString = gson.toJson(SheetActivity.chosenChar)
+
+        var fileName: String = "${SheetActivity.namePgSel}.json"
+        var file = File(context!!.filesDir, fileName)
+        val writer = BufferedWriter(FileWriter(file, false))
+        writer.use {
+            it.write(jsonString)
+            it.newLine()
+        }
+        Log.e("SheetActivity Save", "save for img success")
+
+        if (SheetActivity.campaignChar) {
+            runBlocking {
+                var user = FirebaseAuth.getInstance().currentUser?.uid
+                val storageRef = Firebase.storage.reference
+                val imageRef = storageRef.child("$user/${SheetActivity.chosenChar.pgName}.jpg")
                 val imageFile = File(currentPhotoPath.toString())
                 val imageStream = FileInputStream(imageFile)
-                imageRef.putStream(imageStream).addOnS
+                imageRef.putFile(currentPhotoPath)
+                    .addOnSuccessListener { taskSnapshot ->
+                        Log.e("imgUpload", "okok1")
+                        /*imageRef.downloadUrl.addOnSuccessListener { uri ->
+                            imageUrl = uri.toString()
+                            Log.e("imgupload", "okokok2: $imageUrl")
+                        }*/
+                    }
+                    .addOnFailureListener{
+                        Log.e("imgUpload", "failed")
+                    }
+
+                Toast.makeText(
+                    context,
+                    context!!.getString(R.string.saveSuccRem),
+                    Toast.LENGTH_SHORT
+                )
+
+                //TODO: salva il personaggio in remoto nella campagna giusta
+                /*
+                val storageF = FirebaseFirestore.getInstance()
                 val groupsRef = storageF.collection("groups")
                     .document(CampaignActivity.currentCamp.id.toString())
                     .collection("chars")
                     .document("$user.jpg")
-                    .set().await()
+                    .set(imageMap).await()
 
-                //todo metti in set il nome del file immagine
-                Log.e("Imgage", "img saved remotely")
-                Toast.makeText(context, context!!.getString(R.string.saveSuccRem), Toast.LENGTH_SHORT)
+                Log.e("Image", "img saved remotely")*/
             }
-        }else {
-            //salva il file immagine nello storage e salva il percorso per i personaggi locali
-
-            var file = File(filesDir, fileName)
-            val writer = BufferedWriter(FileWriter(file, false))
-            writer.use {
-                it.write(jsonString)
-                it.newLine()
-            }
-            Log.e("SheetActivity Save", "success")
-            Toast.makeText(this, this.getString(R.string.saveSucc), Toast.LENGTH_SHORT)
         }
-    }    }
+
+        Toast.makeText(context!!, this.getString(R.string.saveSucc), Toast.LENGTH_SHORT)
+    }
+
 }

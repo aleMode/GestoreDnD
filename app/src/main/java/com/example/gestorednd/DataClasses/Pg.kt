@@ -3,6 +3,7 @@ package com.example.gestorednd.DataClasses
 //classe con personaggio dettagliato
 class Pg(
     var idOwner : String? = null,
+    var imgPath : String = "",
 
     var pgName : String = "",
     var species : String = "",
