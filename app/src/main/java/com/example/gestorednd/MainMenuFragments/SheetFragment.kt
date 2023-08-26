@@ -102,7 +102,7 @@ class SheetFragment : Fragment() {
             //se il file non esiste crealo
             file.createNewFile()
         } catch (e: Exception) {
-            Log.e("SheetFragment", "Initial file Creation Error ")
+            Log.e("SheetFragment", "Initial file Creation Error + $e")
         }
 
         charList = chars //per refresh dell'adapter

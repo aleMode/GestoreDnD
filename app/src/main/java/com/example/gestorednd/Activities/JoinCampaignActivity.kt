@@ -32,10 +32,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import org.checkerframework.checker.units.qual.Length
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileWriter
+import java.io.*
 import java.util.*
 
 class JoinCampaignActivity : AppCompatActivity() {
@@ -188,6 +185,25 @@ class JoinCampaignActivity : AppCompatActivity() {
         chosenPg2.species = char!!.specie
         chosenPg2.clss = char!!.clss
 
+        //carico l'immagine se ne ha una
+        if(chosenPg2.imgPath != ""){
+            val storageRef = Firebase.storage.reference
+            val imageRef = storageRef.child(
+                "camp$groupId/${SheetActivity.chosenChar.pgName}.jpg"
+            )
+            val imageFile = File(this.filesDir, SheetActivity.chosenChar.imgPath)
+            if(!imageFile.exists())
+                Log.e("imgUploadRem", "dioca")
+
+            imageRef.putFile(imageFile.toUri())
+                .addOnSuccessListener { taskSnapshot ->
+                    Log.e("imgUpload", "okok1")
+                }
+                .addOnFailureListener{
+                    Log.e("imgUpload", "failed")
+                }
+        }
+
         //caricamento in remote del personaggio e join della campagna
         //aggiornamento dei membri della campagna
         val user = FirebaseAuth.getInstance().currentUser?.uid
@@ -245,6 +261,19 @@ class JoinCampaignActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
 
+        val filename = "campaigns.json"
+        val filetmp = File(this.filesDir, filename)
+        var camps : ArrayList<Campaigns> = arrayListOf()
+        try {
+            val jsonString = filetmp.readText()
+            val gson = Gson()
+            val listCampaignsType = object : TypeToken<ArrayList<Campaigns>>() {}.type
+            camps = gson.fromJson(jsonString, listCampaignsType)
+
+        } catch (e: Exception) {
+            Log.e("FileUtils", "Error ")
+        }
+
         //download file di lista per aggiornare
         val myref = storageRef.child( "$user/campaigns.json")
         var file = File(this.filesDir, "campaigns.json")
@@ -254,6 +283,24 @@ class JoinCampaignActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.e("localJoin", "Error")
             }
+        var camps2 : ArrayList<Campaigns> = arrayListOf()
+        try {
+            val jsonString = file.readText()
+            val gson = Gson()
+            val listCampaignsType = object : TypeToken<ArrayList<Campaigns>>() {}.type
+            camps2 = gson.fromJson(jsonString, listCampaignsType)
+        } catch (e: Exception) {
+            Log.e("FileUtils", "Error ")
+        }
+
+        //confronto per nuove campagne
+        for(campReg in camps)
+            if(!CampaignsFragment.campList.contains(campReg))
+                CampaignsFragment.campList.add(campReg)
+
+        for(campReg in camps2)
+            if(!CampaignsFragment.campList.contains(campReg))
+                CampaignsFragment.campList.add(campReg)
 
         CampaignsFragment.campList.add(camp)
 
