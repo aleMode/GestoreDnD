@@ -47,6 +47,7 @@ class CampaignsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //lista delle campagne
+        Log.e("CampFragment", "lista campagne ${CampaignsFragment.campList}")
         val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.CampaignsView)
         recyclerView.layoutManager = layoutManager
@@ -147,6 +148,25 @@ class CampaignsFragment : Fragment() {
                         it.newLine()
                     }
 
+                    //TODO: rimuovi questa parte fino ad upload
+                    val file2 = File(context?.filesDir, "campaigns.json") // Replace with the path of your file
+                    val stringBuilder = StringBuilder()
+                    try {
+                        val bufferedReader = BufferedReader(FileReader(file2))
+                        var line: String?
+                        while (bufferedReader.readLine().also { line = it } != null) {
+                            stringBuilder.append(line).append("\n")
+                        }
+                        bufferedReader.close()
+                    } catch (e: IOException) {
+                        // Handle file reading error
+                        Log.e("FileRead", "Error reading file: ${e.message}")
+                    }
+                    val fileContent = stringBuilder.toString()
+                    Log.e("CampFragment", "lista campagne2: $fileContent")
+
+                    Log.e("CampFragment", "lista campagne3: ${CampaignsFragment.campList}")
+
                     upload(adapter)
 
                     //creazione file su storage remoto della campagna
@@ -186,8 +206,10 @@ class CampaignsFragment : Fragment() {
         val myref = storageRef.child( "$user/campaigns.json")
         var file = File(context?.filesDir, "campaigns.json")
         if(file.exists()) {
+            myref.delete()
             myref.putFile(file.toUri())
                 .addOnSuccessListener {
+                    Log.e("CampFrag", "Remote file save Success")
                 }
                 .addOnFailureListener { exception ->
                     Log.e("CampFrag", "Remote file save Failed")

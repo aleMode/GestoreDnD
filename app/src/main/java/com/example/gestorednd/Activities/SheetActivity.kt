@@ -68,6 +68,9 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
             chosenChar = initialize(index)
         }
 
+        val txtName = findViewById<TextView>(R.id.txtCharName)
+        txtName.text = chosenChar.pgName
+
         val statsFrag = StatsFragment()
         fm.beginTransaction().replace(R.id.sheetPortionContainer, statsFrag).commit()
 
