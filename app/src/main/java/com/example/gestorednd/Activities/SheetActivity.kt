@@ -60,8 +60,13 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
                 Log.e("check campagna2", chosenChar.pgName)
                 namePgSel = chosenChar.pgName
             }else {
-                //se ho campindex sono il dm di una campagna
-                chosenChar = CampaignActivity.sheetList[Integer.parseInt(campIndex)]
+                //se ho campindex sono il dm di una campagna, scarico i personaggi aggiornati
+                // e procedo
+                chosenChar = runBlocking {
+                    CampaignActivity.estraiPers(
+                        CampaignActivity.sheetList[Integer.parseInt(campIndex)]
+                    )
+                }
             }
         }else {
             //se ho un index significa che sono tra i personaggi locali
@@ -150,6 +155,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
         if(campaignChar){
             //se edito un personaggio di una campagna lo salvo direttamente in remoto
             //salvo con il campo idowner in modo che sia sempre chiaro di chi sia il personaggio
+
             runBlocking { remoteSave() }
             Log.e("SheetActivity Save", "camp char")
         }else {

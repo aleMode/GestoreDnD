@@ -51,8 +51,21 @@ class CampaignActivity : AppCompatActivity() {
         var chosenChar = Pg()
 
         suspend fun estraiPers(): Pg {
-            //recupero il personaggio usato nella campagna
+            //recupero il personaggio usato nella campagna per user non dm
             val user = FirebaseAuth.getInstance().currentUser?.uid
+            val storageF = Firebase.firestore
+
+            val champSnapshot = storageF.collection("groups")
+                .document(currentCamp.id.toString())
+                .collection("chars")
+                .document("$user.json").get().await()
+
+            Log.e("estraiPers champ", champSnapshot.data.toString())
+            return castToPg(champSnapshot.data)
+        }
+        suspend fun estraiPers(selectedPg : Pg): Pg {
+            //recupero il personaggio usato nella campagna per dm
+            val user = selectedPg.idOwner
             val storageF = Firebase.firestore
 
             val champSnapshot = storageF.collection("groups")

@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MenuActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     //funzione per swappare il frammento da quello di login a quello di registrazione

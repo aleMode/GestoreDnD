@@ -72,7 +72,6 @@ class RegistrationFragment() : Fragment() {
 
             if (email_pattern.matcher(emailTxt).matches()){
                 if(password_pattern.matcher(passTxt).matches()){
-
                     if(emailTxt == emailConfTxt) {
                         if(passTxt == passConfTxt) {
                             auth.createUserWithEmailAndPassword(
@@ -85,6 +84,12 @@ class RegistrationFragment() : Fragment() {
                                                 loginCleanup(emailTxt)
                                                 val intent =
                                                     Intent(context, MenuActivity::class.java)
+                                                //impedisce di tornare indietro se non
+                                                // dall'apposito pulsante
+                                                intent.addFlags(
+                                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                                                            Intent.FLAG_ACTIVITY_NEW_TASK
+                                                )
                                                 startActivity(intent)
                                             } else {
                                                 Toast.makeText(
@@ -108,7 +113,6 @@ class RegistrationFragment() : Fragment() {
                             }
                         }else{error.text = "Password diverse"}
                     }else{error.text = "Indirizzi email" + " diversi"}
-
                 }else{error.text = "Password deve contenere almeno una lettera minuscola, una " +
                         "maiuscola e un numero"}
             }else{error.text = "Indirizzo email non valido"}

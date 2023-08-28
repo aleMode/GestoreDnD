@@ -18,21 +18,19 @@ import com.example.gestorednd.MainMenuFragments.CampaignsFragment
 import com.example.gestorednd.MainMenuFragments.SheetFragment
 import com.example.gestorednd.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
-import org.checkerframework.checker.units.qual.Length
-import java.io.*
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileWriter
 import java.util.*
 
 class JoinCampaignActivity : AppCompatActivity() {
@@ -45,6 +43,16 @@ class JoinCampaignActivity : AppCompatActivity() {
         var filename = "campaigns.json"
         var file = File(this.filesDir, filename)
         file.delete()
+
+        if(Firebase.auth.currentUser == null) {
+            Toast.makeText(
+                this,
+                this.getString(R.string.login_needed),
+                Toast.LENGTH_LONG
+            )
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         val link = getCampaignLink()
         if(!link.contains("error"))

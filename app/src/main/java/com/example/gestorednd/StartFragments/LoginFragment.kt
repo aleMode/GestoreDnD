@@ -36,6 +36,8 @@ class LoginFragment() : Fragment() {
                                                 //      UI accordingly.
         if(currentUser != null){
             val intent = Intent(context, MenuActivity::class.java)
+            //impedisce di tornare indietro se non dall'apposito pulsante
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
 
