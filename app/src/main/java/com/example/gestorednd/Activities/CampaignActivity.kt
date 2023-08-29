@@ -113,8 +113,8 @@ class CampaignActivity : AppCompatActivity() {
 
                 data?.get("equip") as ArrayList<String>? ?: arrayListOf(),
                 data?.get("bag") as ArrayList<String>? ?: arrayListOf(),
-                data?.get("spellArray") as ArrayList<Pair<String,Int>>? ?: arrayListOf(),
-                data?.get("featArray") as ArrayList<Pair<String,String>>? ?: arrayListOf(),
+                data?.get("spells") as ArrayList<Pair<String,Int>>? ?: arrayListOf(),
+                data?.get("feats") as ArrayList<Pair<String,String>>? ?: arrayListOf(),
                 )
         }
     }

@@ -1,42 +1,17 @@
 package com.example.gestorednd.Activities
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.content.ContentValues
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.gestorednd.Adapters.PopupSheetListAdapter
-import com.example.gestorednd.DataClasses.Campaigns
-import com.example.gestorednd.DataClasses.Characters
-import com.example.gestorednd.DataClasses.Pg
 import com.example.gestorednd.MainMenuFragments.CampaignsFragment
 import com.example.gestorednd.MainMenuFragments.SheetFragment
 import com.example.gestorednd.R
-import com.example.gestorednd.R.layout.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
-import java.util.*
 
 class MenuActivity : AppCompatActivity() {
 
@@ -48,7 +23,15 @@ class MenuActivity : AppCompatActivity() {
         val logout = findViewById<ImageView>(R.id.icnLogout)
         logout.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
+            //TODO: aggiungere il non poter tornare indietro
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        val mechanics = findViewById<ImageView>(R.id.icnMech)
+        mechanics.setOnClickListener{
+            val intent = Intent(this, CompendiumActivity::class.java)
             startActivity(intent)
             finish()
         }

@@ -102,4 +102,5 @@
 
     <string name="saveSucc">Save Successful</string>
     <string name="saveSuccRem">Remote Save Successful</string>
+    <string name="title_activity_compendium">CompendiumActivity</string>
 </resources>

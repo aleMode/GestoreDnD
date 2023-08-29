@@ -27,15 +27,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/icnMech"
                 style="@style/Icon"
-                android:id="@+id/SettingMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="@+id/toolbar"
                 app:layout_constraintStart_toStartOf="@+id/toolbar"
                 app:layout_constraintTop_toTopOf="@+id/toolbar"
-                app:srcCompat="@drawable/ic_baseline_settings_24" />
+                app:srcCompat="@drawable/ic_baseline_compendium_24" />
 
             <TextView
                 android:id="@+id/mainTitle"
@@ -44,7 +45,7 @@
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="@+id/toolbar"
                 app:layout_constraintEnd_toStartOf="@+id/icnLogout"
-                app:layout_constraintStart_toEndOf="@+id/SettingMain"
+                app:layout_constraintStart_toEndOf="@+id/icnMech"
                 app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
             <ImageView
@@ -53,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
+                android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="@+id/toolbar"
                 app:layout_constraintEnd_toEndOf="@+id/toolbar"
                 app:layout_constraintTop_toTopOf="@+id/toolbar"
