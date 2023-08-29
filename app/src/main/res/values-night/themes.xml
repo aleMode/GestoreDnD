@@ -3,12 +3,50 @@
     <style name="Base.Theme.GestoreDnD" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
 
-        <item name="colorPrimary">@color/alt_dark_primary</item>
-        <item name="colorPrimaryVariant">@color/alt_light_primary</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/dm_primary</item>
+        <item name="colorPrimaryVariant">@color/dm_light_primary</item>
+        <item name="colorOnPrimary">@color/dm_primary_text</item>
 
-        <item name="colorSecondary">@color/accent</item>
-        <item name="colorSecondaryVariant">@color/accent</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/dm_accent</item>
+        <item name="colorOnSecondary">@color/dm_primary_text</item>
     </style>
+
+    <style name="Base.Theme.GestoreDnD.NoActionBar"></style>
+
+    <style name="Toolbar">
+        <item name="android:background">@color/dm_light_primary</item>
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="Screen">
+        <item name="android:background">@color/dm_primary</item>
+        <item name="android:textColor">@color/dm_primary_text</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textColor">@color/dm_primary_text</item>
+    </style>
+
+    <style name="Element">
+        <item name="android:background">@color/dm_light_primary</item>
+        <item name="android:textColor">@color/dm_primary_text</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:background">@color/dm_light_primary</item>
+        <item name="android:textColor">@color/dm_primary_text</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:color">@color/dm_divider</item>
+    </style>
+
+    <style name="Icon">
+        <item name="android:color">@color/dm_primary_text</item>
+    </style>
+
+    <style name="EditableText">
+        <item name="android:color">@color/dm_desat_accent</item>
+    </style>
+
 </resources>

@@ -23,6 +23,7 @@
 
         <Button
             android:id="@+id/btnRemoveFeat"
+            style="@style/Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
@@ -38,25 +39,26 @@
 
             <EditText
                 android:id="@+id/txtNewFeatName"
+                style="@style/EditableText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/alt_light_primary"
                 android:hint="New feat name"
                 android:inputType="text" />
 
             <EditText
                 android:id="@+id/txtNewFeatDescr"
+                style="@style/EditableText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/alt_light_primary"
                 android:hint="New feat description"
                 android:inputType="text" />
 
             <Button
                 android:id="@+id/btnAddFeat"
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

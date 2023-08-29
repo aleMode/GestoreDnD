@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/alt_light_primary"
     tools:context=".CharacterSheetFragments.SpellsFragment">
 
     <LinearLayout
@@ -44,20 +43,20 @@
 
                 <EditText
                     android:id="@+id/txtNewSpellName"
+                    style="@style/EditableText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@color/alt_light_primary"
                     android:hint="New spell name"
                     android:inputType="text"
                     android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/txtNewSpellLvl"
+                    style="@style/EditableText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@color/alt_light_primary"
                     android:hint="New spell lvl"
                     android:inputType="number"
                     android:textSize="16sp" />
@@ -67,6 +66,7 @@
 
         <Button
             android:id="@+id/btnAddSpell"
+            style="@style/Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Add" />

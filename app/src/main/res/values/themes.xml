@@ -8,22 +8,46 @@
         <item name="colorOnPrimary">@color/primary_text</item>
 
         <item name="colorSecondary">@color/accent</item>
-        <item name="colorSecondaryVariant">@color/accent</item>
         <item name="colorOnSecondary">@color/primary_text</item>
 
     </style>
 
-    <style name="Base_toolbar">
+    <style name="Base.Theme.GestoreDnD.NoActionBar"></style>
+
+    <style name="Toolbar">
+        <item name="android:background">@color/dark_primary</item>
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="Screen">
         <item name="android:background">@color/primary</item>
-        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
-    <style name="Base.Theme.GestoreDnD.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="Text">
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
-    <style name="Base.Theme.GestoreDnD.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Element">
+        <item name="android:background">@color/dark_primary</item>
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
 
-    <style name="Base.Theme.GestoreDnD.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Button">
+        <item name="android:background">@color/dark_primary</item>
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:color">@color/divider</item>
+    </style>
+
+    <style name="Icon">
+        <item name="android:color">@color/primary_text</item>
+    </style>
+
+    <style name="EditableText">
+        <item name="android:color">@color/desat_accent</item>
+    </style>
+
 </resources>

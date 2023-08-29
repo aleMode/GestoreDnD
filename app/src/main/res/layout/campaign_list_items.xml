@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/alt_light_primary">
+    style="@style/Element">
 
     <TextView
         android:id="@+id/txtCampName"
@@ -22,6 +22,7 @@
 
     <View
         android:id="@+id/divider2"
+        style="@style/Divider"
         android:layout_width="409dp"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"

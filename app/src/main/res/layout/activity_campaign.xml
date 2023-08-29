@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    style="@style/Screen"
     tools:context=".Activities.CampaignActivity" >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -19,8 +20,10 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:theme="@style/Base_toolbar"
+                android:layout_height="wrap_content"
+                android:theme="@style/Toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -44,11 +47,13 @@
         android:orientation="horizontal">
 
         <ImageView
+            style="@style/Icon"
             android:id="@+id/imgCopyLinkIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            app:srcCompat="@drawable/ic_baseline_content_copy_24" />
+            app:srcCompat="@drawable/ic_baseline_content_copy_24"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/txtLink"

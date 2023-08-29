@@ -48,6 +48,7 @@
 
                 <Button
                     android:id="@+id/btn_camera"
+                    style="@style/Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -56,6 +57,7 @@
 
                 <Button
                     android:id="@+id/btn_files"
+                    style="@style/Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -188,8 +190,6 @@
                     android:inputType="number"
                     android:textSize="16sp" />
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
-
 </FrameLayout>

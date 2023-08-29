@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".Activities.JoinCampaignActivity">
+    tools:context=".Activities.JoinCampaignActivity"
+    style="@style/Screen">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Base.Theme.GestoreDnD.AppBarOverlay">
+        android:theme="@style/Toolbar">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Base.Theme.GestoreDnD.PopupOverlay" />
+            android:layout_height="wrap_content"
+            app:popupTheme="@style/Toolbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,6 +44,7 @@
         android:orientation="horizontal">
 
         <Button
+            style="@style/Button"
             android:id="@+id/btnJoinCharCanc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,6 +52,7 @@
             android:text="@string/popupSelQuit" />
 
         <Button
+            style="@style/Button"
             android:id="@+id/btnJoinCharOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -13,6 +13,7 @@
 
         <View
             android:id="@+id/divider9"
+            style="@style/Divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />

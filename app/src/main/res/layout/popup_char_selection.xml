@@ -26,6 +26,7 @@
 
         <Button
             android:id="@+id/btnPopCharCanc"
+            style="@style/Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -33,6 +34,7 @@
 
         <Button
             android:id="@+id/btnPopCharOk"
+            style="@style/Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
