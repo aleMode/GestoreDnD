@@ -7,7 +7,7 @@
         <item name="colorPrimaryVariant">@color/dm_light_primary</item>
         <item name="colorOnPrimary">@color/dm_primary_text</item>
 
-        <item name="colorSecondary">@color/dm_accent</item>
+        <item name="colorSecondary">@color/dm_desat_accent</item>
         <item name="colorOnSecondary">@color/dm_primary_text</item>
     </style>
 
@@ -20,6 +20,7 @@
 
     <style name="Screen">
         <item name="android:background">@color/dm_primary</item>
+        <item name="android:backgroundTint">@color/dm_primary</item>
         <item name="android:textColor">@color/dm_primary_text</item>
     </style>
 
@@ -28,12 +29,12 @@
     </style>
 
     <style name="Element">
-        <item name="android:background">@color/dm_light_primary</item>
+        <item name="android:backgroundTint">@color/dm_primary</item>
         <item name="android:textColor">@color/dm_primary_text</item>
     </style>
 
     <style name="Button">
-        <item name="android:background">@color/dm_light_primary</item>
+        <item name="android:backgroundTint">@color/dm_light_primary</item>
         <item name="android:textColor">@color/dm_primary_text</item>
     </style>
 
@@ -42,7 +43,7 @@
     </style>
 
     <style name="Icon">
-        <item name="android:color">@color/dm_primary_text</item>
+        <item name="android:tint">@color/dm_primary_text</item>
     </style>
 
     <style name="EditableText">

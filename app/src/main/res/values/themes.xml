@@ -7,7 +7,7 @@
         <item name="colorPrimaryVariant">@color/dark_primary</item>
         <item name="colorOnPrimary">@color/primary_text</item>
 
-        <item name="colorSecondary">@color/accent</item>
+        <item name="colorSecondary">@color/desat_accent</item>
         <item name="colorOnSecondary">@color/primary_text</item>
 
     </style>
@@ -21,6 +21,7 @@
 
     <style name="Screen">
         <item name="android:background">@color/primary</item>
+        <item name="android:backgroundTint">@color/primary</item>
         <item name="android:textColor">@color/primary_text</item>
     </style>
 
@@ -29,12 +30,12 @@
     </style>
 
     <style name="Element">
-        <item name="android:background">@color/dark_primary</item>
-        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:background">@color/primary</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Button">
-        <item name="android:background">@color/dark_primary</item>
+        <item name="android:backgroundTint">@color/dark_primary</item>
         <item name="android:textColor">@color/primary_text</item>
     </style>
 
@@ -43,11 +44,16 @@
     </style>
 
     <style name="Icon">
-        <item name="android:color">@color/primary_text</item>
+        <item name="android:tint">@color/primary_text</item>
     </style>
 
     <style name="EditableText">
         <item name="android:color">@color/desat_accent</item>
+    </style>
+
+    <style name="ChipGroup">
+        <item name="android:background">@color/primary</item>
+
     </style>
 
 </resources>

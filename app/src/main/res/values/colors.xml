@@ -3,16 +3,16 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
-    <color name="primary">#BCBBBB</color>
-    <color name="dark_primary">#616161</color>
+    <color name="primary">#E3E3E3</color>
+    <color name="dark_primary">#F3A903</color>
 
-    <color name="dm_primary">#121212</color>
-    <color name="dm_light_primary">#545151</color>
+    <color name="dm_primary">#1C1B1F</color>
+    <color name="dm_light_primary">#2f3380</color>
 
-    <color name="accent">#FF9800</color>
-    <color name="desat_accent">#32FF9800</color>
-    <color name="dm_accent">#5647AE</color>
-    <color name="dm_desat_accent">#335647AE</color>
+    <color name="accent">#E60D29</color>
+
+    <color name="desat_accent">#65F3A903</color>
+    <color name="dm_desat_accent">#662F3380</color>
 
     <color name="primary_text">#212121</color>
     <color name="dm_primary_text">#BABABA</color>
