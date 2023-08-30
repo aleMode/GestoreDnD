@@ -1,5 +1,6 @@
 package com.example.gestorednd.StartFragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -57,6 +58,7 @@ class LoginFragment() : Fragment() {
                         loginCleanup(email)
                         val intent = Intent(context, MenuActivity::class.java)
                         startActivity(intent)
+                        activity?.finish()
                     }else {
                         error.text = "Password o mail errate"
                     }

@@ -82,15 +82,14 @@ class RegistrationFragment() : Fragment() {
                                         .addOnCompleteListener(requireActivity()) { task ->
                                             if (task.isSuccessful) {
                                                 loginCleanup(emailTxt)
-                                                val intent =
-                                                    Intent(context, MenuActivity::class.java)
+                                                val intent = Intent(
+                                                    context,
+                                                    MenuActivity::class.java
+                                                )
                                                 //impedisce di tornare indietro se non
                                                 // dall'apposito pulsante
-                                                intent.addFlags(
-                                                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                                                            Intent.FLAG_ACTIVITY_NEW_TASK
-                                                )
                                                 startActivity(intent)
+                                                activity?.finish()
                                             } else {
                                                 Toast.makeText(
                                                     context, getText(R.string.AuthFail),

@@ -28,9 +28,10 @@
 
             <TextView
                 android:id="@+id/mainTitleComp"
+                style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Compendium"
+                android:text="@string/Compendium"
                 app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
                 app:layout_constraintEnd_toStartOf="@+id/toolbar2"
                 app:layout_constraintStart_toEndOf="@+id/toolbar2"

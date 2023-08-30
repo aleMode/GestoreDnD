@@ -1,6 +1,7 @@
 package com.example.gestorednd.Adapters
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,15 +30,15 @@ class MechanicsListAdapter(private var mechList : ArrayList<Mechanics>): Recycle
         val currentItem = mechList[position]
         holder.name.text = currentItem.name
         holder.descr.text = currentItem.description
-        holder.descr.visibility == View.GONE
 
         holder.itemView.setOnClickListener {
+            Log.e("boh", "ciao")
             if(holder.descr.visibility == View.GONE)
-                holder.descr.visibility == View.VISIBLE
+                holder.descr.visibility = View.VISIBLE
             else
-                holder.descr.visibility == View.GONE
+                holder.descr.visibility = View.GONE
 
-            notifyDataSetChanged()
+            notifyItemChanged(position)
         }
 
     }

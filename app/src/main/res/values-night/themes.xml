@@ -26,10 +26,10 @@
 
     <style name="Text">
         <item name="android:textColor">@color/dm_primary_text</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Element">
-        <item name="android:backgroundTint">@color/dm_primary</item>
         <item name="android:textColor">@color/dm_primary_text</item>
     </style>
 

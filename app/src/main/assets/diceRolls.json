@@ -1,0 +1,34 @@
+[
+    {
+        "name" : "Melee Attack Roll",
+        "description" : "To make a Melee Attack Roll you need to use your d20 + proficiency modifier + your strenght modifier"
+    },
+    {
+        "name" : "Ranged Attack Roll",
+        "description" : "To make a Ranged Attack Roll you need to use your d20 + proficiency modifier + your dexterity modifier"
+    },
+    {
+        "name" : "Ability Check",
+        "description" : "To perform an ability check you need to use your d20 + your bonus in that particular ability"
+    },
+    {
+        "name" : "Saving Throw",
+        "description" : "To perform a saving throw in a statistic like Strength you need to use your d20 + your proficiency bonus (if you have it) + your modifier in that statistic"
+    },
+    {
+        "name" : "Melee or Ranged Spell Attack Roll",
+        "description" : "To prform a Melee or Ranged Spell Attack you need to use your d20 + your proficiency modifier + your spellcasting ability modifier "
+    },
+    {
+        "name" : "Grapple Check",
+        "description" : "To perform a grapple check you need to use a d20 + your athletics modifier; your opponent has to do the same and the greatest of the two wins the check"
+    },
+    {
+        "name" : "Unarmed Attack Roll",
+        "description" : "To make an Unarmed Attack Roll you need to perform a Melee Attack Roll without the proficiency modifier, except if you are a monk"
+    },
+    {
+        "name" : "Throw Roll",
+        "description" : "To throw an item in a precise location you need to use a d20 + your strength or dexterity modifier"
+    }
+]

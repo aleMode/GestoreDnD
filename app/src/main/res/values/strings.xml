@@ -19,6 +19,7 @@
     <string name="ConfMail">Confirm e-mail</string>
     <string name="ConfPsw">Confirm password</string>
     <string name="OffMode">Offline Mode</string>
+    <string name="Compendium">Compendium</string>
 
     <string name="Stats">Stats</string>
     <string name="Ability">Ability</string>
@@ -102,5 +103,7 @@
 
     <string name="saveSucc">Save Successful</string>
     <string name="saveSuccRem">Remote Save Successful</string>
+    <string name="succ">Process Successful</string>
+    <string name="fail">Process Failed</string>
     <string name="title_activity_compendium">CompendiumActivity</string>
 </resources>

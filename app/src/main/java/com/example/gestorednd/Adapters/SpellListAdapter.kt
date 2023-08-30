@@ -1,13 +1,16 @@
 package com.example.gestorednd.Adapters
 
+import android.content.res.Configuration
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestorednd.DataClasses.Spells
 import com.example.gestorednd.R
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 class SpellListAdapter(private var spellList : ArrayList<Spells>) : RecyclerView.Adapter<SpellListAdapter.MyViewHolder>(){
 
@@ -25,10 +28,21 @@ class SpellListAdapter(private var spellList : ArrayList<Spells>) : RecyclerView
         holder.name.text = currentItem.name
         holder.lvl.text = currentItem.lvl.toString()
         //cambio colore per selezione
+        val accent : Int
+        var normalColor : Int
+        if(holder.itemView.context.resources.configuration.uiMode == Configuration.UI_MODE_NIGHT_YES){
+            normalColor = ContextCompat.getColor(holder.itemView.context, R.color.dm_primary)
+            accent = ContextCompat.getColor(holder.itemView.context, R.color.dm_desat_accent)
+        }
+        else {
+            normalColor = ContextCompat.getColor(holder.itemView.context, R.color.primary)
+            accent = ContextCompat.getColor(holder.itemView.context, R.color.desat_accent)
+        }
+
         if(position == selectedItem)
-            holder.itemView.setBackgroundColor(Color.parseColor(R.color.accent.toString()))
+            holder.itemView.setBackgroundColor(accent)
         else
-            holder.itemView.setBackgroundColor(Color.WHITE)
+            holder.itemView.setBackgroundColor(normalColor)
         holder.itemView.setOnClickListener {
             toggleSelection(holder.adapterPosition)
 

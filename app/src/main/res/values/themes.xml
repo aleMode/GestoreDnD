@@ -27,10 +27,11 @@
 
     <style name="Text">
         <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="Element">
-        <item name="android:background">@color/primary</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

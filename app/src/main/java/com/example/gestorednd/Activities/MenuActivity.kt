@@ -23,7 +23,6 @@ class MenuActivity : AppCompatActivity() {
         val logout = findViewById<ImageView>(R.id.icnLogout)
         logout.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
-            //TODO: aggiungere il non poter tornare indietro
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -33,7 +32,6 @@ class MenuActivity : AppCompatActivity() {
         mechanics.setOnClickListener{
             val intent = Intent(this, CompendiumActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         //FragmentManager e chips per la gestione dei frammenti di schede personaggio
