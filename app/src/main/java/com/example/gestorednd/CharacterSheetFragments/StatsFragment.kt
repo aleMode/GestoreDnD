@@ -121,7 +121,7 @@ class StatsFragment() : Fragment() {
             if(SheetActivity.campaignChar){
                 val storageRef = Firebase.storage.reference
                 val myref = storageRef.child(
-                    "${SheetActivity.chosenChar.imgPath}/${SheetActivity.chosenChar.pgName}.jpg"
+                    "${SheetActivity.chosenChar.idOwner}/${SheetActivity.chosenChar.pgName}.jpg"
                 )
                 val file = File(context?.filesDir, SheetActivity.chosenChar.imgPath)
                 myref.getFile(file)
