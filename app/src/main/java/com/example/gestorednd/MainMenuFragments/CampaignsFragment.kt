@@ -137,6 +137,7 @@ class CampaignsFragment : Fragment() {
                     campList.add(camp)
                     adapter = CampaignListAdapter(campList)
                     recyclerView.adapter = adapter
+                    adapter.notifyDataSetChanged()
 
                     //aggiornamento del file con la lista delle campagne
                     val file = File(context?.filesDir, "campaigns.json")
@@ -148,7 +149,7 @@ class CampaignsFragment : Fragment() {
                         it.newLine()
                     }
 
-                    //TODO: rimuovi questa parte fino ad upload
+                    /*//TODO: rimuovi questa parte fino ad upload
                     val file2 = File(context?.filesDir, "campaigns.json") // Replace with the path of your file
                     val stringBuilder = StringBuilder()
                     try {
@@ -165,7 +166,7 @@ class CampaignsFragment : Fragment() {
                     val fileContent = stringBuilder.toString()
                     Log.e("CampFragment", "lista campagne2: $fileContent")
 
-                    Log.e("CampFragment", "lista campagne3: ${CampaignsFragment.campList}")
+                    Log.e("CampFragment", "lista campagne3: ${CampaignsFragment.campList}")*/
 
                     upload(adapter)
 
@@ -209,10 +210,10 @@ class CampaignsFragment : Fragment() {
             myref.delete()
             myref.putFile(file.toUri())
                 .addOnSuccessListener {
-                    Log.e("CampFrag", "Remote file save Success")
+                    //Toast.makeText(context, resources.getString(R.string.succ),Toast.LENGTH_SHORT)
                 }
                 .addOnFailureListener { exception ->
-                    Log.e("CampFrag", "Remote file save Failed")
+                    //Toast.makeText(context, resources.getString(R.string.fail),Toast.LENGTH_SHORT)
                 }
         }
 
@@ -229,12 +230,12 @@ class CampaignsFragment : Fragment() {
         val file = File(context?.filesDir, "campaigns.json")
         myref.getFile(file.toUri())
             .addOnSuccessListener {
+                //Toast.makeText(context, resources.getString(R.string.succ),Toast.LENGTH_SHORT)
             }
             .addOnFailureListener { exception ->
-                Log.e("CampFrag", "Camp file Download Failed")
+                //Toast.makeText(context, resources.getString(R.string.fail),Toast.LENGTH_SHORT)
             }
 
-        //TODO: problema con il primo login nelle campagne
         //aggiorno la lista delle campagne dello user
         if(file.exists()) {
             val gson = Gson()

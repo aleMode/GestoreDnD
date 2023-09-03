@@ -30,7 +30,7 @@
     </style>
 
     <style name="Element">
-        <item name="android:textColor">@color/dm_primary_text</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
     <style name="Button">

@@ -52,6 +52,7 @@ class JoinCampaignActivity : AppCompatActivity() {
             )
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         val link = getCampaignLink()
@@ -92,6 +93,7 @@ class JoinCampaignActivity : AppCompatActivity() {
                 Toast.makeText(this, this.getString(R.string.popupQuitNotif), Toast.LENGTH_SHORT)
                 val intent = Intent(this, MenuActivity::class.java)
                 this.startActivity(intent)
+                finish()
             }
 
             val btnOk = findViewById<Button>(R.id.btnJoinCharOk)
@@ -102,6 +104,7 @@ class JoinCampaignActivity : AppCompatActivity() {
                     val intent = Intent(this, MenuActivity::class.java)
                     this.startActivity(intent)
                     Toast.makeText(this, this.getString(R.string.popupQuitErrChar), Toast.LENGTH_SHORT)
+                    finish()
                 }
 
                 val camp = remotejoin(char, groupId)
@@ -201,7 +204,7 @@ class JoinCampaignActivity : AppCompatActivity() {
             )
             val imageFile = File(this.filesDir, SheetActivity.chosenChar.imgPath)
             if(!imageFile.exists())
-                Log.e("imgUploadRem", "dioca")
+                Log.e("imgUploadRem", "failed")
 
             imageRef.putFile(imageFile.toUri())
                 .addOnSuccessListener { taskSnapshot ->

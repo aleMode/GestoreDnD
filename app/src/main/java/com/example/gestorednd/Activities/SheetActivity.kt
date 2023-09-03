@@ -1,6 +1,5 @@
 package com.example.gestorednd.Activities
 
-import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -9,12 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.example.gestorednd.CharacterSheetFragments.*
-import com.example.gestorednd.DataClasses.Campaigns
 import com.example.gestorednd.DataClasses.Characters
 import com.example.gestorednd.DataClasses.Pg
 import com.example.gestorednd.R
 import com.example.gestorednd.Interfaces.SheetSwapper
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
@@ -151,7 +148,6 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
     }
 
     fun save(){
-
         if(campaignChar){
             //se edito un personaggio di una campagna lo salvo direttamente in remoto
             //salvo con il campo idowner in modo che sia sempre chiaro di chi sia il personaggio

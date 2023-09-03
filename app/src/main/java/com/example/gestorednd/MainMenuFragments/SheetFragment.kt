@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
@@ -22,12 +21,10 @@ import com.example.gestorednd.R
 import com.example.gestorednd.Adapters.SheetListAdapter
 import com.example.gestorednd.DataClasses.Pg
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.w3c.dom.Text
 import java.io.*
 
 class SheetFragment : Fragment() {
@@ -93,17 +90,19 @@ class SheetFragment : Fragment() {
         val filename = "characters.json"
         val file = File(context?.filesDir, filename)
         var chars : ArrayList<Characters> = arrayListOf()
-        try {
-            val jsonString = file.readText()
-            val gson = Gson()
-            val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
-            chars = gson.fromJson(jsonString, listCharactersType)
-
-        } catch (e: FileNotFoundException) {
-            //se il file non esiste crealo
-            file.createNewFile()
-        } catch (e: Exception) {
-            Log.e("SheetFragment", "Initial file Creation Error + $e")
+        if (file.exists()) {
+            try {
+                val jsonString = file.readText()
+                val gson = Gson()
+                val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
+                chars = gson.fromJson(jsonString, listCharactersType)
+            } catch (e: FileNotFoundException) {
+                //se il file non esiste crealo
+                file.createNewFile()
+            } catch (e: Exception) {
+                Log.e("SheetFragment", "Initial file Creation Error + $e")
+                file.createNewFile()
+            }
         }
 
         charList = chars //per refresh dell'adapter
@@ -203,8 +202,6 @@ class SheetFragment : Fragment() {
     //salva in remoto i files dei personaggi
     fun upload(adapter: SheetListAdapter) {
         //sincronizzo per scaricare eventuali personaggi che non sono ancora stati scaricati
-        sync(this.adapter)
-
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
 
@@ -228,9 +225,10 @@ class SheetFragment : Fragment() {
             val file2 = File(context?.filesDir, "${pers.name}.json")
             myref.putFile(file2.toUri())
                 .addOnSuccessListener {
+                    //Toast.makeText(context, resources.getString(R.string.succ),Toast.LENGTH_SHORT)
                 }
                 .addOnFailureListener { exception ->
-                    Log.e("SheetFrag", "Upload Failed 2")
+                    //Toast.makeText(context, resources.getString(R.string.fail),Toast.LENGTH_SHORT)
                 }
         }
 
@@ -242,67 +240,49 @@ class SheetFragment : Fragment() {
     //la funzione gestisce anche i files salvati in locale e non ancora caricati
     fun sync(adapter: SheetListAdapter) {
         fixUnsavedChars()
-        var file = File(context?.filesDir, "characters.json")
-        if (!file.exists()) return
-
-        //prendo l'array con i personaggi registrati (suppongo già un passaggio di fixUnsavedChars())
-        val jsonString = file.readText()
-        val listCharactersType = object : TypeToken<ArrayList<Characters>>() {}.type
-        val gson = Gson()
-        var chars: ArrayList<Characters>? = null
-        try {
-            chars = gson.fromJson(jsonString, listCharactersType)
-        }catch(e: java.lang.NullPointerException){
-            Log.e("SheetFrag", "Sync Failed 1")
-        }
 
         val user = FirebaseAuth.getInstance().currentUser?.uid
         val storageRef = Firebase.storage.reference
         val myref = storageRef.child("$user/characters.json")
         val file2 = File(context?.filesDir, "characters.json")
+        file2.createNewFile()
         myref.getFile(file2)
             .addOnSuccessListener {
+                Log.e("SheetFrag", "Sync succ 2")
             }
             .addOnFailureListener { exception ->
-                Log.e("SheetFrag", "Sync failed 2")
+                Log.e("SheetFrag", "Sync Failed 2")
             }
 
-        //faccio la stessa cosa col file proveniente da remoto
-        var chars2: ArrayList<Characters>? = null
+        var chars: ArrayList<Characters> = arrayListOf()
         try {
+
             var jsonString2 = file2.readText()
 
             val listCharactersType2 = object : TypeToken<ArrayList<Characters>>() {}.type
             val gson2 = Gson()
-            chars2 = gson2.fromJson(jsonString2, listCharactersType2)
+            chars = gson2.fromJson(jsonString2, listCharactersType2)
         }catch(e: java.lang.NullPointerException){
-
         }
 
-        //se un elemento in locale non è nella lista in remoto lo aggiungo e poi concludo scaricando
-        // i files personaggio da remoto
-        if(chars != null){
-            if(!(chars?.isEmpty())!!) {
-                for (char in chars!!)
-                    if (!chars2!!.contains(char))
-                        chars2.add(char)
-            }
-        }
+        Log.e("Sheetfrag", "$chars")
 
-        if(chars2 != null){
-            if(!(chars2?.isEmpty())!!) {
-                //falliranno soltanto quelli non salvati in remoto ma in locale
-                for (pers in chars2!!) {
-                    //upload di tutte le schede personaggio
-                    val myref = storageRef.child("$user/${pers.name}.json")
-                    val file = File(context?.filesDir, "${pers.name}.json")
-                    myref.getFile(file)
-                        .addOnSuccessListener {
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.e("SheetFrag", "Sync Failed 3")
-                        }
-                }
+        if(!(chars?.isEmpty())!!) {
+            Log.e("Sheetfrag", "if entered")
+            //falliranno soltanto quelli non salvati in remoto ma in locale
+            for (pers in chars!!) {
+                //download di tutte le schede personaggio
+                val myref = storageRef.child("$user/${pers.name}.json")
+                val file = File(context?.filesDir, "${pers.name}.json")
+                file.delete()
+                file.createNewFile()
+                myref.getFile(file)
+                    .addOnSuccessListener {
+                        Log.e("SheetFrag", "Downloaded $pers")
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("SheetFrag", "Sync Failed 3")
+                    }
             }
         }
 

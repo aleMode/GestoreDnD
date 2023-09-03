@@ -10,9 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gestorednd.Activities.SheetActivity
-import com.example.gestorednd.Adapters.EquipmentListAdapter
 import com.example.gestorednd.Adapters.SpellListAdapter
-import com.example.gestorednd.DataClasses.Pg
 import com.example.gestorednd.DataClasses.Spells
 import com.example.gestorednd.R
 
@@ -44,13 +42,17 @@ class SpellsFragment : Fragment() {
         recyclerViewSpells.adapter = adapterSpells
 
         //bottoni per spells
-        val addEquip = view.findViewById<Button>(R.id.btnAddSpell)
+        val addSpell = view.findViewById<Button>(R.id.btnAddSpell)
 
-        addEquip.setOnClickListener {
+        addSpell.setOnClickListener {
             val spellName = view.findViewById<TextView>(R.id.txtNewSpellName)
             val spellLvl = view.findViewById<TextView>(R.id.txtNewSpellLvl)
-            SheetActivity.chosenChar.spells.add(Spells(spellName.text.toString(),
-                Integer.parseInt(spellLvl.text.toString())!!))
+            SheetActivity.chosenChar.spells.add(
+                Spells(
+                    spellName.text.toString(),
+                    spellLvl.text.toString().toLong()
+                )
+            )
             adapterSpells = SpellListAdapter(SheetActivity.chosenChar.spells)
             recyclerViewSpells.adapter = adapterSpells
             spellName.text = ""

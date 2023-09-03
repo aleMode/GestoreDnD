@@ -118,7 +118,6 @@ class StatsFragment() : Fragment() {
         //TODO: prendi l'immagine scaricata col personaggio e aprila
         val img_slot = view.findViewById<ImageView>(R.id.img_char)
         if (SheetActivity.chosenChar.imgPath != "") {
-            //TODO: quando un personaggio viene aggiunto ad una campagna salva l'immagine in remoto
             if(SheetActivity.campaignChar){
                 val storageRef = Firebase.storage.reference
                 val myref = storageRef.child(
@@ -130,6 +129,19 @@ class StatsFragment() : Fragment() {
                     }
                     .addOnFailureListener { exception ->
                         Log.e("SheetFrag", "Sync failed 2")
+                    }
+            }else{
+                val user = FirebaseAuth.getInstance().currentUser?.uid
+                val storageRef = Firebase.storage.reference
+                val myref = storageRef.child(
+                    "${user}/${SheetActivity.chosenChar.pgName}.jpg"
+                )
+                val file = File(context?.filesDir, SheetActivity.chosenChar.imgPath)
+                myref.getFile(file)
+                    .addOnSuccessListener {
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("SheetFrag", "Sync failed *")
                     }
             }
             val img = File(
@@ -245,7 +257,6 @@ class StatsFragment() : Fragment() {
     //salva le immagini in locale se il personaggio non è in una campagna, in remoto se si
     private fun saveImg() {
         //salva il percorso nella scheda personaggio
-        //TODO: non è un path ma un nome
         SheetActivity.chosenChar.imgPath = currentPhotoName
 
         val gson = Gson()
@@ -261,25 +272,17 @@ class StatsFragment() : Fragment() {
         Log.e("SheetActivity Save", "save for img success")
 
         if (SheetActivity.campaignChar) {
-            var user = FirebaseAuth.getInstance().currentUser?.uid
             val storageRef = Firebase.storage.reference
             val imageRef = storageRef.child(
                 "${SheetActivity.chosenChar.imgPath}/${SheetActivity.chosenChar.pgName}.jpg"
                 )
             val imageFile = File(context!!.filesDir, SheetActivity.chosenChar.imgPath)
-            val imageStream = FileInputStream(imageFile)
             Log.e("imgUpload", SheetActivity.chosenChar.imgPath)
-
-            if(!imageFile.exists())
-                Log.e("imgUpload", "dioca")
 
             imageRef.putFile(imageFile.toUri())
                 .addOnSuccessListener { taskSnapshot ->
                     Log.e("imgUpload", "okok1")
-                    /*imageRef.downloadUrl.addOnSuccessListener { uri ->
-                        imageUrl = uri.toString()
-                        Log.e("imgupload", "okokok2: $imageUrl")
-                    }*/
+
                 }
                 .addOnFailureListener{
                     Log.e("imgUpload", "failed")
@@ -290,17 +293,24 @@ class StatsFragment() : Fragment() {
                 context!!.getString(R.string.saveSuccRem),
                 Toast.LENGTH_SHORT
             )
+        }else{
+            var user = FirebaseAuth.getInstance().currentUser?.uid
+            val storageRef = Firebase.storage.reference
+            val imageRef = storageRef.child(
+                "${user}/${SheetActivity.chosenChar.pgName}.jpg"
+            )
+            val imageFile = File(context!!.filesDir, SheetActivity.chosenChar.imgPath)
+            Log.e("imgUpload", SheetActivity.chosenChar.imgPath)
 
-            //TODO: salva il personaggio in remoto nella campagna giusta
-            /*
-            val storageF = FirebaseFirestore.getInstance()
-            val groupsRef = storageF.collection("groups")
-                .document(CampaignActivity.currentCamp.id.toString())
-                .collection("chars")
-                .document("$user.jpg")
-                .set(imageMap).await()
+            imageRef.putFile(imageFile.toUri())
+                .addOnSuccessListener { taskSnapshot ->
+                    Log.e("imgUpload", "okok1")
 
-            Log.e("Image", "img saved remotely")*/
+                }
+                .addOnFailureListener{
+                    Log.e("imgUpload", "failed")
+                }
+
         }
 
 
