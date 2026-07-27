@@ -39,11 +39,6 @@ class JoinCampaignActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join_campaign)
 
-        //snippet for debugging to clear the local file
-        var filename = "campaigns.json"
-        var file = File(this.filesDir, filename)
-        file.delete()
-
         if(Firebase.auth.currentUser == null) {
             Toast.makeText(
                 this,
