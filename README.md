@@ -4,14 +4,11 @@ A native Android app for managing **Dungeons & Dragons 5e characters and campaig
 
 Built end-to-end (design, data model, UI, backend integration) in **Kotlin** on **Firebase**.
 
-<!--
-Screenshots — replace these placeholders with real captures:
 <p align="center">
-  <img src="docs/screenshots/login.png"    width="220" alt="Login" />
-  <img src="docs/screenshots/sheet.png"    width="220" alt="Character sheet" />
-  <img src="docs/screenshots/campaign.png" width="220" alt="Campaign roster" />
+  <img src="docs/screenshots/sheet-stats.jpg"     width="220" alt="Character sheet — Stats tab" />
+  <img src="docs/screenshots/campaign-roster.jpg" width="220" alt="Campaign roster with share link" />
+  <img src="docs/screenshots/compendium.jpg"      width="220" alt="Compendium" />
 </p>
--->
 
 ---
 
