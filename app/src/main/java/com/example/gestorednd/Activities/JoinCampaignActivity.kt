@@ -44,7 +44,7 @@ class JoinCampaignActivity : AppCompatActivity() {
                 this,
                 this.getString(R.string.login_needed),
                 Toast.LENGTH_LONG
-            )
+            ).show()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -86,6 +86,7 @@ class JoinCampaignActivity : AppCompatActivity() {
             val btnQuit = findViewById<Button>(R.id.btnJoinCharCanc)
             btnQuit.setOnClickListener {
                 Toast.makeText(this, this.getString(R.string.popupQuitNotif), Toast.LENGTH_SHORT)
+                    .show()
                 val intent = Intent(this, MenuActivity::class.java)
                 this.startActivity(intent)
                 finish()
@@ -99,6 +100,7 @@ class JoinCampaignActivity : AppCompatActivity() {
                     val intent = Intent(this, MenuActivity::class.java)
                     this.startActivity(intent)
                     Toast.makeText(this, this.getString(R.string.popupQuitErrChar), Toast.LENGTH_SHORT)
+                        .show()
                     finish()
                 }
 
@@ -108,9 +110,11 @@ class JoinCampaignActivity : AppCompatActivity() {
                 val intent = Intent(this, MenuActivity::class.java)
                 this.startActivity(intent)
                 Toast.makeText(this, this.getString(R.string.popupQuitSucc), Toast.LENGTH_SHORT)
+                    .show()
             }
         }else{
             Toast.makeText(this, this.getString(R.string.popupJoined), Toast.LENGTH_SHORT)
+                .show()
             Log.w(ContentValues.TAG, "già membro o dm")
         }
     }

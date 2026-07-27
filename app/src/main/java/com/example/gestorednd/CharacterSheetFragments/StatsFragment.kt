@@ -292,7 +292,7 @@ class StatsFragment() : Fragment() {
                 context,
                 context!!.getString(R.string.saveSuccRem),
                 Toast.LENGTH_SHORT
-            )
+            ).show()
         }else{
             var user = FirebaseAuth.getInstance().currentUser?.uid
             val storageRef = Firebase.storage.reference
@@ -311,10 +311,8 @@ class StatsFragment() : Fragment() {
                     Log.e("imgUpload", "failed")
                 }
 
+            Toast.makeText(context!!, getString(R.string.saveSucc), Toast.LENGTH_SHORT).show()
         }
-
-
-        Toast.makeText(context!!, this.getString(R.string.saveSucc), Toast.LENGTH_SHORT)
     }
 
 }

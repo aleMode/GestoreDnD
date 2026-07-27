@@ -167,7 +167,7 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
                 it.newLine()
             }
             Log.e("SheetActivity Save", "success")
-            Toast.makeText(this, this.getString(R.string.saveSucc), Toast.LENGTH_SHORT)
+            Toast.makeText(this, this.getString(R.string.saveSucc), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -182,6 +182,6 @@ class SheetActivity : AppCompatActivity(), SheetSwapper {
             .set(chosenChar).await()
 
         Log.e("SheetActivity RemSave", "DocumentSnapshot successfully written!")
-        Toast.makeText(this, this.getString(R.string.saveSuccRem), Toast.LENGTH_SHORT)
+        Toast.makeText(this, this.getString(R.string.saveSuccRem), Toast.LENGTH_SHORT).show()
     }
 }
